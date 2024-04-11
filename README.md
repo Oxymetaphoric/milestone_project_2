@@ -1,6 +1,8 @@
 # Milestone Project :two:
 
-LINK TO LIVE SITE
+## LINK TO LIVE SITE
+
+![amiresponsive screenshot](/docs/images/amiresponsive.png)
 ---
 
 ## :world_map: Strategy
@@ -9,13 +11,27 @@ LINK TO LIVE SITE
 
 ### Project Goals
 
-![amiresponsive screenshot](/docs/images/amiresponsive.png)
+This is my milestone two project for the [Code Institute's](http://www.codeinstitute.net/) *'Level 5 Diploma in Web Application Development'*. The goal of this project is to *Design, develop and implement a dynamic Front end web application using HTML, CSS and JavaScript*. To this end I am building a website that will connect to the [Netrunner Database](http://www.netrunnerdb.com) API, download, manipulate, and display card data in the JSON format, and allow users to build a deck of cards for the card game [Netrunner](http://www.nullsignalgames.com/about/netrunner/), exporting completed decks as a printable pdf or uploading to netrunnerdb.
 
 #### User Goals
 
+- browse the database of Netrunner cards
+- filter the cards displayed by various properties
+- add and remove cards from their current deck
+- upload completed decks to netrunnerdb to share them with other players
+- remove all cards and start again
+
 #### Site Operator Goals
 
+- provide a robust and easily accessible tool for deckbuilding
+- promote the game of Netrunner
+
 #### Developer Goals
+
+- develop on knowledge of manipulating JSON and array methods
+- Develop a site that satisfies the Goals of the Users and Operator as determined by the User Stories and Goals
+- create a visually interesting and well-optimised experience
+- Build a performant and efficient site, benchmarked using tools such as lighthouse, that is workable on all modern browsers and devices
 
 ---
 
@@ -33,16 +49,11 @@ LINK TO LIVE SITE
 
 ##### - First Time User
 
-
 ##### - Returning User
-
 
 ##### - Site Owner
 
-
 #### Identified tasks/needs the website should fulfill
-
-
 
 #### Accessibility
 
