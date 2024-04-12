@@ -3,8 +3,8 @@
 ## Javascript
 
 - skeleton out required functions for manipulating cards
-- write function to connect to API and grab data
-- write  function to parse data to JSON
+- ~~write function to connect to API and grab data~~
+- ~~write  function to parse data to JSON~~
 
 ## HTML
 
