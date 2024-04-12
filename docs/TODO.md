@@ -9,7 +9,7 @@
 
 # HTML: 
 
-- sketch out basic areas for js to interact with
+~~- sketch out basic areas for js to interact with~~
 
 # CSS: 
 

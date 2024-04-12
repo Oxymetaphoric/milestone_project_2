@@ -1,13 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=play:wght@200;300;400&family=public sans:wght@300;400;500;600;700&display=swap");
 
 /* global styling */ 
-body {
+html, body {
   padding: 0;
-  border: 0;
   margin: 0;
+  height: 100%;
 }
 
-h1 h2 h3 h4 h5 h6 {
+.full-height {
+  height: 100%;
+  width: 100%;
+}
+
+.make-purple {
+  background-color: blueviolet;
+}
+
+h1, h2, h3, h4, h5, h6 {
   font-family: "Play", Arial, Helvetica, sans-serif;
 }
 
@@ -17,42 +26,12 @@ p {
 
 /* setting up the page */
 
-#main-stage { 
-  min-height: 100%;
-  width: 1268px;
-  min-height: 920px;
-  height:auto;
-  background-color: blueviolet;
-  float: right;
+#main-stage {
+  min-height: 600px;
 }
 
 #controls {
-  height: 100px;
-  width: 100%;
-  background-color: black;
-  
+  min-height: auto;
+  max-height: auto;
+
 }
-
-#card-browser {
-  float: left;
-  width: 634px;
-  height: 900px;
-  overflow: scroll;
-  background-color: aquamarine;
-}
-
-#current-cards {
-  float: left;
-  width: 50%;
-  height: 900px;
-  background-color: brown;
-}
-
-#my-deck {
-  float: right;
-  width: 50%;
-  height: 900px;
-}
-
-
-
