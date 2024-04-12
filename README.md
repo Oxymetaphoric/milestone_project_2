@@ -122,6 +122,18 @@ Page should be responsive and designed for mobile, tablet, and desktop.
 
 ### Wireframes
 
+#### Desktop Wireframes
+
+![wireframe - desktop](/docs/wireframes/landing_page_desktop.png)
+![wireframe - desktop](/docs/wireframes/landing_page_1_desktop.png)
+
+#### Mobile Wireframes
+
+![wireframe - mobile](/docs/wireframes/mobile-landing.png)
+![wireframe - mobile](/docs/wireframes/mobile-browse-cards.png)
+![wireframe - mobile](/docs/wireframes/mobile-filter.png)
+![wireframe - mobile](/docs/wireframes/mobile-browse-deck.png)
+
 ### Features
 
 - query netrunnerdb API and parse returned data
