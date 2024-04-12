@@ -15,13 +15,15 @@ async function getAndLogCards() {
 //extract only IDs
 async function extractIDs() {
   let allCards = await getAndLogCards();
+  console.log(allCards)
+  let ids =[];
   for (let card of allCards) {
     if (card.attributes.card_type_id === 'runner_identity') {
-      console.log(card)
-      let title = card.attributes.title
-      $("<div>").html("<h1>" + title + "</h1>").appendTo("#allCards");
+      ids.push(card);
+      $("<div>").html("<h1>" + card.attributes.title + "</h1>").appendTo("#allCards");
       }
-    }
+    } 
+    
   }
 
 
