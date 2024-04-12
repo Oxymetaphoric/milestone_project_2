@@ -1,16 +1,16 @@
-# Javascript:
+# TODO
 
+## Javascript
 
-
-~~- import and link bootstrap, jQuery, and fontAwesome~~
 - skeleton out required functions for manipulating cards
 - write function to connect to API and grab data
 - write  function to parse data to JSON
 
-# HTML: 
+## HTML
 
-~~- sketch out basic areas for js to interact with~~
+- ~~import and link bootstrap, jQuery, and fontAwesome~~
+- ~~sketch out basic areas for js to interact with~~
 
-# CSS: 
+## CSS
 
-~~- import fonts and set up intital styling~~
+- ~~import fonts and set up intital styling~~
