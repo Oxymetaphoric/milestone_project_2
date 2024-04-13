@@ -1,9 +1,17 @@
 const apiLink = "https://api-preview.netrunnerdb.com/api/v3/public/"
 
 
-async function fetchCards(link, filter, param, page = 1) {
+async function fetchCards(link, filter, param) {
   const response = await fetch(`${link}cards?filter[${filter}]=${param}`);
   const data = await response.json();
+  let next = data.links.next;
+  let prev = data.links.prev;
+//call function recursively until there are no more pages
+  if (next) {
+    const nextData = await fetchCards(next, "side_id", "runner");
+    data.data = [...data.data, ...nextData];
+  }
+
   return data.data;
   }
 
