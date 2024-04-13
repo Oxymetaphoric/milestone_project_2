@@ -1,8 +1,8 @@
 const apiLink = "https://api-preview.netrunnerdb.com/api/v3/public/"
 
 
-async function fetchCards(link, filter, side) {
-  const response = await fetch(`${apiLink}cards?filter[${filter}]=${side}`);
+async function fetchCards(link, filter, param) {
+  const response = await fetch(`${link}cards?filter[${filter}]=${param}`);
   const data = await response.json();
   return data.data;
   }
@@ -12,19 +12,18 @@ async function getAndLogCards() {
   return allCards
   }
   
-//extract only IDs
+//filter returned cards
+//TODO replace hardcoded values with passed values 
 async function extractIDs() {
   let allCards = await getAndLogCards();
-  console.log(allCards)
-  let ids =[];
-  for (let card of allCards) {
-    if (card.attributes.card_type_id === 'runner_identity') {
-      ids.push(card);
-      $("<div>").html("<h1>" + card.attributes.title + "</h1>").appendTo("#allCards");
-      }
-    } 
-    
+  let filteredCards = allCards.filter(card => card.attributes.card_type_id === 'runner_identity').map(card => {
+  return $("<div>").html("<h1>" + card.attributes.title + "</h1>");("#allCards");
   }
+);
+      $("#allCards").append(filteredCards);
+  }
+    
+  
 
 
 extractIDs();
