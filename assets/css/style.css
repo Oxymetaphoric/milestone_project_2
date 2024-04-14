@@ -18,13 +18,13 @@ html, body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Play", Arial, Helvetica, sans-serif;
-  font-size: 15pt;
-  line-height: 2cap;
+  font-size: 19pt;
+  line-height: 1.5cap;
 }
 
 p {
   font-family: "Public Sans", Arial, Helvetica, sans-serif;
-  font-size: small;
+  font-size: medium;
 }
 
 /* setting up the page */
@@ -52,6 +52,13 @@ p {
   margin: 1px;
 }
 
+.faction_icon {
+  height: 90px;
+  width: 90px;
+  opacity: 0.5;
+
+}
+
 .columnTitle h1 {
   text-align: center;
   font-size: 18pt;
@@ -60,49 +67,26 @@ p {
 /* Faction Colours */
 
 .weyland_consortium {
-  background-color: rgba(51, 68, 51, 0.5);
-}
-
+  background-color: rgba(51, 68, 51, 0.5);}
 .haas_bioroid {
-  background-color: rgba(105, 20, 105, 0.5)
-}
-
+  background-color: rgba(105, 20, 105, 0.5)}
 .jinteki {
-  background-color: rgba(141, 34, 34, 0.8)
-}
-
+  background-color: rgba(141, 34, 34, 0.8)}
 .nbn {
-  background-color: rgba(255, 208, 0, 0.5)
-}
-
+  background-color: rgba(255, 208, 0, 0.5)}
 .anarch {
-  background-color: rgba(255, 30, 0, 0.5)
-}
-
+  background-color: rgba(255, 30, 0, 0.5)}
 .shaper {
-  background-color: rgba(0, 197, 0, 0.5)
-}
-
+  background-color: rgba(0, 197, 0, 0.5)}
 .criminal {
-  background-color: rgba(84, 128, 209, 0.5)
-}
-
+  background-color: rgba(84, 128, 209, 0.5)}
 .neutral_runner {
-  background-color: rgba(128, 128, 128, 0.5);
-}
-
+  background-color: rgba(128, 128, 128, 0.5);}
 .neutral_corp {
-  background-color: rgba(128, 128, 128, 0.5);
-}
-
+  background-color: rgba(128, 128, 128, 0.5);}
 .adam {
-  background-color: rgba(156, 124, 156, 0.5);
-}
-
+  background-color: rgba(156, 124, 156, 0.5);}
 .sunny_lebeau {
-  background-color: rgba(156, 124, 156, 0.5);
-}
-
+  background-color: rgba(156, 124, 156, 0.5);}
 .apex {
-  background-color: rgba(156, 124, 156, 0.5);
-}
+  background-color: rgba(156, 124, 156, 0.5);}

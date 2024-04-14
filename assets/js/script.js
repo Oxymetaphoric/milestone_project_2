@@ -23,34 +23,34 @@ async function filterCards(cardProperty = "", cardFilter = "", side = "") {
 
   let allCards = await fetchCards(apiLink, "cards", "side_id", side);
   let filteredCards = allCards.filter(card => card.attributes[cardProperty] === cardFilter).map(card => {
-  let factionCSS = card.attributes.faction_id    
+  let factionID = card.attributes.faction_id   
+  let factionIcon = `/assets/images/NSG-Visual-Assets/SVG/FactionGlyphs/NSG_${factionID}.svg`
+  console.log(factionIcon)
   //horrible regex to format factions nicely
   let formattedFaction = card.attributes.faction_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace(/Nbn/g, 'NBN').replace(/Haas/g, 'Haas-');
-  let factionIcon = `<img class="factionIcon" `  
-  
   //html for allCards entries
   let allCardsHTML = (
   `
-<div class='row'>
-  <img class='factionIcon' src=#>
-  <div class=col>
-    <h2 class='cardTitle'>
-      ${card.attributes.title}
-    </h2>
-      <em><p class='cardFaction'>Faction:&nbsp${formattedFaction} </p></em>
-    </h2>
-  </div>
-</div>` 
-
+<div class="row">
+<div class='row faction_icon'>
+  <img src = ${factionIcon}>
+</div>
+<div class=col>
+  <h2 class='cardTitle'>
+    ${card.attributes.title}
+  </h2>
+  <em><p class='cardFaction'>Faction:&nbsp${formattedFaction} </p></em>
+</div>
+</div>
+  `
   )
 
-    return $("<div>'").html(allCardsHTML).addClass("cardEntry").addClass(factionCSS)
+    return $("<div>'").html(allCardsHTML).addClass("cardEntry").addClass(factionID)
     });
 
     filteredCards.sort((a, b) => {
       let factionA = $(a).find('.cardFaction').text();
       let factionB = $(b).find('.cardFaction').text();
-      console.log(factionA, factionB);
       if (factionA < factionB) return -1;
       if (factionB > factionB) return 1;
       return 0;
@@ -80,3 +80,4 @@ filterCards("card_type_id", cardType, side);
 
 
 main(userSide);
+$("#")
