@@ -28,11 +28,18 @@ async function filterCards(cardProperty = "", cardFilter = "", side = "") {
 
     return $("<div>'").html(                                      
       "<h1 class='cardTitle'>" + card.attributes.title + "</h1><em><p class='cardFaction'>" + formattedFaction + "</p></em>").addClass("cardEntry").addClass(factionCSS);
-    }
-  );
-  $("#allCards").append(filteredCards);
-}
+    });
 
+    filteredCards.sort((a, b) => {
+      let factionA = $(a).find('.cardFaction').text();
+      let factionB = $(b).find('.cardFaction').text();
+      console.log(factionA, factionB);
+      if (factionA < factionB) return -1;
+      if (factionB > factionB) return 1;
+      return 0;
+    });
+$("#allCards").sort().append(filteredCards);
+  }
 
 //fetch the different types of cards filtered by selected side
 async function getCardTypes(side) {
@@ -49,7 +56,7 @@ async function getCardTypes(side) {
 async function main(side) {
 side = "corp" //runner or corp
 let userCardTypes = await getCardTypes(side);
-cardType = userCardTypes[4].id //see console.log for available choices filtered by side
+cardType = userCardTypes[2].id //see console.log for available choices filtered by side
 filterCards("card_type_id", cardType, side);
 }
 

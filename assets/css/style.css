@@ -61,7 +61,7 @@ p {
 }
 
 .jinteki {
-  background-color: red
+  background-color: rgba(255, 0, 0, 0.8)
 }
 
 .nbn {
@@ -78,5 +78,17 @@ p {
 
 .criminal {
   background-color: blue
+}
+
+.neutral_runner {
+  background-color: grey, .5;
+}
+
+.adam {
+  background-color: blanchedalmond;
+}
+
+.sunny_lebeau {
+  background-color: purple;
 }
 
