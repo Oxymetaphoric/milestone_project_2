@@ -1,5 +1,5 @@
 const apiLink = "https://api-preview.netrunnerdb.com/api/v3/public/"
-let userSide = "corp"
+//let userSide = "corp"
 
 
 //connect to netrunnerdb and fetch cards with a url crafted from arguments
@@ -41,9 +41,12 @@ async function getCardTypes(side) {
     return availableTypes
     }  
 
-async function main(apiLink, userSide) {
+//Main function, for calling other functions
+async function main() {
+userSide = "runner" //runner or corp
+cardType = "runner_identity" //type of card see console.log for available choices per side
 let userCardTypes = await getCardTypes(userSide);
-filterCards("card_type_id", "agenda", userSide);
+filterCards("card_type_id", cardType, userSide);
 }
 
-main(apiLink, userSide);
+main();
