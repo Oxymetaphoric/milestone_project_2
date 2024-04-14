@@ -2,6 +2,7 @@ const apiLink = "https://api-preview.netrunnerdb.com/api/v3/public/"
 let userSide = ""
 
 
+
 //connect to netrunnerdb and fetch cards with a url crafted from arguments
 async function fetchCards(apiLink, filter = "", param = "", side) {
   const response = await fetch(`${apiLink}${filter}?filter[${param}]=${side}`);
@@ -22,7 +23,11 @@ return data.data;
 async function filterCards(cardProperty = "", cardFilter = "", side = "") {
   let allCards = await fetchCards(apiLink, "cards", "side_id", side);
   let filteredCards = allCards.filter(card => card.attributes[cardProperty] === cardFilter).map(card => {
-    return $("<div>").html("<h1>" + card.attributes.title + "</h1>");("#allCards");
+  let factionCSS = card.attributes.faction_id
+  let formattedFaction = card.attributes.faction_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace(/Nbn/g, 'NBN').replace(/Haas/g, 'Haas-');          
+
+    return $("<div>'").html(                                      
+      "<h1 class='cardTitle'>" + card.attributes.title + "</h1><em><p class='cardFaction'>" + formattedFaction + "</p></em>").addClass("cardEntry").addClass(factionCSS);
     }
   );
   $("#allCards").append(filteredCards);
@@ -42,12 +47,11 @@ async function getCardTypes(side) {
 
 //Main function, for calling other functions
 async function main(side) {
-side = "runner" //runner or corp
+side = "corp" //runner or corp
 let userCardTypes = await getCardTypes(side);
 cardType = userCardTypes[4].id //see console.log for available choices filtered by side
 filterCards("card_type_id", cardType, side);
 }
 
-main(userSide);
 
-//let cardTypes = userCardTypes.filter(type => type.attributes.side_id === type)
+main(userSide);
