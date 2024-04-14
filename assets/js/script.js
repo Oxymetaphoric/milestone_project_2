@@ -19,15 +19,32 @@ return data.data;
   }
 
 //filter requested cards
-//TODO replace hardcoded values with passed values 
 async function filterCards(cardProperty = "", cardFilter = "", side = "") {
+
   let allCards = await fetchCards(apiLink, "cards", "side_id", side);
   let filteredCards = allCards.filter(card => card.attributes[cardProperty] === cardFilter).map(card => {
-  let factionCSS = card.attributes.faction_id
-  let formattedFaction = card.attributes.faction_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace(/Nbn/g, 'NBN').replace(/Haas/g, 'Haas-');          
+  let factionCSS = card.attributes.faction_id    
+  //horrible regex to format factions nicely
+  let formattedFaction = card.attributes.faction_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace(/Nbn/g, 'NBN').replace(/Haas/g, 'Haas-');
+  let factionIcon = `<img class="factionIcon" `  
+  
+  //html for allCards entries
+  let allCardsHTML = (
+  `
+<div class='row'>
+  <img class='factionIcon' src=#>
+  <div class=col>
+    <h2 class='cardTitle'>
+      ${card.attributes.title}
+    </h2>
+      <em><p class='cardFaction'>Faction:&nbsp${formattedFaction} </p></em>
+    </h2>
+  </div>
+</div>` 
 
-    return $("<div>'").html(                                      
-      "<h1 class='cardTitle'>" + card.attributes.title + "</h1><em><p class='cardFaction'>" + formattedFaction + "</p></em>").addClass("cardEntry").addClass(factionCSS);
+  )
+
+    return $("<div>'").html(allCardsHTML).addClass("cardEntry").addClass(factionCSS)
     });
 
     filteredCards.sort((a, b) => {
@@ -39,6 +56,7 @@ async function filterCards(cardProperty = "", cardFilter = "", side = "") {
       return 0;
     });
 $("#allCards").sort().append(filteredCards);
+
   }
 
 //fetch the different types of cards filtered by selected side

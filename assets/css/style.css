@@ -20,7 +20,6 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Play", Arial, Helvetica, sans-serif;
   font-size: 15pt;
   line-height: 2cap;
-  text-align: ce;
 }
 
 p {
@@ -41,7 +40,7 @@ p {
 }
 
 #allCards {
-  max-height: ;
+  max-height: 100vh;
   overflow: auto;
   font-size: 14pt;
   border: 2px solid black;
@@ -53,6 +52,13 @@ p {
   margin: 1px;
 }
 
+.columnTitle h1 {
+  text-align: center;
+  font-size: 18pt;
+}
+
+/* Faction Colours */
+
 .weyland_consortium {
   background-color: rgba(51, 68, 51, 0.5);
 }
@@ -62,7 +68,7 @@ p {
 }
 
 .jinteki {
-  background-color: rgba(141, 34, 34, 0.5)
+  background-color: rgba(141, 34, 34, 0.8)
 }
 
 .nbn {
