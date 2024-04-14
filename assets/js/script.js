@@ -54,7 +54,7 @@ async function getCardTypes(side) {
 
 //Main function, for calling other functions
 async function main(side) {
-side = "corp" //runner or corp
+side = "runner" //runner or corp
 let userCardTypes = await getCardTypes(side);
 cardType = userCardTypes[2].id //see console.log for available choices filtered by side
 filterCards("card_type_id", cardType, side);
