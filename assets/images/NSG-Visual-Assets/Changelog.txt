@@ -1,0 +1,26 @@
+Null Signal Games Visual Assets v1.4
+
+CHANGELOG:
+
+CHANGED: Files renamed from NISEI_*.* to NSG_*.*
+
+------------------------------------
+Null Signal Games Visual Assets v1.3
+
+CHANGELOG:
+
+FIXED: Minor typos
+
+ADDED: Set symbol for Liberation
+
+------------------------------------
+
+Null Signal Games Visual Assets v1.2
+
+CHANGELOG:
+
+CHANGED: Organisation name changed from NISEI to Null Signal Games throughout
+
+ADDED: Set symbols for Ashes, Borealis, System Gateway, System Update 2021, System Core 2019, Magnum Opus Reprint, and Salvaged Memories
+
+ADDED: Game symbols for Archives, HQ, and R&D
