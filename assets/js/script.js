@@ -29,29 +29,21 @@ async function filterCards(cardProperty = "", cardFilter = "", side = "") {
   );
   $("#allCards").append(filteredCards);
 }
-    
-async function getCardTypes(userSide) {
+
+
+//fetch the different types of cards filtered by selected side
+async function getCardTypes(side) {
     let fetchTypes =  await fetch("https://api-preview.netrunnerdb.com//api/v3/public/card_types")
     let cardTypesJSON = await fetchTypes.json();
-    let cardTypes = await cardTypesJSON.data;
-    return cardTypes
+    let cardTypes = cardTypesJSON.data;
+    let availableTypes = cardTypes.filter(type => type.attributes.side_id === side)
+    console.log(availableTypes)
+    return availableTypes
+    }  
+
+async function main(apiLink, userSide) {
+let userCardTypes = await getCardTypes(userSide);
+filterCards("card_type_id", "agenda", userSide);
 }
 
-
-getCardTypes().then(cardTypes => {
-  let availableTypes = []
-  for (let type of cardTypes){
-      if (type.attributes.side_id === userSide) {
-      availableTypes.push(type);
-    }
-  }
-  console.log(availableTypes) 
-  return availableTypes
-})
-
-filterCards("card_type_id", "asset", userSide);
-
-
-
-
-
+main(apiLink, userSide);
