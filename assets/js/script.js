@@ -18,6 +18,17 @@ async function fetchCards(apiLink, filter = "", param = "", side) {
 return data.data;
   }
 
+  //fetch the different types of cards filtered by selected side
+async function getCardTypes(side) {
+  let fetchTypes =  await fetch("https://api-preview.netrunnerdb.com//api/v3/public/card_types")
+  let cardTypesJSON = await fetchTypes.json();
+  let cardTypes = cardTypesJSON.data;
+  let availableTypes = cardTypes.filter(type => type.attributes.side_id === side)
+  console.log(availableTypes)
+  return availableTypes
+  }  
+
+
 //filter requested cards
 async function filterCards(cardProperty = "", cardFilter = "", side = "") {
 
@@ -31,7 +42,7 @@ async function filterCards(cardProperty = "", cardFilter = "", side = "") {
     return filteredCards
   }
 
-
+//populate #allCards with card entries
   function populateCards(cards) {
     $("#allCards").empty(); //clear cards when called
     
@@ -62,24 +73,13 @@ async function filterCards(cardProperty = "", cardFilter = "", side = "") {
          }
         );
   }
-    
 
-
-//fetch the different types of cards filtered by selected side
-async function getCardTypes(side) {
-    let fetchTypes =  await fetch("https://api-preview.netrunnerdb.com//api/v3/public/card_types")
-    let cardTypesJSON = await fetchTypes.json();
-    let cardTypes = cardTypesJSON.data;
-    let availableTypes = cardTypes.filter(type => type.attributes.side_id === side)
-    console.log(availableTypes)
-    return availableTypes
-    }  
 
 //Main function, for calling other functions
 async function main(side) {
-side = "runner" //runner or corp
+side = "corp" //runner or corp
 let userCardTypes = await getCardTypes(side);
-cardType = userCardTypes[2].id //see console.log for available choices filtered by side
+cardType = userCardTypes[1].id //see console.log for available choices filtered by side
 let filteredCards = await filterCards("card_type_id", cardType, side);
 console.log(filteredCards)
 populateCards(filteredCards);
