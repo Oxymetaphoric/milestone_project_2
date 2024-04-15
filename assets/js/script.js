@@ -1,6 +1,8 @@
 const apiLink = "https://api-preview.netrunnerdb.com/api/v3/public/"
+const apiImagesLink = "https://card-images.netrunnerdb.com/v2/large/" 
 let userSide = ""
 let filteredCardsGlobal = []
+
 
 
 //connect to netrunnerdb and fetch cards with a url crafted from arguments
@@ -37,7 +39,8 @@ async function filterCards(cardProperty = "", cardFilter = "", side = "") {
   filteredCards.sort((a, b) => {
     let factionA = a.attributes.faction_id
     let factionB = b.attributes.faction_id
-       return factionA.localeCompare(factionB)
+ 
+    return factionA.localeCompare(factionB)
     });
     return filteredCards
   }
@@ -55,33 +58,51 @@ async function filterCards(cardProperty = "", cardFilter = "", side = "") {
       
       //html for allCards entries
       let cardHTML = `
-      <div class="row">
-      <div class='row faction_icon'>
-        <img src = ${factionIcon}>
-      </div>
-      <div class=col>
-        <h2 class='cardTitle'>
-          ${card.attributes.title}
-        </h2>
-        <p class='cardFaction'><b>Faction:</b>&nbsp${formattedFaction}</p>
-        <p class='cardFaction'>${formattedCardType}</p>
-      </div>
-      </div>
-        `
+      <div class="cardEntry ${factionID}">
+        <div class='row faction_icon'>
+          <img src = ${factionIcon}>
+        </div>
+        <div class=col>
+          <h2 class='cardTitle'>
+            ${card.attributes.title}
+          </h2>
+          <p class='cardFaction'><b>Faction:</b>&nbsp${formattedFaction}</p>
+          <p class='cardFaction'>${formattedCardType}</p>
+        </div>
+      </div>`
 
-    $('#allCards').append(cardHTML).addClass("cardEntry").addClass(factionID)
-         }
-        );
-  }
+    $('#allCards').append(cardHTML);
+//attach eventListners to cardEntries
+$(".cardEntry").last().click(() => {
+  handleCardClick(card);
+});
+  });
+
+
+};
+
+//onClick logic for divs
+function handleCardClick(cardData) {
+  let cardId = cardData.attributes.latest_printing_id
+  console.log(cardId)
+  
+ $("#stage-card-display").html(`
+    <h1>${cardData.id}</h1>
+    <p>Faction: ${cardData.attributes.faction_id}</p>
+    <p>Card Type: ${cardData.attributes.card_type_id}</p>
+    <p>Card Text: ${cardData.attributes.text}</p>
+    `)
+ 
+}
+
 
 
 //Main function, for calling other functions
 async function main(side) {
 side = "corp" //runner or corp
 let userCardTypes = await getCardTypes(side);
-cardType = userCardTypes[1].id //see console.log for available choices filtered by side
+cardType = userCardTypes[4].id //see console.log for available choices filtered by side
 let filteredCards = await filterCards("card_type_id", cardType, side);
-console.log(filteredCards)
 populateCards(filteredCards);
 }
 

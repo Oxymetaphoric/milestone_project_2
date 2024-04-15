@@ -10,7 +10,7 @@
 - add interactivity to divs
 - ~~function that attaches a css class based on the card.attributes.faction_id string~~
 - look into jQuery .data() function for extracting data from divs
-- seperate out filtering and populating logic in allCards
+- ~~seperate out filtering and populating logic in allCards~~
 
 
 ## HTML
