@@ -1,6 +1,6 @@
 const apiLink = "https://api-preview.netrunnerdb.com/api/v3/public/"
 let userSide = ""
-
+let filteredCardsGlobal = []
 
 
 //connect to netrunnerdb and fetch cards with a url crafted from arguments
@@ -22,42 +22,48 @@ return data.data;
 async function filterCards(cardProperty = "", cardFilter = "", side = "") {
 
   let allCards = await fetchCards(apiLink, "cards", "side_id", side);
-  let filteredCards = allCards.filter(card => card.attributes[cardProperty] === cardFilter).map(card => {
-  let factionID = card.attributes.faction_id   
-  let factionIcon = `/assets/images/NSG-Visual-Assets/SVG/FactionGlyphs/NSG_${factionID}.svg`
-  console.log(factionIcon)
-  //horrible regex to format factions nicely
-  let formattedFaction = card.attributes.faction_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace(/Nbn/g, 'NBN').replace(/Haas/g, 'Haas-');
-  //html for allCards entries
-  let allCardsHTML = (
-  `
-<div class="row">
-<div class='row faction_icon'>
-  <img src = ${factionIcon}>
-</div>
-<div class=col>
-  <h2 class='cardTitle'>
-    ${card.attributes.title}
-  </h2>
-  <em><p class='cardFaction'>Faction:&nbsp${formattedFaction} </p></em>
-</div>
-</div>
-  `
-  )
-
-    return $("<div>'").html(allCardsHTML).addClass("cardEntry").addClass(factionID)
+  let filteredCards = allCards.filter(card => card.attributes[cardProperty] === cardFilter);
+  filteredCards.sort((a, b) => {
+    let factionA = a.attributes.faction_id
+    let factionB = b.attributes.faction_id
+       return factionA.localeCompare(factionB)
     });
-
-    filteredCards.sort((a, b) => {
-      let factionA = $(a).find('.cardFaction').text();
-      let factionB = $(b).find('.cardFaction').text();
-      if (factionA < factionB) return -1;
-      if (factionB > factionB) return 1;
-      return 0;
-    });
-$("#allCards").sort().append(filteredCards);
-
+    return filteredCards
   }
+
+
+  function populateCards(cards) {
+    $("#allCards").empty(); //clear cards when called
+    
+    cards.forEach(card => {
+      let factionID = card.attributes.faction_id
+      let factionIcon = `/assets/images/NSG-Visual-Assets/SVG/FactionGlyphs/NSG_${factionID}.svg`
+      //horrible regex to format factions nicely
+      let formattedFaction = card.attributes.faction_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace(/Nbn/g, 'NBN').replace(/Haas/g, 'Haas-');
+      let formattedCardType = card.attributes.card_type_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+      
+      //html for allCards entries
+      let cardHTML = `
+      <div class="row">
+      <div class='row faction_icon'>
+        <img src = ${factionIcon}>
+      </div>
+      <div class=col>
+        <h2 class='cardTitle'>
+          ${card.attributes.title}
+        </h2>
+        <p class='cardFaction'><b>Faction:</b>&nbsp${formattedFaction}</p>
+        <p class='cardFaction'>${formattedCardType}</p>
+      </div>
+      </div>
+        `
+
+    $('#allCards').append(cardHTML).addClass("cardEntry").addClass(factionID)
+         }
+        );
+  }
+    
+
 
 //fetch the different types of cards filtered by selected side
 async function getCardTypes(side) {
@@ -69,15 +75,15 @@ async function getCardTypes(side) {
     return availableTypes
     }  
 
-
 //Main function, for calling other functions
 async function main(side) {
 side = "runner" //runner or corp
 let userCardTypes = await getCardTypes(side);
 cardType = userCardTypes[2].id //see console.log for available choices filtered by side
-filterCards("card_type_id", cardType, side);
+let filteredCards = await filterCards("card_type_id", cardType, side);
+console.log(filteredCards)
+populateCards(filteredCards);
 }
 
-
 main(userSide);
-$("#")
+

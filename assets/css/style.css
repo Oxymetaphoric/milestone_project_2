@@ -19,12 +19,13 @@ html, body {
 h1, h2, h3, h4, h5, h6 {
   font-family: "Play", Arial, Helvetica, sans-serif;
   font-size: 19pt;
-  line-height: 1.5cap;
+  line-height: 1cap;
 }
 
 p {
   font-family: "Public Sans", Arial, Helvetica, sans-serif;
   font-size: medium;
+  line-height: 1;
 }
 
 /* setting up the page */
@@ -36,7 +37,6 @@ p {
 #controls {
   min-height: auto;
   max-height: auto;
-
 }
 
 #allCards {
@@ -50,13 +50,14 @@ p {
   border: 1px solid black;
   padding: 10px;
   margin: 1px;
+  bottom: auto;
+  width: auto;
 }
 
 .faction_icon {
   height: 90px;
   width: 90px;
-  opacity: 0.5;
-
+  opacity: 0.8;
 }
 
 .columnTitle h1 {
