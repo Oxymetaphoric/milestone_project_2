@@ -7,9 +7,9 @@
 - ~~write  function to parse data to JSON~~
 - ~~generalise the filterToId function~~
 - add controls
-- add interactivity to divs
+- ~~add interactivity to divs~~
+- ~~display card information on stage~~
 - ~~function that attaches a css class based on the card.attributes.faction_id string~~
-- look into jQuery .data() function for extracting data from divs
 - ~~seperate out filtering and populating logic in allCards~~
 
 
@@ -24,3 +24,7 @@
 
 - ~~import fonts and set up intital styling~~
 - style cardEntry w/ background image etc.
+
+## Other
+
+= Do I need an API key to access the images on netrunner db?

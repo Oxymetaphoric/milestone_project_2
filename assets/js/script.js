@@ -3,8 +3,6 @@ const apiImagesLink = "https://card-images.netrunnerdb.com/v2/large/"
 let userSide = ""
 let filteredCardsGlobal = []
 
-
-
 //connect to netrunnerdb and fetch cards with a url crafted from arguments
 async function fetchCards(apiLink, filter = "", param = "", side) {
   const response = await fetch(`${apiLink}${filter}?filter[${param}]=${side}`);
@@ -30,7 +28,6 @@ async function getCardTypes(side) {
   return availableTypes
   }  
 
-
 //filter requested cards
 async function filterCards(cardProperty = "", cardFilter = "", side = "") {
 
@@ -45,8 +42,8 @@ async function filterCards(cardProperty = "", cardFilter = "", side = "") {
     return filteredCards
   }
 
-//populate #allCards with card entries
-  function populateCards(cards) {
+//populate #allCards div with card entries
+function populateCards(cards) {
     $("#allCards").empty(); //clear cards when called
     
     cards.forEach(card => {
@@ -72,14 +69,17 @@ async function filterCards(cardProperty = "", cardFilter = "", side = "") {
       </div>`
 
     $('#allCards').append(cardHTML);
-//attach eventListners to cardEntries
-$(".cardEntry").last().click(() => {
-  handleCardClick(card);
-});
+  //attach eventListners to cardEntries
+  $(".cardEntry").last().click(() => {
+    handleCardClick(card);
+    });
   });
-
-
 };
+
+async function fetchCardImage(cardID) {
+const response = await fetch(apiImagesLink+cardID);
+return response;
+}
 
 //onClick logic for divs
 function handleCardClick(cardData) {
@@ -87,6 +87,11 @@ function handleCardClick(cardData) {
  console.log(cardData)
  let formattedFaction = cardData.attributes.faction_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace(/Nbn/g, 'NBN').replace(/Haas/g, 'Haas-');
  let formattedCardType = cardData.attributes.card_type_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+//  let cardImageID = cardData.attributes.latest_printing_id;
+//  let cardImageUrl = apiImagesLink+cardImageID;
+//  console.log(typeof fetchCardImage(cardId))
+ 
+console.log(typeof response);
  $("#main-stage").html(`
     <h1>${cardData.attributes.title}</h1>
     <p>Faction: ${formattedFaction}</p>
@@ -95,8 +100,6 @@ function handleCardClick(cardData) {
     `)
  
 }
-
-
 
 //Main function, for calling other functions
 async function main(side) {
