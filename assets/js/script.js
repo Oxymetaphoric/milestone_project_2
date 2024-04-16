@@ -71,34 +71,39 @@ function populateCards(cards) {
     $('#allCards').append(cardHTML);
   //attach eventListners to cardEntries
   $(".cardEntry").last().click(() => {
-    handleCardClick(card);
+    populateStage(card);
     });
   });
 };
 
-async function fetchCardImage(cardID) {
-const response = await fetch(apiImagesLink+cardID);
-return response;
-}
+//code for fetching images if a dev API key is obtained
+// async function fetchCardImage(cardID) {
+// const response = await fetch(apiImagesLink+cardID);
+// return response;
+// }
 
 //onClick logic for divs
-function handleCardClick(cardData) {
+function populateStage(cardData) {
   let cardId = cardData.attributes.latest_printing_id
- console.log(cardData)
- let formattedFaction = cardData.attributes.faction_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace(/Nbn/g, 'NBN').replace(/Haas/g, 'Haas-');
- let formattedCardType = cardData.attributes.card_type_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+  let formattedFaction = cardData.attributes.faction_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace(/Nbn/g, 'NBN').replace(/Haas/g, 'Haas-');
+  let formattedCardType = cardData.attributes.card_type_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
 //  let cardImageID = cardData.attributes.latest_printing_id;
 //  let cardImageUrl = apiImagesLink+cardImageID;
-//  console.log(typeof fetchCardImage(cardId))
- 
-console.log(typeof response);
- $("#main-stage").html(`
+//  code to allow fetching of card images from the private endpoint of the API. Not implementable under the public endpoint
+console.log(cardData)
+let stageHTML = `
+  <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
     <h1>${cardData.attributes.title}</h1>
     <p>Faction: ${formattedFaction}</p>
+    <p>Cost: </p>
     <p>Card Type: ${formattedCardType}</p>
     <p>Card Text: ${cardData.attributes.text}</p>
-    `)
- 
+  </div>
+`
+  
+
+  $("#main-stage").html(stageHTML)
+
 }
 
 //Main function, for calling other functions
