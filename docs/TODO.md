@@ -27,8 +27,8 @@
 ## CSS
 
 - ~~import fonts and set up intital styling~~
-- style cardEntry w/ background image etc.
-- layout and styling for all element  
+- ~~style cardEntry w/ background image etc.~~
+- ~~layout and styling for all elements~~  
 
 ## Other
 
