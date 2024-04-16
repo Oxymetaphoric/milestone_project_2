@@ -236,3 +236,6 @@ for body text:
 ## :heart: Credits and Acknowledgments
 
 ---
+
+Background image by [Jr Korpa](https://unsplash.com/@jrkorpa?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash) on [Unsplash](https://unsplash.com/photos/pink-and-black-wallpaper-9XngoIpxcEo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash)
+  

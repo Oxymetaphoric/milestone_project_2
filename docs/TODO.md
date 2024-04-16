@@ -12,13 +12,10 @@
 - ~~seperate out filtering and populating logic in allCards~~
 - build out controls section logic
 - build out adding cards to your deck logic
-- build out deckbuilding restriction logic (
+- build out deckbuilding restriction logic:
   - max 3 copies of any card
   - only 1 copy of unique cards
   - track and cap out of faction cards in users deck via 'Influence' card property (card.attributes.influence(?))
-)
-
-
 
 ## HTML
 

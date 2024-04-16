@@ -3,12 +3,13 @@
 html, body {
   padding: 0;
   margin: 0;
-  height: 100%;
+  height: 100vh;
+  background-image: url(/assets/images/background-image.jpg);
 }
 
 .full-height {
-  max-height: 100%;
-  height: 100%;
+  max-height: 100;
+  height: 100vh;
   width: 100%;
 }
 
@@ -32,17 +33,27 @@ p {
 
 #main-stage {
   min-height: 600px;
+  height: 70vh;
+  margin: 10px;
   padding: 20px;
+  background-color:rgba(255, 228, 196, 0.8);
+
 }
 
 #main-stage h1 {
- line-height: 5cap;
+  text-align: left;
+  line-height: 1.5cap;
+  padding: 20px;
   
 }
 
 #controls {
   min-height: auto;
   max-height: auto;
+  height: 20vh;
+  margin: 20px;
+  padding: 10px;
+  background-color:rgba(255, 228, 196, 0.8);
 }
 
 #allCards {
@@ -50,12 +61,14 @@ p {
   overflow: auto;
   font-size: 14pt;
   border: 2px solid black;
+  background-color:rgba(255, 228, 196, 1);
 }
 
 .cardEntry {
   border: 1px solid black;
-  padding: 10px;
-  margin: 1px;
+  padding: 0px;
+  margin: 0px;
+
   bottom: auto;
   width: auto;
   overflow: hidden;
@@ -69,9 +82,17 @@ p {
   z-index: 0;
 }
 
+.columnTitle {
+  padding: 0px;
+  background-color:rgba(255, 228, 196, 0.8);
+  width: 50%;
+  max-height: 30px;
+}
 .columnTitle h1 {
   text-align: center;
+  vertical-align: middle;
   font-size: 18pt;
+  line-height: 1.5rem;
 }
 
 /* Faction Colours */
