@@ -88,6 +88,19 @@ p {
   text-align: center;
   padding: 10px;
   text-decoration: underline;
+}sideRunner
+
+.controlPanel {
+  width: 400px;
+  height: 400px;
+}
+
+#changeSide {
+  max-width: 100px;
+  max-height: 100px;
+  padding: 10px;
+  vertical-align: middle;
+  align-items: center;
 }
 
 /* column Title styling for card columns  */

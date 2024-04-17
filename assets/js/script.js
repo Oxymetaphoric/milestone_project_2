@@ -1,6 +1,5 @@
 const apiLink = "https://api-preview.netrunnerdb.com/api/v3/public/"
 const apiImagesLink = "https://card-images.netrunnerdb.com/v2/large/" 
-let userSide = ""
 
 //connect to netrunnerdb and fetch cards with a url crafted from arguments
 async function fetchCards(apiLink, filter = "", param = "", side) {
@@ -23,7 +22,6 @@ async function getCardTypes(side) {
   let cardTypesJSON = await fetchTypes.json();
   let cardTypes = cardTypesJSON.data;
   let availableTypes = cardTypes.filter(type => type.attributes.side_id === side)
-  console.log(availableTypes)
   return availableTypes
   }  
 
@@ -42,9 +40,9 @@ async function filterCards(cardProperty = "", cardFilter = "", side = "") {
   }
 
 //populate #allCards div with card entries
-function populateCards(cards) {
+async function populateCards(cards, side) {
     $("#allCards").empty(); //clear cards when called
-    let side = userSide
+    $("#allCards").show();
     cards.forEach(card => {
       let factionID = card.attributes.faction_id
       let factionIcon = `/assets/images/NSG-Visual-Assets/SVG/FactionGlyphs/NSG_${factionID}.svg`
@@ -67,7 +65,8 @@ function populateCards(cards) {
     $('#allCards').append(cardHTML);
   //attach eventListners to cardEntries
   $(".cardEntry").last().click(() => {
-    populateStage(card, userSide );
+    console.log(card)
+    populateStage( card, side );
     });
   });
 };
@@ -91,9 +90,10 @@ function populateStage(cardData, side) {
         cardHTML = `
         <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
           <h1 class="text-center">${cardData.attributes.title}</h1>
+          <h2 class="text-center">${formattedFaction}</h2>
           <p class="col align-content-center "><em>Agenda Points: </em><img class="credit" src=
           "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_AGENDA.svg"> ${cardData.attributes.agenda_points} <span>&nbsp&nbsp|&nbsp&nbsp<em>Advancement Points: </em>${cardData.attributes.advancement_requirement}</em></p>
-          <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span>
+          <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span><br><br>
           <p>${cardData.attributes.stripped_text}</p>
         </div>` 
         $("#main-stage").html(cardHTML)      
@@ -104,10 +104,11 @@ function populateStage(cardData, side) {
           cardHTML = `
           <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
             <h1 class="text-center">${cardData.attributes.title}</h1>
+            <h2 class="text-center">${formattedFaction}</h2>
             <p class="col align-content-center "><em>Cost: </em><img class="credit" src=
             "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_CREDIT.svg">${cardData.attributes.cost}<span>&nbsp&nbsp|&nbsp&nbsp<em>Trash: </em><img class="credit" src=
             "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_TRASH_COSTbw.svg">${cardData.attributes.trash_cost}&nbsp&nbsp|&nbsp&nbsp<em>Influence: </em>${cardData.attributes.influence_cost}</p>
-            <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span>
+            <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span><br><br>
             <p>${cardData.attributes.stripped_text}</p>
           </div>`
            $("#main-stage").html(cardHTML)
@@ -116,10 +117,11 @@ function populateStage(cardData, side) {
         cardHTML = `
           <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
             <h1 class="text-center">${cardData.attributes.title}</h1>
+            <h2 class="text-center">${formattedFaction}</h2>
             <p class="col align-content-center "><em>Rez Cost: </em><img class="credit" src=
             "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_REZ_COST.svg"> ${cardData.attributes.cost}<span>&nbsp&nbsp|&nbsp&nbsp
             <em>Strength: </em>${cardData.attributes.strength}
-            <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span>
+            <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em></p></span><br>
             <p>${cardData.attributes.stripped_text}"</p>
           </div>`
           $("#main-stage").html(cardHTML)  
@@ -128,32 +130,124 @@ function populateStage(cardData, side) {
         cardHTML = `
         <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
           <h1 class="text-center">${cardData.attributes.title}</h1>
-          <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span>
+          <h2 class="text-center">${formattedFaction}</h2>
+          <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em><br><br>
+          <strong>Minimum Deck Size: </strong>${cardData.attributes.minimum_deck_size}<br>
+          <strong>Influence: </strong>${cardData.attributes.influence_limit}</p></span> </p></span>
           <p>${cardData.attributes.stripped_text}</p>
         </div>`
         $("#main-stage").html(cardHTML)  
         break; 
     }
-  }
   } 
 
+  if (side == "runner"){
+    switch (cardData.attributes.card_type_id) {
+      case "hardware":
+      case "resource":
+      case "program":
+          cardHTML = `
+          <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
+            <h1 class="text-center">${cardData.attributes.title}</h1>
+            <h2 class="text-center">${formattedFaction}</h2>
+            <p class="col align-content-center ">
+              <em>Cost: </em>
+              <img class="credit" src=
+            "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_CREDIT.svg">${cardData.attributes.cost}<span>&nbsp&nbsp|&nbsp&nbsp<em>Influence: </em>${cardData.attributes.influence_cost}
+            
+            <span>&nbsp&nbsp|&nbsp&nbsp
+              <em>Memory Cost: </em>
+                <img class="credit" src=
+              "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_Mu.svg">${cardData.attributes.memory_cost}</em></p>
+              <p><Strong>${formattedCardType}</Strong>
+              &nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em></p></span>
+            <p>${cardData.attributes.stripped_text}</p>
+          </div>`
+           $("#main-stage").html(cardHTML)
+           break;
+      case "breaker":  
+        cardHTML = `
+          <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
+            <h1 class="text-center">${cardData.attributes.title}</h1>
+            <h2 class="text-center">${formattedFaction}</h2>
+            <p class="col align-content-center "><em>Rez Cost: </em><img class="credit" src=
+            "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_REZ_COST.svg"> ${cardData.attributes.cost}<span>&nbsp&nbsp|&nbsp&nbsp
+            <em>Strength: </em>${cardData.attributes.strength}
+            <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span>
+            <p>${cardData.attributes.stripped_text}"</p>
+          </div>`
+          $("#main-stage").html(cardHTML)  
+          break;
+      case "runner_identity":
+        cardHTML = `
+        <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
+          <h1 class="text-center">${cardData.attributes.title}</h1>
+          <h2 class="text-center">${formattedFaction}</h2>
+          <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em>
+          <br><strong>Link: </strong>${cardData.attributes.base_link}<br>
+          <strong>Minimum Deck Size: </strong>${cardData.attributes.minimum_deck_size}<br>
+          <strong>Influence: </strong>${cardData.attributes.influence_limit}</p></span>
+          <p>${cardData.attributes.stripped_text}</p>
+        </div>`
+        $("#main-stage").html(cardHTML)  
+        break; 
+    }
+  
+  }
+};
+
+
+async function populateControls(side) {
+  $("#filterCardsControls").empty();
+  let cardTypes = await getCardTypes(side);
+  
+  for (let type of cardTypes) {
+    let formattedCardType = type.id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+    let changeSideButtons = `
+    <div class="row changeSideOption">
+      <img class="sideRunner" src="assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_LINK.svg"><p>Runner</p>
+    </div>
+    <div class="row changeSideOption"><img class="sideCorp" src="assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_AGENDA.svg"><p>Corporation</p></div>"
+`
+
+    var newRadioButton = document.createElement('input');
+    newRadioButton.type = 'radio';
+    newRadioButton.id = type.id;
+    newRadioButton.value = type.id;
+    newRadioButton.name = "cardType"
+    let newLabel = document.createElement('label');
+    newLabel.htmlFor = type.id
+    newLabel.textContent = formattedCardType;
+    $("#changeSide").html = changeSideButtons
+    $("#filterCardsControls").append(newRadioButton, newLabel);    
+    
+    newRadioButton.addEventListener('click', function() {
+      (async () => {
+          // Filter cards based on the selected card type
+          let filteredCards = await filterCards("card_type_id", type.id, side);
+          // Populate cards with filtered cards
+          populateCards(filteredCards, side);
+      }
+      )();
+    });
+  }; 
+};
 //Main function, use for calling other functions and hooking into user interface
-async function main(side) {
-userSide = side // update global userSide variable 
-let userCardTypes = await getCardTypes(side);
-cardType = userCardTypes[2].id //see console.log for available choices filtered by side
-console.log(cardType);
-let filteredCards = await filterCards("card_type_id", cardType, side);
-populateCards(filteredCards);
-populateControls();
+async function main(side, startingPage) {
+  let userCardTypes = await getCardTypes(side);
+  let cardType = await userCardTypes[startingPage].id //see console.log for available choices filtered by side
+  let filteredCards = await filterCards("card_type_id", cardType, side);
+  populateCards(filteredCards, side);
+  populateControls(side);
 }
 
 $(document).ready(function(){
+  $("#allCards").hide();
   $("#sideRunner").on("click", function() {
-    main("runner")
+    main("runner", 4)
   });
     
   $("#sideCorp").on("click", function(){
-    main("corp")
+    main("corp", 2)
   });
 });
