@@ -82,19 +82,13 @@ function populateCards(cards) {
 
 //onClick logic for divs
 function populateStage(cardData, side) {
-  console.log(side)
   let cardId = cardData.attributes.latest_printing_id
   let formattedFaction = cardData.attributes.faction_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace(/Nbn/g, 'NBN').replace(/Haas/g, 'Haas-');
   let formattedCardType = cardData.attributes.card_type_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
   let cardHTML = "";
-
-  console.log(cardData);
-  console.log(side)
-  console.log(cardData)
   if (side == "corp") {
     switch (cardData.attributes.card_type_id) {
       case 'agenda':
-        console.log("Agenda")
         cardHTML = `
         <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
           <h1 class="text-center">${cardData.attributes.title}</h1>
@@ -152,8 +146,9 @@ function populateStage(cardData, side) {
             <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span>
             <p>${cardData.attributes.stripped_text}</p>
           </div>`
+          $("#main-stage").html(cardHTML)
           break;
-          $("#main-stage").html(cardHTML)  
+            
       case "upgrade":
           cardHTML = `
           <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
@@ -164,8 +159,9 @@ function populateStage(cardData, side) {
             <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span>
             <p>${cardData.attributes.stripped_text}</p>
           </div>`
-          break;
-          $("#main-stage").html(cardHTML)  
+           $("#main-stage").html(cardHTML)
+           break;
+         
     }
   }
   } 
@@ -181,12 +177,10 @@ populateCards(filteredCards);
 
 $(document).ready(function(){
   $("#sideRunner").on("click", function() {
-    console.log("bonjour le monde")
     main("runner")
   });
     
   $("#sideCorp").on("click", function(){
-    console.log("hello world")
     main("corp")
 
   });
