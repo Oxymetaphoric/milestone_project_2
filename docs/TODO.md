@@ -32,6 +32,7 @@
 
 ## Other
 
-- Do I need an API key to access the images on netrunner db?
+- ~~Do I need an API key to access the images on netrunner db?~~
+  - yes. Devs contacted, yet to hear back
 - modal instructions on main page
-- background image
+- ~~background image~~
