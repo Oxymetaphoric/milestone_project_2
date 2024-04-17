@@ -55,16 +55,14 @@ function populateCards(cards) {
       
       //html for allCards entries
       let cardHTML = `
-      <div class="row cardEntry ${factionID}">
-        <div class='col faction_icon'>
-          <img class="faction_icon" src = ${factionIcon}>
-        </div>
-        <div>
-          <h2 class='cardTitle'>
+      <div class="row cardEntry ${factionID}">  
+        <img class="row faction_icon" src = ${factionIcon}>
+        <div class="col">
+          <h2 class='card-title'>
             ${card.attributes.title}
           </h2>
-          <p class='cardFaction'><b>Faction:</b>&nbsp${formattedFaction}</p>
-          <p class='cardFaction'>${formattedCardType}</p>
+          <p class='cardFaction'>${formattedFaction}</p>
+          <p class='cardFaction'><strong>${formattedCardType}</strong> | ${card.attributes.display_subtypes}</p>
         </div>
       </div>`
 
@@ -90,27 +88,80 @@ function populateStage(cardData) {
 //  let cardImageID = cardData.attributes.latest_printing_id;
 //  let cardImageUrl = apiImagesLink+cardImageID;
 //  code to allow fetching of card images from the private endpoint of the API. Not implementable under the public endpoint
-console.log(cardData)
-let stageHTML = `
+  console.log(cardData)
+
+  let agendaHTML = `
   <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
-    <h1>${cardData.attributes.title}</h1>
-    <p>Faction: ${formattedFaction}</p>
-    <p>Cost: </p>
-    <p>Card Type: ${formattedCardType}</p>
-    <p>Card Text: ${cardData.attributes.text}</p>
+    <h1 class="text-center">${cardData.attributes.title}</h1>
+    <p class="col align-content-center "><em>Agenda Points: </em><img class="credit" src=
+    "assets/images/NSG-Visual-Assets/SVG/Game Symbols/NSG_AGENDA.svg"> ${cardData.attributes.agenda_points} <span>&nbsp&nbsp|&nbsp&nbsp<em>Advancement Points: </em>${cardData.attributes.advancement_requirement}</em></p>
+    <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span>
+    <p>${cardData.attributes.stripped_text}</p>
+  </div>
+  `
+  let assetHTML = `
+    <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
+      <h1 class="text-center">${cardData.attributes.title}</h1>
+      <p class="col align-content-center "><em>Cost: </em><img class="credit" src=
+      "assets/images/NSG-Visual-Assets/SVG/Game Symbols/NSG_CREDIT.svg">${cardData.attributes.cost}<span>&nbsp&nbsp|&nbsp&nbsp<em>Trash: </em><img class="credit" src=
+      "assets/images/NSG-Visual-Assets/SVG/Game Symbols/NSG_TRASH_COSTbw.svg">${cardData.attributes.trash_cost}&nbsp&nbsp|&nbsp&nbsp<em>Influence: </em>${cardData.attributes.influence_cost}</p>
+      <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span>
+      <p>${cardData.attributes.text}</p>
+    </div>
+  `  
+  let iceHTML = `
+    <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
+      <h1 class="text-center">${cardData.attributes.title}</h1>
+      <p class="col align-content-center "><em>Rez Cost: </em><img class="credit" src=
+      "assets/images/NSG-Visual-Assets/SVG/Game Symbols/NSG_REZ_COST.svg"> ${cardData.attributes.cost}<span>&nbsp&nbsp|&nbsp&nbsp
+      <em>Strength: </em>${cardData.attributes.strength}
+      <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span>
+      <p>${cardData.attributes.stripped_text}"</p>
+    </div>
+  `
+
+  let identityHTML = `
+  <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
+    <h1 class="text-center">${cardData.attributes.title}</h1>
+    <p class="col align-content-center "><em>Cost: </em><img class="credit" src=
+    "assets/images/NSG-Visual-Assets/SVG/Game Symbols/NSG_CREDIT.svg">${cardData.attributes.cost}<span>&nbsp&nbsp|&nbsp&nbsp<em>Trash: </em><img class="credit" src=
+    "assets/images/NSG-Visual-Assets/SVG/Game Symbols/NSG_TRASH_COSTbw.svg">${cardData.attributes.trash_cost}&nbsp&nbsp|&nbsp&nbsp<em>Influence: </em>${cardData.attributes.influence_cost}</p>
+    <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span>
+    <p>${cardData.attributes.stripped_text}</p>
   </div>
 `
+
+
+let operationHTML = `
+<div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
+  <h1 class="text-center">${cardData.attributes.title}</h1>
+  <p class="col align-content-center "><em>Cost: </em><img class="credit" src=
+  "assets/images/NSG-Visual-Assets/SVG/Game Symbols/NSG_CREDIT.svg">${cardData.attributes.cost}<span>&nbsp&nbsp|&nbsp&nbsp<em>Trash: </em><img class="credit" src=
+  "assets/images/NSG-Visual-Assets/SVG/Game Symbols/NSG_TRASH_COSTbw.svg">${cardData.attributes.trash_cost}&nbsp&nbsp|&nbsp&nbsp<em>Influence: </em>${cardData.attributes.influence_cost}</p>
+  <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span>
+  <p>${cardData.attributes.stripped_text}</p>
+</div>
+`
+
+let upgradeHTML = `
+<div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
+  <h1 class="text-center">${cardData.attributes.title}</h1>
+  <p class="col align-content-center "><em>Cost: </em><img class="credit" src=
+  "assets/images/NSG-Visual-Assets/SVG/Game Symbols/NSG_CREDIT.svg">${cardData.attributes.cost}<span>&nbsp&nbsp|&nbsp&nbsp<em>Trash: </em><img class="credit" src=
+  "assets/images/NSG-Visual-Assets/SVG/Game Symbols/NSG_TRASH_COSTbw.svg">${cardData.attributes.trash_cost}&nbsp&nbsp|&nbsp&nbsp<em>Influence: </em>${cardData.attributes.influence_cost}</p>
+  <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span>
+  <p>${cardData.attributes.stripped_text}</p>
+</div>
+`
   
-
-  $("#main-stage").html(stageHTML)
-
+  $("#main-stage").html(iceHTML)
 }
 
-//Main function, for calling other functions
+//Main function, use for calling other functions and hooking into user interface
 async function main(side) {
-side = "corp" //runner or corp
+side = "runner" //runner or corp
 let userCardTypes = await getCardTypes(side);
-cardType = userCardTypes[2].id //see console.log for available choices filtered by side
+cardType = userCardTypes[3].id //see console.log for available choices filtered by side
 let filteredCards = await filterCards("card_type_id", cardType, side);
 populateCards(filteredCards);
 }

@@ -22,7 +22,7 @@
 - ~~import and link bootstrap, jQuery, and fontAwesome~~
 - ~~sketch out basic areas for js to interact with~~
 - build out controls area
-- build out stage area
+- ~~build out stage area~~
 
 ## CSS
 
