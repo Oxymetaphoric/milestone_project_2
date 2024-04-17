@@ -10,7 +10,7 @@
 - ~~display card information on stage~~
 - ~~function that attaches a css class based on the card.attributes.faction_id string~~
 - ~~seperate out filtering and populating logic in allCards~~
-- build out controls section logic
+- ~~build out controls section logic~~
 - build out adding cards to your deck logic
 - build out deckbuilding restriction logic:
   - max 3 copies of any card
@@ -21,14 +21,15 @@
 
 - ~~import and link bootstrap, jQuery, and fontAwesome~~
 - ~~sketch out basic areas for js to interact with~~
-- build out controls area
+- ~~build out controls area~~
 - ~~build out stage area~~
 
 ## CSS
 
 - ~~import fonts and set up intital styling~~
 - ~~style cardEntry w/ background image etc.~~
-- ~~layout and styling for all elements~~  
+- ~~layout and styling for all elements~~
+- style controls  
 
 ## Other
 
