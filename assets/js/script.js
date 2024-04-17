@@ -81,8 +81,7 @@ function populateCards(cards) {
 // }
 
 //onClick logic for divs
-function populateStage(cardData, side) {
-  let cardId = cardData.attributes.latest_printing_id
+function populateStage(cardData, side) {  
   let formattedFaction = cardData.attributes.faction_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace(/Nbn/g, 'NBN').replace(/Haas/g, 'Haas-');
   let formattedCardType = cardData.attributes.card_type_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
   let cardHTML = "";
@@ -98,20 +97,21 @@ function populateStage(cardData, side) {
           <p>${cardData.attributes.stripped_text}</p>
         </div>` 
         $("#main-stage").html(cardHTML)      
-        break;
-
+        break; 
       case "asset":
-        cardHTML = `
+      case "operation":
+      case "upgrade":
+          cardHTML = `
           <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
             <h1 class="text-center">${cardData.attributes.title}</h1>
             <p class="col align-content-center "><em>Cost: </em><img class="credit" src=
             "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_CREDIT.svg">${cardData.attributes.cost}<span>&nbsp&nbsp|&nbsp&nbsp<em>Trash: </em><img class="credit" src=
             "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_TRASH_COSTbw.svg">${cardData.attributes.trash_cost}&nbsp&nbsp|&nbsp&nbsp<em>Influence: </em>${cardData.attributes.influence_cost}</p>
             <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span>
-            <p>
-            ${cardData.attributes.stripped_text}</p></div>`
-          $("#main-stage").html(cardHTML); 
-          break;
+            <p>${cardData.attributes.stripped_text}</p>
+          </div>`
+           $("#main-stage").html(cardHTML)
+           break;
       case "ice":  
         cardHTML = `
           <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
@@ -128,40 +128,11 @@ function populateStage(cardData, side) {
         cardHTML = `
         <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
           <h1 class="text-center">${cardData.attributes.title}</h1>
-          <p class="col align-content-center "><em>Cost: </em><img class="credit" src=
-          "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_CREDIT.svg">${cardData.attributes.cost}<span>&nbsp&nbsp|&nbsp&nbsp<em>Trash: </em><img class="credit" src=
-          "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_TRASH_COSTbw.svg">${cardData.attributes.trash_cost}&nbsp&nbsp|&nbsp&nbsp<em>Influence: </em>${cardData.attributes.influence_cost}</p>
           <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span>
           <p>${cardData.attributes.stripped_text}</p>
         </div>`
         $("#main-stage").html(cardHTML)  
-        break;
-      case "operation":
-        cardHTML = `
-          <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
-            <h1 class="text-center">${cardData.attributes.title}</h1>
-            <p class="col align-content-center "><em>Cost: </em><img class="credit" src=
-            "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_CREDIT.svg">${cardData.attributes.cost}<span>&nbsp&nbsp|&nbsp&nbsp<em>Trash: </em><img class="credit" src=
-            "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_TRASH_COSTbw.svg">${cardData.attributes.trash_cost}&nbsp&nbsp|&nbsp&nbsp<em>Influence: </em>${cardData.attributes.influence_cost}</p>
-            <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span>
-            <p>${cardData.attributes.stripped_text}</p>
-          </div>`
-          $("#main-stage").html(cardHTML)
-          break;
-            
-      case "upgrade":
-          cardHTML = `
-          <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
-            <h1 class="text-center">${cardData.attributes.title}</h1>
-            <p class="col align-content-center "><em>Cost: </em><img class="credit" src=
-            "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_CREDIT.svg">${cardData.attributes.cost}<span>&nbsp&nbsp|&nbsp&nbsp<em>Trash: </em><img class="credit" src=
-            "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_TRASH_COSTbw.svg">${cardData.attributes.trash_cost}&nbsp&nbsp|&nbsp&nbsp<em>Influence: </em>${cardData.attributes.influence_cost}</p>
-            <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span>
-            <p>${cardData.attributes.stripped_text}</p>
-          </div>`
-           $("#main-stage").html(cardHTML)
-           break;
-         
+        break; 
     }
   }
   } 
@@ -170,9 +141,11 @@ function populateStage(cardData, side) {
 async function main(side) {
 userSide = side // update global userSide variable 
 let userCardTypes = await getCardTypes(side);
-cardType = userCardTypes[1].id //see console.log for available choices filtered by side
+cardType = userCardTypes[2].id //see console.log for available choices filtered by side
+console.log(cardType);
 let filteredCards = await filterCards("card_type_id", cardType, side);
 populateCards(filteredCards);
+populateControls();
 }
 
 $(document).ready(function(){
@@ -182,6 +155,5 @@ $(document).ready(function(){
     
   $("#sideCorp").on("click", function(){
     main("corp")
-
   });
 });
