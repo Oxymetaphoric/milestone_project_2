@@ -81,7 +81,8 @@ async function populateCards(cards, side) {
 // }
 
 //onClick logic for divs
-function populateStage(cardData, side) {  
+function populateStage(cardData, side) {   
+
   let formattedFaction = cardData.attributes.faction_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace(/Nbn/g, 'NBN').replace(/Haas/g, 'Haas-');
   let formattedCardType = cardData.attributes.card_type_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
   let cardHTML = "";
@@ -136,17 +137,24 @@ function populateStage(cardData, side) {
           <strong>Minimum Deck Size: </strong>${cardData.attributes.minimum_deck_size}<br>
           <strong>Influence: </strong>${cardData.attributes.influence_limit}</p></span> </p></span>
           <p>${cardData.attributes.stripped_text}</p>
+        <div class="row">
+          <div class="center-text">
+            <button class="userID col" type="button">Build deck with this ID</button>
+          </div>
+        </div>
         </div>`
         $("#main-stage").html(cardHTML)  
+        $(".userID").off().on("click", () => addToDeck(cardData));  
         break; 
-    }
-  } 
-
+        }
+      }
+    
   if (side == "runner"){
     switch (cardData.attributes.card_type_id) {
       case "hardware":
       case "resource":
       case "program":
+      case "event":
           cardHTML = `
           <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
             <h1 class="text-center">${cardData.attributes.title}</h1>
@@ -162,7 +170,7 @@ function populateStage(cardData, side) {
               "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_Mu.svg">${cardData.attributes.memory_cost}</em></p>
               <p><Strong>${formattedCardType}</Strong>
               &nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em></p></span>
-            <p>${cardData.attributes.stripped_text}</p>Build deck with this ID
+            <p>${cardData.attributes.stripped_text}</p>
 
           </div>`
            $("#main-stage").html(cardHTML)
@@ -195,18 +203,19 @@ function populateStage(cardData, side) {
           <strong>Minimum Deck Size: </strong>${cardData.attributes.minimum_deck_size}<br>
           <strong>Influence: </strong>${cardData.attributes.influence_limit}</p></span>
           <p>${cardData.attributes.stripped_text}</p>
-        </div>
-        <div class="row">
-          <div class="center-text">
-            <button class="col" type="button" id="useID">Build deck with this ID</button>
+          <div class="row ">
+              <div class="center-text">
+                <button class="userID col" type="button">Build deck with this ID</button>
+              </div>
           </div>
         </div>`
         
-        $("#main-stage").html(cardHTML)  
-        break; 
+        
+        break;   
     }
-  
-  }
+  } 
+  $("#main-stage").html(cardHTML)
+  $(".userID").off().on("click", () => addToDeck(cardData));  
 };
 
 
@@ -239,28 +248,33 @@ async function populateControls(side) {
           // Filter cards based on the selected card type
           let filteredCards = await filterCards("card_type_id", type.id, side);
           // Populate cards with filtered cards
-          populateCards(filteredCards, side);
-      }
-      )();
-    });
-  }; 
-};
+          populateCards(filteredCards, side);}
+          )();
+        });
+    }; 
+  };
+
+function addToDeck(card) {
+  alert(card.attributes.title)
+}
+
 //Main function, use for calling other functions and hooking into user interface
 async function main(side, startingPage) {
   let userCardTypes = await getCardTypes(side);
   let cardType = await userCardTypes[startingPage].id //see console.log for available choices filtered by side
   let filteredCards = await filterCards("card_type_id", cardType, side);
   populateCards(filteredCards, side);
-  populateControls(side);
+  populateControls(side);  
 }
 
 $(document).ready(function(){
   $("#allCards").hide();
   $("#sideRunner").on("click", function() {
     main("runner", 4)
-    $("#main-stage-display").innerHTML()
   });
-    
+
+
+  
   $("#sideCorp").on("click", function(){
     main("corp", 2)
   });
