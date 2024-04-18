@@ -1,5 +1,6 @@
 const apiLink = "https://api-preview.netrunnerdb.com/api/v3/public/"
 const apiImagesLink = "https://card-images.netrunnerdb.com/v2/large/" 
+const userSelectedID = false
 
 //connect to netrunnerdb and fetch cards with a url crafted from arguments
 async function fetchCards(apiLink, filter = "", param = "", side) {
@@ -161,7 +162,8 @@ function populateStage(cardData, side) {
               "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_Mu.svg">${cardData.attributes.memory_cost}</em></p>
               <p><Strong>${formattedCardType}</Strong>
               &nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em></p></span>
-            <p>${cardData.attributes.stripped_text}</p>
+            <p>${cardData.attributes.stripped_text}</p>Build deck with this ID
+
           </div>`
            $("#main-stage").html(cardHTML)
            break;
@@ -175,12 +177,17 @@ function populateStage(cardData, side) {
             <em>Strength: </em>${cardData.attributes.strength}
             <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span>
             <p>${cardData.attributes.stripped_text}"</p>
+          </div>
+          <div class="row addToDeck">
+            <div class="col">less</div>
+            <div class="col">amount</div>
+            <div class="col">more</div>
           </div>`
           $("#main-stage").html(cardHTML)  
           break;
       case "runner_identity":
-        cardHTML = `
-        <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
+        cardHTML = 
+        `<div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
           <h1 class="text-center">${cardData.attributes.title}</h1>
           <h2 class="text-center">${formattedFaction}</h2>
           <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em>
@@ -188,7 +195,13 @@ function populateStage(cardData, side) {
           <strong>Minimum Deck Size: </strong>${cardData.attributes.minimum_deck_size}<br>
           <strong>Influence: </strong>${cardData.attributes.influence_limit}</p></span>
           <p>${cardData.attributes.stripped_text}</p>
+        </div>
+        <div class="row">
+          <div class="center-text">
+            <button class="col" type="button" id="useID">Build deck with this ID</button>
+          </div>
         </div>`
+        
         $("#main-stage").html(cardHTML)  
         break; 
     }
@@ -245,6 +258,7 @@ $(document).ready(function(){
   $("#allCards").hide();
   $("#sideRunner").on("click", function() {
     main("runner", 4)
+    $("#main-stage-display").innerHTML()
   });
     
   $("#sideCorp").on("click", function(){
