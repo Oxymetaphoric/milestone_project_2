@@ -11,7 +11,7 @@
 
 ### Project Goals
 
-This is my milestone two project for the [Code Institute's](http://www.codeinstitute.net/) *'Level 5 Diploma in Web Application Development'*. The goal of this project is to *Design, develop and implement a dynamic Front end web application using HTML, CSS and JavaScript*. To this end I am building a website that will connect to the [Netrunner Database](http://www.netrunnerdb.com) API, download, manipulate, and display card data in the JSON format, and allow users to build a deck of cards for the card game [Netrunner](http://www.nullsignalgames.com/about/netrunner/), exporting completed decks as a printable pdf or uploading to netrunnerdb.
+This is my milestone two project for the [Code Institute's](http://www.codeinstitute.net/) *'Level 5 Diploma in Web Application Development'*. The goal of this project is to *Design, develop and implement a dynamic Front end web application using HTML, CSS and JavaScript*. To this end I am building a website that will connect to the [Netrunner Database](http://www.netrunnerdb.com) API, download, manipulate, and display card data in the JSON format, and allow users to build a deck of cards for the card game [Netrunner](http://www.nullsignalgames.com/about/netrunner/), exporting completed decks as a printable pdf or uploading to netrunnerdb. The app  will be aimed at people already familiar with the game and ruleset.
 
 #### User Goals
 
@@ -75,6 +75,7 @@ This is my milestone two project for the [Code Institute's](http://www.codeinsti
 4. As the site owner I want to create a useful tool for the community
 
 #### Identified tasks/needs the website should fulfill
+
 | Task/Need                                   |      Importance (1 -5) |
 |----------------------------------------------|-------------------|
 | browsing the card collection at netrunnerdb|      5   |
@@ -164,8 +165,6 @@ for body text:
 
 #### Colour Palettes
 
-
-
 ### Technologies and Tools used
 
 #### Languages
@@ -174,6 +173,7 @@ for body text:
 - **HTML5**
 - **javaScript**
 - **Markdown**
+- **Regex**
 
 
 #### Tools
@@ -184,6 +184,7 @@ for body text:
 - **[git](https://git-scm.com/)**
 - **[VSCode for linux](https://code.visualstudio.com/)**
 - **[Bootstrap 5.3.2](https://getbootstrap.com/)**
+- **jQuery - NEED LINK**
 - **[GitHub](https://www.github.com)**
 - **[Pencil](https://pencil.evolus.vn/)**
 - **[Coolors](https://coolors.co/)**
@@ -204,12 +205,11 @@ for body text:
 
 ### User Stories Testing
 
-#### - First Time User
+#### - First Time User Testing
 
+#### - Returning User Testing
 
-#### - Returning User
-
-#### - Site Owner
+#### - Site Owner Testing
 
 ### HTML/CSS Validators
 

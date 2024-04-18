@@ -30,10 +30,11 @@
 - ~~style cardEntry w/ background image etc.~~
 - ~~layout and styling for all elements~~
 - style controls  
+- media queries
 
 ## Other
 
 - ~~Do I need an API key to access the images on netrunner db?~~
   - yes. Devs contacted, yet to hear back
-- modal instructions on main page
+- modal instructions on main page //no use intial html on the stage area for intro and instructions
 - ~~background image~~
