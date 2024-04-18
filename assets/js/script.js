@@ -110,11 +110,17 @@ function populateStage(cardData, side) {
             <h1 class="text-center">${cardData.attributes.title}</h1>
             <h2 class="text-center">${formattedFaction}</h2>
             <p class="col align-content-center ">
-              <em>Cost: </em><img class="credit" src=
-              "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_CREDIT.svg">${cardData.attributes.cost}<span>&nbsp&nbsp|&nbsp&nbsp<em>Trash: </em>
+              <em>Cost: </em>
               <img class="credit" src=
-              "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_TRASH_COSTbw.svg">${cardData.attributes.trash_cost}&nbsp&nbsp|&nbsp&nbsp<em>Influence: </em>
-              ${cardData.attributes.influence_cost}
+              "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_CREDIT.svg">${cardData.attributes.cost}
+              <span id="trashCost">&nbsp&nbsp|&nbsp&nbsp<em>Trash: </em>
+              <img class="credit" src=
+              "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_TRASH_COSTbw.svg">${cardData.attributes.trash_cost}&nbsp&nbsp|</span>
+              <span>
+                &nbsp&nbsp
+                <em>Influence: </em>
+                ${cardData.attributes.influence_cost}
+              </span>
             </p>
             <span>
               <p>
@@ -175,12 +181,18 @@ function populateStage(cardData, side) {
               <em>Cost: </em>
               <img class="credit" src=
             "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_CREDIT.svg">${cardData.attributes.cost}<span>&nbsp&nbsp|&nbsp&nbsp<em>Influence: </em>${cardData.attributes.influence_cost}
-              <span>&nbsp&nbsp|&nbsp&nbsp
+           
+            <span id="memoryCost">&nbsp&nbsp|&nbsp&nbsp
               <em>Memory Cost: </em>
               <img class="credit" src=
-              "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_Mu.svg">${cardData.attributes.memory_cost}
-              <p><Strong>${formattedCardType}</Strong>
-              &nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em></p></span>
+              "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_Mu.svg">${cardData.attributes.memory_cost ? cardData.attributes.memory_cost : ""}
+            </span>
+              <span>
+                <p>
+                  <Strong>${formattedCardType}</Strong>
+                  &nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em>
+                </p>
+              </span>
             <p>${cardData.attributes.stripped_text}</p>
           </div>`
            $("#main-stage").html(cardHTML)
@@ -204,7 +216,9 @@ function populateStage(cardData, side) {
         break;   
     }
   } 
-  $("#main-stage").html(cardHTML)
+  $("#main-stage").html(cardHTML) 
+  cardData.attributes.memory_cost == null ? $("#memoryCost").hide() : $("#memoryCost").show();
+  cardData.attributes.trash_cost == null ?  $("#trashCost").hide() :  $("#trashCost").show();
   $(".userID").off().on("click", () => addToDeck(cardData));  
 };
 
