@@ -87,7 +87,7 @@ async function populateCards(cards, side, targetDiv) {
     $(targetDiv).show();
     cards.forEach(card => {
       let factionID = card.attributes.faction_id
-      let factionIcon = `/assets/images/NSG-Visual-Assets/SVG/FactionGlyphs/NSG_${factionID}.svg`
+      let factionIcon = `assets/images/NSG-Visual-Assets/SVG/FactionGlyphs/NSG_${factionID}.svg`
       //horrible regex to format factions nicely, this could be refactored into it's own function, as it is used in a few places 
       let formattedFaction = card.attributes.faction_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace(/Nbn/g, 'NBN').replace(/Haas/g, 'Haas-');
       let formattedCardType = card.attributes.card_type_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())

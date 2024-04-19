@@ -197,19 +197,70 @@ for body text:
 
 ### Functional testing
 
-
+| test                                           | verified |
+| ---------------------------------------------- | -------- |
+| on load page - initial HTML should be visible    | yes      |
+| side clicked should load cards of that side and clear stage     | yes      |
+| clicking a cardEntry should display card info on main stage     | yes      |
+| hitting the 'Build Deck with this ID' button should add that information to the deck information section         | yes      |
+| hitting the 'add card' button on the stage on a card should add that card to myDeck and display the card in the second column       | yes      |
+| adding card to deck should update deckInfo section approriately      | yes      |
+| radio Buttons should clear cards display and load appropriate cards in   | yes      |
+| small 'side' icons in controls should change side, clear the stage and update radio buttons appropriately                   | yes      |
 
 ### User Stories Testing
 
 #### - First Time User Testing
 
+- As a first-time user I may want more details on the game
+
+The introductory text explains the game and provides a link to the publishers website for more information.
+
+- As a first-time user I would want the UX/UI to be clear and unambiguous, and also intutive
+
+The UI could definitely do with styling further, it is currently functional but a bit ugly. However I believe that the flow of information is clear and reasonably intuitive.
+
+- As a first time user I would like to leave the site with more information that I arrived with
+
+Users can visit the publishers website for more information as well as examine individual cards and IDs to get a better idea of what the game is about.
+
+- As a first time user I want to be able to quickly and easily start building decks
+
+I believe this app achieves the goal, users are immedietly presented with teh ability to build with no pre-amble
+
 #### - Returning User Testing
+
+- As a returning user I want to be able to start deckbuilding immedietely
+
+this has been achieved
+
+- As a returning user I want to be able to contact the site if I see anything that needs correcting
+
+No contact details have been provided thus far, though determined users could contact me through the sites github.
 
 #### - Site Owner Testing
 
-### HTML/CSS Validators
+- As the site owner, I want integration with netrunnerdb
+
+Achieved
+
+- As the site owner I want to be notified when I am contacted via the website
+
+not achieved
+
+- As the site owner I want to promote the game of Netrunner
+
+Achieved
+
+- As the site owner I want to create a useful tool for the community
+
+Achieved
+
+## HTML/CSS Validators
 
 ### WAVE
+
+
 
 ### Lighthouse
 
@@ -218,6 +269,8 @@ for body text:
 ---
 
 ### Mobile Testing
+
+Unfortunately this site has not been developed for mobile. The javascript required to complete the project was so complex that I found I had run out of time before I could address implementing media queries.
 
 ### Devices
 
@@ -229,7 +282,7 @@ Deployment will be using gitHub pages and similarly to my previous project can b
 
 > git clone <http://www.github.com/Oxymetaphoric/milestone_project_2>
 
-placing the cloned files in the root of your web server, should be sufficient. 
+placing the cloned files in the root of your web server, should be sufficient for deployment.
 
 ---
 
@@ -243,6 +296,3 @@ My wonderful family!
 Background image by [Jr Korpa](https://unsplash.com/@jrkorpa?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash) on [Unsplash](https://unsplash.com/photos/pink-and-black-wallpaper-9XngoIpxcEo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash)
 
 card data and all game related information and imagery - [null signal games](https://nullsignal.games/)
-
-
-  
