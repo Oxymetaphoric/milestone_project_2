@@ -1,6 +1,5 @@
 const apiLink = "https://api-preview.netrunnerdb.com/api/v3/public/"
-const userSelectedID = false
-
+let userSelectedID = false;
 let userDeck = {
   title: null,
   side: null,
@@ -9,7 +8,9 @@ let userDeck = {
   id_title: "",
   id_subtype: "",
   min_deck_size: null,
+  current_deck_size: null,
   avail_influence: null,
+  current_influence: null,
   base_link: null,
   cards: [],
 }
@@ -211,6 +212,11 @@ function populateStage(cardData, side) {
                 </p>
               </span>
             <p>${cardData.attributes.stripped_text}</p>
+            <div class="row ">
+              <div class="center-text">
+                <button class="addToDeckButton col" type="button">Add Card to Deck</button>
+              </div>
+          </div>
           </div>`
            break;
       case "runner_identity":
@@ -239,6 +245,7 @@ function populateStage(cardData, side) {
   cardData.attributes.trash_cost == null ?  $("#trashCost").hide() :  $("#trashCost").show();
 //add event listeners to each card entry
   $(".userID").off().on("click", () => addToDeck(cardData, side));  
+  $(".addToDeckButton").off().on("click", () => addToDeck(cardData, side));  
 };
 
 // populate the options section 
@@ -247,6 +254,7 @@ async function populateControls(side) {
   $("#filterCardsControls").empty();
 //fetch card types waiting for response
   let cardTypes = await getCardTypes(side);
+
 //iterate over the different types of cards
   for (let type of cardTypes) {
 //apply conditional formatting, anything that exactly matches between /   / will be replaced \b \w/g takes the first character of each word
@@ -276,32 +284,46 @@ async function populateControls(side) {
           )();
         });
     }; 
-  $("#changeSide").HTML(changeSideButtons);
+ // $("#changeSide").HTML(changeSideButtons);
   };
 
 
 //function called when user wishes to add a card to their deck 
 function addToDeck(card, side) {
-  console.log(card)
-  console.log(userDeck)
-  let userDeck = {
-    title: null,
-    side: null,
-    faction: null,
-    deck_id: {},
-    id_title: "",
-    id_subtype: "",
-    min_deck_size: null,
-    avail_influence: null,
-    base_link: null,
-    cards: [],
+//matches any card_type_id ending in _identity and starting with any number of a-z characters and sets appropriate values 
+if (card.attributes.card_type_id.match(/^[a-z]+_identity$/)){
+  userDeck.title = card.attributes.title;
+  userDeck.side = side;
+  userDeck.faction = card.attributes.faction_id;
+  userDeck.deck_id = card;
+  userDeck.id_title = card.attributes.title;
+  userDeck.id_subtype = card.attributes.display_subtypes;
+  userDeck.min_deck_size = card.attributes.minimum_deck_size;
+  userDeck.avail_influence = card.attributes.influence_limit;
+  userDeck.base_link = card.attributes.base_link;
+  userDeck.cards = [];
+  userSelectedID = true;
+} else { 
+    if (userSelectedID) {
+      userDeck.cards.push(card);
+      userDeck.title = card.attributes.title;
+      userDeck.side = side;
+      userDeck.faction = card.attributes.faction_id;
+      userDeck.deck_id = card;
+      userDeck.id_title = card.attributes.title;
+      userDeck.id_subtype = card.attributes.display_subtypes;
+      userDeck.min_deck_size = card.attributes.minimum_deck_size;
+      userDeck.current_deck_size = userDeck.cards.length;
+      userDeck.current_influence = userDeck.avail_influence - card.attributes.influence;
+      userDeck.base_link = card.attributes.base_link;
+  } else {
+    alert("please select an ID")
   }
-
-if (card.attributes.card_type_id === /[a-z]_/+"identity"){
-    console.log("this is an ID!")
+}
+console.log(userDeck)
+ 
 }
 
-}
 
 //Main function, use for calling other functions and hooking into user interface
 async function main(side, startingPage) {
