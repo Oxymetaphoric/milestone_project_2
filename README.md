@@ -256,15 +256,18 @@ Achieved
 
 Achieved
 
-## HTML/CSS Validators
+### Desktop
+
+### HTML/CSS Validators
 
 ### WAVE
 
-
+![WAVE validation](docs/images/wave1.png)![]
+![WAVE validation](docs/images/wave2.png)
 
 ### Lighthouse
 
-### Desktop
+![lighthouse validation](docs/images/lighthouse.png)
 
 ---
 
