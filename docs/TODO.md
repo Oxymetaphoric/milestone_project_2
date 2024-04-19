@@ -12,6 +12,7 @@
 - ~~seperate out filtering and populating logic in allCards~~
 - ~~build out controls section logic~~
 - build out adding cards to your deck logic
+  - define card objectg parameters
 - build out deckbuilding restriction logic:
   - max 3 copies of any card
   - only 1 copy of unique cards
@@ -29,12 +30,17 @@
 - ~~import fonts and set up intital styling~~
 - ~~style cardEntry w/ background image etc.~~
 - ~~layout and styling for all elements~~
-- style controls  
+- ~~style controls~~
 - media queries
 
 ## Other
 
 - ~~Do I need an API key to access the images on netrunner db?~~
   - yes. Devs contacted, yet to hear back
-- modal instructions on main page //no use intial html on the stage area for intro and instructions
+- ~~modal instructions on main page~~ //no use intial html on the stage area for intro and instructions
 - ~~background image~~
+- Testing
+
+## README
+
+- testing

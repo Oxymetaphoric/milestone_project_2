@@ -1,6 +1,19 @@
 const apiLink = "https://api-preview.netrunnerdb.com/api/v3/public/"
 const userSelectedID = false
 
+let userDeck = {
+  title: null,
+  side: null,
+  faction: null,
+  deck_id: {},
+  id_title: "",
+  id_subtype: "",
+  min_deck_size: null,
+  avail_influence: null,
+  base_link: null,
+  cards: [],
+}
+
 //connect to netrunnerdb and fetch cards with a url crafted from arguments passed to the function
 async function fetchCards(apiLink, filter = "", param = "", side) {
   const response = await fetch(`${apiLink}${filter}?filter[${param}]=${side}`);
@@ -90,7 +103,7 @@ async function populateCards(cards, side) {
 
 //onClick logic for divs
 function populateStage(cardData, side) {   
-//here's that annoying string off regex again! 
+//here's that annoying string of regex again! 
   let formattedFaction = cardData.attributes.faction_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace(/Nbn/g, 'NBN').replace(/Haas/g, 'Haas-');
   let formattedCardType = cardData.attributes.card_type_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
   let cardHTML = "";
@@ -219,12 +232,13 @@ function populateStage(cardData, side) {
         break;   
     }
   } 
+//populate stage with required html
   $("#main-stage").html(cardHTML) 
 //conditional formatting for cards 
   cardData.attributes.memory_cost == null ? $("#memoryCost").hide() : $("#memoryCost").show();
   cardData.attributes.trash_cost == null ?  $("#trashCost").hide() :  $("#trashCost").show();
 //add event listeners to each card entry
-  $(".userID").off().on("click", () => chooseID(cardData));  
+  $(".userID").off().on("click", () => addToDeck(cardData, side));  
 };
 
 // populate the options section 
@@ -267,9 +281,26 @@ async function populateControls(side) {
 
 
 //function called when user wishes to add a card to their deck 
-function chooseID(card) {
-  $("#userControls").show() 
-  alert(card.attributes.title)
+function addToDeck(card, side) {
+  console.log(card)
+  console.log(userDeck)
+  let userDeck = {
+    title: null,
+    side: null,
+    faction: null,
+    deck_id: {},
+    id_title: "",
+    id_subtype: "",
+    min_deck_size: null,
+    avail_influence: null,
+    base_link: null,
+    cards: [],
+  }
+
+if (card.attributes.card_type_id === /[a-z]_/+"identity"){
+    console.log("this is an ID!")
+}
+
 }
 
 //Main function, use for calling other functions and hooking into user interface
