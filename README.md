@@ -1,8 +1,7 @@
 # Milestone Project :two:
 
-## LINK TO LIVE SITE
+[LIVE SITE](https://Oxymetaphoric.github.io/milestone_project_2/index.html)
 
-![amiresponsive screenshot](/docs/images/amiresponsive.png)
 ---
 
 ## :world_map: Strategy
@@ -139,9 +138,7 @@ Page should be responsive and designed for mobile, tablet, and desktop.
 
 - query netrunnerdb API and parse returned data
 - display cards for users, parsing the API data based on filtering options provided on the page
-- allow users to add and remove cards to a custom deck
-- allow users to download a printable list of cards required to build their deck
-- allow users to upload created deck to netrunnerdb
+- allow users to add and remove cards to a custom deck list
 
 ---
 
@@ -175,7 +172,6 @@ for body text:
 - **Markdown**
 - **Regex**
 
-
 #### Tools
 
 - **[Tilix](https://gnunn1.github.io/tilix-web/)**
@@ -184,7 +180,7 @@ for body text:
 - **[git](https://git-scm.com/)**
 - **[VSCode for linux](https://code.visualstudio.com/)**
 - **[Bootstrap 5.3.2](https://getbootstrap.com/)**
-- **jQuery - NEED LINK**
+- **[jQuery](https://jquery.com/)**
 - **[GitHub](https://www.github.com)**
 - **[Pencil](https://pencil.evolus.vn/)**
 - **[Coolors](https://coolors.co/)**
@@ -193,8 +189,6 @@ for body text:
 - **[hextorgba](https://rgbacolorpicker.com/hex-to-rgba)**
 - **[amiresponsive](https://ui.dev/amiresponsive)**
 
-#### Resources
-
 ---
 
 ## :microscope: Testing
@@ -202,6 +196,8 @@ for body text:
 ---
 
 ### Functional testing
+
+
 
 ### User Stories Testing
 
@@ -229,6 +225,12 @@ for body text:
 
 ## :loudspeaker: Deployment
 
+Deployment will be using gitHub pages and similarly to my previous project can be simply deployed yourself by first cloning the repository: 
+
+> git clone <http://www.github.com/Oxymetaphoric/milestone_project_2>
+
+
+
 ---
 
 ---
@@ -238,4 +240,8 @@ for body text:
 ---
 
 Background image by [Jr Korpa](https://unsplash.com/@jrkorpa?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash) on [Unsplash](https://unsplash.com/photos/pink-and-black-wallpaper-9XngoIpxcEo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash)
+
+card data and all game related information and imagery - [null signal games](https://nullsignal.games/)
+
+
   
