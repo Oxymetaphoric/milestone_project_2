@@ -1,6 +1,6 @@
 const apiLink = "https://api-preview.netrunnerdb.com/api/v3/public/"
-const allCardsDiv = `"#allCards"`;
-const myDeckDiv = `#myDeck`
+const allCardsDiv = "#allCards";
+const myDeckDiv = "#myDeck";
 //initialise the userDeck object with null values 
 let userSelectedID = false;
 let userDeck = {
@@ -64,6 +64,7 @@ async function filterCards(cardProperty = "", cardFilter = "", side = "") {
 
 //generate divs and html then populate #allCards div
 async function populateCards(cards, side, targetDiv) {
+  console.log(typeof cards)
     $(targetDiv).empty(); //clear cards when called 
     $(targetDiv).show();
     cards.forEach(card => {
@@ -86,12 +87,12 @@ async function populateCards(cards, side, targetDiv) {
         </div>
       </div>`
 //append each card to the card navigation section
-    $(allCardsDiv).append(cardHTML);
+    $(targetDiv).append(cardHTML);
   //attach eventListners to cardEntries to send clicked card information and user side to main Stage
   $(".cardEntry").last().click(() => {
     populateStage( card, side );
-    });
-  });
+    }); }
+);
 };
 
 //code for fetching images if a dev API key is obtained: 
@@ -290,9 +291,7 @@ async function populateControls(side) {
     let newLabel = document.createElement('label');
     newLabel.htmlFor = type.id
     newLabel.textContent = formattedCardType;
-    
     $("#filterCardsControls").append(newRadioButton, newLabel);   
-     
 //give each radio button an event listener that runs the filterCard function based on the label of the radio button and then populates the filtered cards 
 // to the card navigation section
     newRadioButton.addEventListener('click', function() {
@@ -304,13 +303,10 @@ async function populateControls(side) {
           )();
         });
     }; 
- // $("#changeSide").HTML(changeSideButtons);
   };
-
 
 //function called when user wishes to add a card to their deck 
 function addToDeck(card, side) {
-  myDeckDiv.empty();
 //matches any card_type_id ending in _identity and starting with any number 
 //of a-z characters and sets appropriate values, passing the ID card object to the deckID key of userDeck 
 if (card.attributes.card_type_id.match(/^[a-z]+_identity$/)){
@@ -325,9 +321,11 @@ if (card.attributes.card_type_id.match(/^[a-z]+_identity$/)){
   userDeck.current_influence = card.attributes.influence_limit;
   userDeck.base_link = card.attributes.base_link;
   userDeck.cards = []; 
+  
   userDeck.current_deck_size = userDeck.cards.length;
   userSelectedID = true;
-  populateCards(userDeck.cards, side, myDeckDiv);
+  $(myDeckDiv).empty();
+  populateCards([userDeck.deck_id], side, myDeckDiv);
 } else { 
     if (userSelectedID) {
       //if the card is any other type, add the card to the deck
@@ -354,7 +352,7 @@ async function main(side, startingPage) {
 }
 //function runs on page load and initialises the app. Hiding unwanted empty elements, and running main
 $(document).ready(function(){
-  $("#allCards").hide();
+  $(allCardsDiv).hide();
   $("#sideRunner").on("click", function() {
     main("runner", 4);
   });
