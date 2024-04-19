@@ -18,6 +18,25 @@ let userDeck = {
   cards: [],
 }
 
+function nullDeck() {
+  $(myDeckDiv).empty();
+  userDeck = {
+  title: null,
+  side: null,
+  faction: null,
+  deck_id: {},
+  id_title: "",
+  id_subtype: "",
+  min_deck_size: null,
+  current_deck_size: null,
+  total_influence: null,
+  current_influence: null,
+  base_link: null,
+  cards: [],
+}
+}
+nullDeck()
+
 //connect to netrunnerdb and fetch cards with a url crafted from arguments passed to the function
 async function fetchCards(apiLink, filter = "", param = "", side) {
   const response = await fetch(`${apiLink}${filter}?filter[${param}]=${side}`);
@@ -64,7 +83,6 @@ async function filterCards(cardProperty = "", cardFilter = "", side = "") {
 
 //generate divs and html then populate #allCards div
 async function populateCards(cards, side, targetDiv) {
-  console.log(typeof cards)
     $(targetDiv).empty(); //clear cards when called 
     $(targetDiv).show();
     cards.forEach(card => {
@@ -89,9 +107,9 @@ async function populateCards(cards, side, targetDiv) {
 //append each card to the card navigation section
     $(targetDiv).append(cardHTML);
   //attach eventListners to cardEntries to send clicked card information and user side to main Stage
-  $(".cardEntry").last().click(() => {
-    populateStage( card, side );
-    }); }
+  $(".cardEntry").last().click(async () => {
+    await populateStage(card, side);
+  }); }
 );
 };
 
@@ -107,7 +125,7 @@ async function populateCards(cards, side, targetDiv) {
 //  }
 
 //onClick logic for divs
-function populateStage(cardData, side) {   
+async function populateStage(cardData, side) {   
 //here's that annoying string of regex again! 
   let formattedFaction = cardData.attributes.faction_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace(/Nbn/g, 'NBN').replace(/Haas/g, 'Haas-');
   let formattedCardType = cardData.attributes.card_type_id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
@@ -260,15 +278,17 @@ function populateStage(cardData, side) {
     }
   } 
 //populate stage with required html
-  $("#main-stage").html(cardHTML) 
+  $("#main-stage-display").html(cardHTML) 
 //conditional formatting for cards 
   cardData.attributes.memory_cost == null ? $("#memoryCost").hide() : $("#memoryCost").show();
   cardData.attributes.trash_cost == null ?  $("#trashCost").hide() :  $("#trashCost").show();
 //add event listeners to each card entry
-  $(".userID").off().on("click", () => addToDeck(cardData, side));  
-  $(".addToDeckButton").off().on("click", () => addToDeck(cardData, side));  
+  $(".userID").off().click( async () => { await addToDeck(cardData, side);});  
+  $(".addToDeckButton").off().click(async() => { await addToDeck(cardData, side);});  
 };
-
+$(".cardEntry").last().click(async () => {
+  await populateStage(card, side);
+});
 // populate the options section 
 async function populateControls(side) {
 //empty controls div each time function is called to prevent stacking  
@@ -288,7 +308,7 @@ async function populateControls(side) {
     newRadioButton.id = type.id;
     newRadioButton.value = type.id;
     newRadioButton.name = "cardType"
-    let newLabel = document.createElement('label');
+    let newLabel = document.createElement('label');1
     newLabel.htmlFor = type.id
     newLabel.textContent = formattedCardType;
     $("#filterCardsControls").append(newRadioButton, newLabel);   
@@ -299,72 +319,99 @@ async function populateControls(side) {
           // Filter cards based on the selected card type
           let filteredCards = await filterCards("card_type_id", type.id, side);
           // Populate cards with filtered cards
-          populateCards(filteredCards, side, allCardsDiv);}
+          await populateCards(filteredCards, side, allCardsDiv);}
           )();
         });
     }; 
+updateDeckInfo();
   };
 
-//function called when user wishes to add a card to their deck 
-function addToDeck(card, side) {
-//matches any card_type_id ending in _identity and starting with any number 
-//of a-z characters and sets appropriate values, passing the ID card object to the deckID key of userDeck 
-if (card.attributes.card_type_id.match(/^[a-z]+_identity$/)){
-  userDeck.title = card.attributes.title;
-  userDeck.side = side;
-  userDeck.faction = card.attributes.faction_id;
-  userDeck.deck_id = card;
-  userDeck.id_title = card.attributes.title;
-  userDeck.id_subtype = card.attributes.display_subtypes;
-  userDeck.min_deck_size = card.attributes.minimum_deck_size;
-  userDeck.total_influence = card.attributes.influence_limit;
-  userDeck.current_influence = card.attributes.influence_limit;
-  userDeck.base_link = card.attributes.base_link;
-  userDeck.cards = []; 
-  
-  userDeck.current_deck_size = userDeck.cards.length;
-  userSelectedID = true;
-  $(myDeckDiv).empty();
-  populateCards([userDeck.deck_id], side, myDeckDiv);
-} else { 
+// Function called when user wishes to add a card to their deck 
+async function addToDeck(card, side) {
+  // Matches any card_type_id ending in _identity and starting with any number 
+  // of a-z characters and sets appropriate values, passing the ID card object to the deckID key of userDeck 
+  if (card.attributes.card_type_id.match(/^[a-z]+_identity$/)) {
+    userDeck.title = card.attributes.title;
+    userDeck.side = side;
+    userDeck.faction = card.attributes.faction_id;
+    userDeck.deck_id = card;
+    userDeck.id_title = card.attributes.title;
+    userDeck.id_subtype = card.attributes.display_subtypes;
+    userDeck.min_deck_size = card.attributes.minimum_deck_size;
+    userDeck.total_influence = card.attributes.influence_limit;
+    userDeck.current_influence = card.attributes.influence_limit;
+    userDeck.base_link = card.attributes.base_link;
+    userDeck.cards = []; 
+
+    userDeck.current_deck_size = userDeck.cards.length;
+    userSelectedID = true;
+    $(myDeckDiv).empty();
+  } else { 
     if (userSelectedID) {
-      //if the card is any other type, add the card to the deck
+      // If the card is any other type, add the card to the deck
       userDeck.cards.push(card);
       userDeck.current_deck_size = userDeck.cards.length;
       userDeck.current_influence -= card.attributes.influence_cost;
-      populateCards(userDeck.cards, side, myDeckDiv);
-  } else {
-    alert("please select an ID")
+    await populateCards(userDeck.cards, side, myDeckDiv);
+    } else {
+      alert("Please select an ID");
+    }
   }
-}
-console.log(userDeck)
-}
+  updateDeckInfo();
+}  
 
+function updateDeckInfo() {
+let deckInfoHTML = `
+    <div class="row">
+      <div class="col">
+        <p class="col side"><strong>${userDeck.side ? userDeck.side : " "}</strong></p> 
+        <p class="col deckIDtitle">${userDeck.title ? userDeck.title : " "}</p>
+        <br><br>
+        <div class="col">
+          <p class="deckSize"><strong>Deck Size: </strong>
+          ${userDeck.current_deck_size ? userDeck.current_deck_size : " "} / ${userDeck.min_deck_size ? userDeck.min_deck_size : " "}</p>
+          <p class="deckInfluence"><strong>Influence: </strong>
+          ${userDeck.current_influence ? userDeck.current_influence : " "} / ${userDeck.total_influence ? userDeck.total_influence : " "}</p>
+        </div>
+        <p class="deckID"><strong>Deck ID: </strong>${userDeck.id_title}</p>
+    </div>
+    </div>`
+  // Update the deck info section with the new HTML
+  $("#deckInfo").html(deckInfoHTML);
+};
 
 //Main function, use for calling other functions and hooking into user interface
 async function main(side, startingPage) {
   let userCardTypes = await getCardTypes(side);
   let cardType = await userCardTypes[startingPage].id;
   let filteredCards = await filterCards("card_type_id", cardType, side);
-  populateCards(filteredCards, side, allCardsDiv);
-  populateControls(side);
-  $("#userControls").hide() 
+  await populateCards(filteredCards, side, allCardsDiv);
+  await populateControls(side);
+  $("#userControls").hide(); 
 }
+$(".cardEntry").last().click(async () => {
+  await populateStage(card, side);
+});
+
 //function runs on page load and initialises the app. Hiding unwanted empty elements, and running main
 $(document).ready(function(){
   $(allCardsDiv).hide();
-  $("#sideRunner").on("click", function() {
-    main("runner", 4);
+  $("#sideRunner").click(async() => {
+    $("#main-stage-display").empty();
+    await main("runner", 4);
   });
-  $("#sideCorp").on("click", function(){
-    main("corp", 2);
+  $("#sideCorp").click(async() => {
+    $("#main-stage-display").empty();
+    await main("corp", 2);
   });
-  $("#runnerSwitch").on("click", function() {
-    $("#main-stage").empty();
-    main("runner", 4);
+  $("#runnerSwitch").click(async() => {
+    $("#main-stage-display").empty();
+    nullDeck();
+    await main("runner", 4);
   });
-  $("#corpSwitch").on("click", function(){
-    $("#main-stage").empty(); 
-    main("corp", 2);
+  $("#corpSwitch").click(async() => {
+    $("#main-stage-display").empty(); 
+    nullDeck();
+    await main("corp", 2);
   });
 });
