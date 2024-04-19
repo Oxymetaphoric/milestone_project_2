@@ -225,11 +225,11 @@ for body text:
 
 ## :loudspeaker: Deployment
 
-Deployment will be using gitHub pages and similarly to my previous project can be simply deployed yourself by first cloning the repository: 
+Deployment will be using gitHub pages and similarly to my previous project can be simply deployed yourself by first cloning the repository:
 
 > git clone <http://www.github.com/Oxymetaphoric/milestone_project_2>
 
-
+placing the cloned files in the root of your web server, should be sufficient. 
 
 ---
 
@@ -239,6 +239,7 @@ Deployment will be using gitHub pages and similarly to my previous project can b
 
 ---
 
+My wonderful family!
 Background image by [Jr Korpa](https://unsplash.com/@jrkorpa?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash) on [Unsplash](https://unsplash.com/photos/pink-and-black-wallpaper-9XngoIpxcEo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash)
 
 card data and all game related information and imagery - [null signal games](https://nullsignal.games/)
