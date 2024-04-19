@@ -224,7 +224,7 @@ function populateStage(cardData, side) {
   cardData.attributes.memory_cost == null ? $("#memoryCost").hide() : $("#memoryCost").show();
   cardData.attributes.trash_cost == null ?  $("#trashCost").hide() :  $("#trashCost").show();
 //add event listeners to each card entry
-  $(".userID").off().on("click", () => addToDeck(cardData));  
+  $(".userID").off().on("click", () => chooseID(cardData));  
 };
 
 // populate the options section 
@@ -238,16 +238,6 @@ async function populateControls(side) {
 //apply conditional formatting, anything that exactly matches between /   / will be replaced \b \w/g takes the first character of each word
 // then sends it to the uppercase fuinction and returns it uppercase
     let formattedCardType = type.id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
- // html for change side controls    
-    let changeSideButtons = `
-    <div class="row changeSideOption">
-      <img class="sideRunner" src="assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_LINK.svg">
-      <p>Runner</p>
-    </div>
-    <div class="row changeSideOption">
-      <img class="sideCorp" src="assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_AGENDA.svg">
-      <p>Corporation</p>
-    </div>"`
 //create new radio buttons based on the number of types of cards in cardTypes then assign it 
 // various properties 
     var newRadioButton = document.createElement('input');
@@ -258,8 +248,9 @@ async function populateControls(side) {
     let newLabel = document.createElement('label');
     newLabel.htmlFor = type.id
     newLabel.textContent = formattedCardType;
-    $("#changeSide").html = changeSideButtons;
-    $("#filterCardsControls").append(newRadioButton, newLabel);    
+    
+    $("#filterCardsControls").append(newRadioButton, newLabel);   
+     
 //give each radio button an event listener that runs the filterCard function based on the label of the radio button and then populates the filtered cards 
 // to the card navigation section
     newRadioButton.addEventListener('click', function() {
@@ -271,11 +262,13 @@ async function populateControls(side) {
           )();
         });
     }; 
+  $("#changeSide").HTML(changeSideButtons);
   };
 
 
 //function called when user wishes to add a card to their deck 
-function addToDeck(card) {
+function chooseID(card) {
+  $("#userControls").show() 
   alert(card.attributes.title)
 }
 
@@ -285,15 +278,24 @@ async function main(side, startingPage) {
   let cardType = await userCardTypes[startingPage].id;
   let filteredCards = await filterCards("card_type_id", cardType, side);
   populateCards(filteredCards, side);
-  populateControls(side);  
+  populateControls(side);
+  $("#userControls").hide() 
 }
 //function runs on page load and initialises the app. Hiding unwanted empty elements, and running main
 $(document).ready(function(){
   $("#allCards").hide();
   $("#sideRunner").on("click", function() {
-    main("runner", 4)
+    main("runner", 4);
   });
   $("#sideCorp").on("click", function(){
-    main("corp", 2)
+    main("corp", 2);
+  });
+  $("#runnerSwitch").on("click", function() {
+    $("#main-stage").empty();
+    main("runner", 4);
+  });
+  $("#corpSwitch").on("click", function(){
+    $("#main-stage").empty(); 
+    main("corp", 2);
   });
 });
