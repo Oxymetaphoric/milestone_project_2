@@ -11,12 +11,13 @@
 - ~~function that attaches a css class based on the card.attributes.faction_id string~~
 - ~~seperate out filtering and populating logic in allCards~~
 - ~~build out controls section logic~~
-- build out adding cards to your deck logic
-  - define card objectg parameters
+- ~~build out adding cards to your deck logic~~
+  - ~~define card object parameters~~
 - build out deckbuilding restriction logic:
   - max 3 copies of any card
   - only 1 copy of unique cards
-  - track and cap out of faction cards in users deck via 'Influence' card property (card.attributes.influence(?))
+  - ~~track and cap out of faction cards in users deck via 'Influence' card property (card.attributes.influence(?))~~
+  - modify populateCards function to accept a target parameter to determine which div to populate and with what
 
 ## HTML
 

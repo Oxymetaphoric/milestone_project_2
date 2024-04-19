@@ -1,4 +1,7 @@
 const apiLink = "https://api-preview.netrunnerdb.com/api/v3/public/"
+const allCardsDiv = `"#allCards"`;
+const myDeckDiv = `#myDeck`
+//initialise the userDeck object with null values 
 let userSelectedID = false;
 let userDeck = {
   title: null,
@@ -9,7 +12,7 @@ let userDeck = {
   id_subtype: "",
   min_deck_size: null,
   current_deck_size: null,
-  avail_influence: null,
+  total_influence: null,
   current_influence: null,
   base_link: null,
   cards: [],
@@ -60,9 +63,9 @@ async function filterCards(cardProperty = "", cardFilter = "", side = "") {
   }
 
 //generate divs and html then populate #allCards div
-async function populateCards(cards, side) {
-    $("#allCards").empty(); //clear cards when called
-    $("#allCards").show();
+async function populateCards(cards, side, targetDiv) {
+    $(targetDiv).empty(); //clear cards when called 
+    $(targetDiv).show();
     cards.forEach(card => {
       let factionID = card.attributes.faction_id
       let factionIcon = `/assets/images/NSG-Visual-Assets/SVG/FactionGlyphs/NSG_${factionID}.svg`
@@ -83,7 +86,7 @@ async function populateCards(cards, side) {
         </div>
       </div>`
 //append each card to the card navigation section
-    $('#allCards').append(cardHTML);
+    $(allCardsDiv).append(cardHTML);
   //attach eventListners to cardEntries to send clicked card information and user side to main Stage
   $(".cardEntry").last().click(() => {
     populateStage( card, side );
@@ -119,9 +122,16 @@ function populateStage(cardData, side) {
           <p class="col align-content-center ">
             <em>Agenda Points: </em>
             <img class="credit" src=
-          "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_AGENDA.svg"> ${cardData.attributes.agenda_points} <span>&nbsp&nbsp|&nbsp&nbsp<em>Advancement Points: </em>${cardData.attributes.advancement_requirement}</em></p>
-          <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span><br><br>
+          "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_AGENDA.svg"> ${cardData.attributes.agenda_points} 
+          <span>&nbsp&nbsp|&nbsp&nbsp<em>Advancement Points: </em>${cardData.attributes.advancement_requirement}</em></p>
+          <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span>
+          <br><br>
           <p>${cardData.attributes.stripped_text}</p>
+          <div class="row ">
+            <div class="center-text">
+              <button class="addToDeckButton col" type="button">Add Card to Deck</button>
+            </div>
+          </div>
         </div>`     
         break; 
       case "asset":
@@ -152,6 +162,11 @@ function populateStage(cardData, side) {
             </span>
             <br><br>
             <p>${cardData.attributes.stripped_text}</p>
+            <div class="row ">
+              <div class="center-text">
+                <button class="addToDeckButton col" type="button">Add Card to Deck</button>
+              </div>
+            </div>
           </div>`
            break;
       case "ice":  
@@ -164,6 +179,11 @@ function populateStage(cardData, side) {
             <em>Strength: </em>${cardData.attributes.strength}
             <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em></p></span><br>
             <p>${cardData.attributes.stripped_text}"</p>
+            <div class="row ">
+              <div class="center-text">
+                <button class="addToDeckButton col" type="button">Add Card to Deck</button>
+              </div>
+            </div>
           </div>`
           break;
       case "corp_identity":
@@ -216,7 +236,7 @@ function populateStage(cardData, side) {
               <div class="center-text">
                 <button class="addToDeckButton col" type="button">Add Card to Deck</button>
               </div>
-          </div>
+            </div>
           </div>`
            break;
       case "runner_identity":
@@ -280,7 +300,7 @@ async function populateControls(side) {
           // Filter cards based on the selected card type
           let filteredCards = await filterCards("card_type_id", type.id, side);
           // Populate cards with filtered cards
-          populateCards(filteredCards, side);}
+          populateCards(filteredCards, side, allCardsDiv);}
           )();
         });
     }; 
@@ -290,7 +310,9 @@ async function populateControls(side) {
 
 //function called when user wishes to add a card to their deck 
 function addToDeck(card, side) {
-//matches any card_type_id ending in _identity and starting with any number of a-z characters and sets appropriate values 
+  myDeckDiv.empty();
+//matches any card_type_id ending in _identity and starting with any number 
+//of a-z characters and sets appropriate values, passing the ID card object to the deckID key of userDeck 
 if (card.attributes.card_type_id.match(/^[a-z]+_identity$/)){
   userDeck.title = card.attributes.title;
   userDeck.side = side;
@@ -299,29 +321,25 @@ if (card.attributes.card_type_id.match(/^[a-z]+_identity$/)){
   userDeck.id_title = card.attributes.title;
   userDeck.id_subtype = card.attributes.display_subtypes;
   userDeck.min_deck_size = card.attributes.minimum_deck_size;
-  userDeck.avail_influence = card.attributes.influence_limit;
+  userDeck.total_influence = card.attributes.influence_limit;
+  userDeck.current_influence = card.attributes.influence_limit;
   userDeck.base_link = card.attributes.base_link;
-  userDeck.cards = [];
+  userDeck.cards = []; 
+  userDeck.current_deck_size = userDeck.cards.length;
   userSelectedID = true;
+  populateCards(userDeck.cards, side, myDeckDiv);
 } else { 
     if (userSelectedID) {
+      //if the card is any other type, add the card to the deck
       userDeck.cards.push(card);
-      userDeck.title = card.attributes.title;
-      userDeck.side = side;
-      userDeck.faction = card.attributes.faction_id;
-      userDeck.deck_id = card;
-      userDeck.id_title = card.attributes.title;
-      userDeck.id_subtype = card.attributes.display_subtypes;
-      userDeck.min_deck_size = card.attributes.minimum_deck_size;
       userDeck.current_deck_size = userDeck.cards.length;
-      userDeck.current_influence = userDeck.avail_influence - card.attributes.influence;
-      userDeck.base_link = card.attributes.base_link;
+      userDeck.current_influence -= card.attributes.influence_cost;
+      populateCards(userDeck.cards, side, myDeckDiv);
   } else {
     alert("please select an ID")
   }
 }
 console.log(userDeck)
- 
 }
 
 
@@ -330,7 +348,7 @@ async function main(side, startingPage) {
   let userCardTypes = await getCardTypes(side);
   let cardType = await userCardTypes[startingPage].id;
   let filteredCards = await filterCards("card_type_id", cardType, side);
-  populateCards(filteredCards, side);
+  populateCards(filteredCards, side, allCardsDiv);
   populateControls(side);
   $("#userControls").hide() 
 }
