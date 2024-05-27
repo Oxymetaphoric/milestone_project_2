@@ -3,6 +3,7 @@ const allCardsDiv = "#allCards";
 const myDeckDiv = "#myDeck";
 //initialise the userDeck object with null values 
 let userSelectedID = false;
+//refactor into function
 let userDeck = {
   title: null,
   side: null,
@@ -41,11 +42,9 @@ nullDeck()
 async function fetchCards(apiLink, filter = "", param = "", side) {
   const response = await fetch(`${apiLink}${filter}?filter[${param}]=${side}`);
   const data = await response.json();
-//fetch links for next and prev pages of data
-  let next = data.links.next;
-  let prev = data.links.prev;
+
 //call function recursively, while data.links.next has a truthy value, i.e until there are no more pages
-  if (next) {
+  if (data.links.next) {
     const nextData = await fetchCards(next);
 //spread returned data to array
     data.data = [...data.data, ...nextData];
@@ -59,9 +58,9 @@ async function getCardTypes(side) {
   let fetchTypes =  await fetch("https://api-preview.netrunnerdb.com//api/v3/public/card_types")
   //call fetchTypes and convert to json
   let cardTypesJSON = await fetchTypes.json();
-  let availableTypes = cardTypesJSON.data.filter(type => type.attributes.side_id === side)
+  return cardTypesJSON.data.filter(type => type.attributes.side_id === side)
   //return an array of strings, containing the different card types of a specified side
-  return availableTypes
+
   }  
 
 //filter requested cards by subtype, could extend to filter by any property in theory
@@ -106,7 +105,7 @@ async function populateCards(cards, side, targetDiv) {
       </div>`
 //append each card to the card navigation section
     $(targetDiv).append(cardHTML);
-  //attach eventListners to cardEntries to send clicked card information and user side to main Stage
+  //attach eventListeners to cardEntries to send clicked card information and user side to main Stage
   $(".cardEntry").last().click(async () => {
     await populateStage(card, side);
   }); }
