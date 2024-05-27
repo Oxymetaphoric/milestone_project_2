@@ -9,7 +9,7 @@
 - ~~add interactivity to divs~~
 - ~~display card information on stage~~
 - ~~function that attaches a css class based on the card.attributes.faction_id string~~
-- ~~seperate out filtering and populating logic in allCards~~
+- ~~separate out filtering and populating logic in allCards~~
 - ~~build out controls section logic~~
 - ~~build out adding cards to your deck logic~~
   - ~~define card object parameters~~
@@ -31,7 +31,7 @@
 
 ## CSS
 
-- ~~import fonts and set up intital styling~~
+- ~~import fonts and set up initial styling~~
 - ~~style cardEntry w/ background image etc.~~
 - ~~layout and styling for all elements~~
 - ~~style controls~~
@@ -47,14 +47,15 @@
 
 - ~~Do I need an API key to access the images on netrunner db?~~
   - yes. Devs contacted, yet to hear back
-- ~~modal instructions on main page~~ //no use intial html on the stage area for intro and instructions
+- ~~modal instructions on main page~~ //no use initial html on the stage area for intro and instructions
 - ~~background image~~
 - Testing
 - more instruction text throughout app
 
 ## README
 
-- Extend project rationale (audiencew needs met etc.)
+- Extend project rationale (audience needs met etc.)
 - Testing
 - expand UX documentation
 - expand deployment section
+- ~~spellcheck readme~~
