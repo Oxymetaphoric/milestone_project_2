@@ -70,7 +70,7 @@ async function filterCards(cardProperty = "", cardFilter = "", side = "") {
   let allCards = await fetchCards(apiLink, "cards", "side_id", side); 
 //this nasty little arrow function assigns an array of all the card objects whose property matches the cardFilter argument
   let filteredCards = allCards.filter(card => card.attributes[cardProperty] === cardFilter);
-//cards are then sorted. For now simply by alphebetising the faction_id property, but this could be modified to accept different criteria
+//cards are then sorted. For now simply by alphabetizing the faction_id property, but this could be modified to accept different criteria
   filteredCards.sort((a, b) => {
     let factionA = a.attributes.faction_id
     let factionB = b.attributes.faction_id
@@ -299,7 +299,7 @@ async function populateControls(side) {
 //iterate over the different types of cards
   for (let type of cardTypes) {
 //apply conditional formatting, anything that exactly matches between /   / will be replaced \b \w/g takes the first character of each word
-// then sends it to the uppercase fuinction and returns it uppercase
+// then sends it to the uppercase function and returns it uppercase
     let formattedCardType = type.id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
 //create new radio buttons based on the number of types of cards in cardTypes then assign it 
 // various properties 
@@ -396,6 +396,7 @@ $(".cardEntry").last().click(async () => {
 //function runs on page load and initialises the app. Hiding unwanted empty elements, and running main
 $(document).ready(function(){
   $(allCardsDiv).hide();
+  $(myDeckDiv).hide();
   $("#sideRunner").click(async() => {
     $("#main-stage-display").empty();
     await main("runner", 4);
