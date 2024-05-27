@@ -36,7 +36,7 @@ async function fetchCards(apiLink, filter = "", param = "", side) {
 
 //call function recursively, while data.links.next has a truthy value, i.e until there are no more pages
   if (data.links.next) {
-    const nextData = await fetchCards(next);
+    const nextData = await fetchCards(data.links.next);
 //spread returned data to array
     data.data = [...data.data, ...nextData];
   }
@@ -319,7 +319,7 @@ updateDeckInfo();
 // Function called when user wishes to add a card to their deck 
 async function addToDeck(card, side) {
   // Matches any card_type_id ending in _identity and starting with any number 
-  // of a-z characters and sets appropriate values, passing the ID card object to the deckID key of userDeck 
+  // of a-z characters and sets appropriate values, passing the ID card object to the deckID key of userDeck  
   if (card.attributes.card_type_id.match(/^[a-z]+_identity$/)) {
     userDeck = initializeUserDeck();
     userDeck.title = card.attributes.title;
@@ -330,26 +330,18 @@ async function addToDeck(card, side) {
     userDeck.id_subtype = card.attributes.display_subtypes;
     userDeck.min_deck_size = card.attributes.minimum_deck_size;
     userDeck.total_influence = card.attributes.influence_limit;
-    userDeck.current_influence = card.attributes.influence_limit;
     userDeck.base_link = card.attributes.base_link;
-    userDeck.cards = []; 
-
-    userDeck.current_deck_size = userDeck.cards.length;
     userSelectedID = true;
     $(myDeckDiv).empty();
   } else { 
     if (userSelectedID) {
-      // If the card is any other type, add the card to the deck
       userDeck.cards.push(card);
       userDeck.current_deck_size = userDeck.cards.length;
-      userDeck.current_influence -= card.attributes.influence_cost;
-    await populateCards(userDeck.cards, side, myDeckDiv);
-    } else {
-      alert("Please select an ID");
-    }
+      userDeck.current_influence = card.attributes.influence_limit;
+      await populateCards(userDeck.cards, side, myDeckDiv)
+    }  
   }
-  updateDeckInfo();
-}  
+}
 
 function updateDeckInfo() {
 let deckInfoHTML = `
@@ -406,4 +398,5 @@ $(document).ready(function(){
     nullDeck();
     await main("corp", 2);
   });
-});
+  }
+)
