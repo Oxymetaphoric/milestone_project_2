@@ -46,7 +46,7 @@ This is my milestone two project for the [Code Institute's](http://www.codeinsti
 
 #### User Requirements and Expectations
 
-- easy and sensicle navigation
+- easy and intuitive navigation
 - accessible for users with additional needs
 - all presented functionality works as intended
 - quick and easy to navigate the card pool, filter down etc.
@@ -57,14 +57,14 @@ This is my milestone two project for the [Code Institute's](http://www.codeinsti
 ##### - First Time User
 
 1. As a first-time user I may want more details on the game
-2. As a first-time user I would want the UX/UI to be clear and unambiguous, and also intutive
+2. As a first-time user I would want the UX/UI to be clear and unambiguous, and also intuitive
 3. As a first time user I would like to leave the site with more information that I arrived with
 4. As a first time user I want to be able to quickly and easily start building decks
 
 ##### - Returning User
 
-1. As a returning user I want to be able to start deckbuilding immedietely
-2. As a returning user I want to be able to contact the site if I see antthing that needs correcting
+1. As a returning user I want to be able to start deckbuilding immediately
+2. As a returning user I want to be able to contact the site if I see anything that needs correcting
 
 ##### - Site Owner
 
@@ -87,7 +87,7 @@ This is my milestone two project for the [Code Institute's](http://www.codeinsti
 #### Accessibility
 
 - don't rely on images to convey key information, even if that means redundancy (for e.g. displaying a picture of a card, along side html containing the effects, costs for screenreader access etc.)
-- Colour palletes will be assessed for color-blind friendliness, and adjusted if necessary.
+- Colour palettes will be assessed for color-blind friendliness, and adjusted if necessary.
 - the structure of the page should allow for keyboard navigation and be screen-reader friendly
 
 ---
@@ -100,7 +100,7 @@ The site will designed in such a way as to consist of a single page, with intera
 
 Users will then decide which of the two possible roles in the game that they would like to build a deck for, either the Corporation or the Runner.
 
-Based on this choice the nav element containing the list of cards populates with the relevent sides cards.
+Based on this choice the nav element containing the list of cards populates with the relevant sides cards.
 
 Users will then select an 'ID', which is a specific character within the corporation/runner faction to play as.
 
@@ -204,7 +204,7 @@ for body text:
 | clicking a cardEntry should display card info on main stage     | yes      |
 | hitting the 'Build Deck with this ID' button should add that information to the deck information section         | yes      |
 | hitting the 'add card' button on the stage on a card should add that card to myDeck and display the card in the second column       | yes      |
-| adding card to deck should update deckInfo section approriately      | yes      |
+| adding card to deck should update deckInfo section appropriately      | yes      |
 | radio Buttons should clear cards display and load appropriate cards in   | yes      |
 | small 'side' icons in controls should change side, clear the stage and update radio buttons appropriately                   | yes      |
 
@@ -216,7 +216,7 @@ for body text:
 
 The introductory text explains the game and provides a link to the publishers website for more information.
 
-- As a first-time user I would want the UX/UI to be clear and unambiguous, and also intutive
+- As a first-time user I would want the UX/UI to be clear and unambiguous, and also intuitive
 
 The UI could definitely do with styling further, it is currently functional but a bit ugly. However I believe that the flow of information is clear and reasonably intuitive.
 
@@ -226,11 +226,11 @@ Users can visit the publishers website for more information as well as examine i
 
 - As a first time user I want to be able to quickly and easily start building decks
 
-I believe this app achieves the goal, users are immedietly presented with teh ability to build with no pre-amble
+I believe this app achieves the goal, users are immediately presented with the ability to build with no pre-amble
 
 #### - Returning User Testing
 
-- As a returning user I want to be able to start deckbuilding immedietely
+- As a returning user I want to be able to start deckbuilding immediately
 
 this has been achieved
 
