@@ -20,12 +20,14 @@ function initializeUserDeck(){
   current_influence: null,
   base_link: null,
   cards: [],
+  userSelectedID: false
   };
 }
 
 function nullDeck() {
   $(myDeckDiv).empty();
   userDeck = initializeUserDeck();
+
 }
 nullDeck()
 
@@ -99,9 +101,8 @@ async function populateCards(cards, side, targetDiv) {
   //attach eventListeners to cardEntries to send clicked card information and user side to main Stage
   $(".cardEntry").last().click(async () => {
     await populateStage(card, side);
-  }); }
-);
-};
+  }); 
+})};
 
 //code for fetching images if a dev API key is obtained: 
 //
@@ -275,10 +276,12 @@ async function populateStage(cardData, side) {
 //add event listeners to each card entry
   $(".userID").off().click( async () => { await addToDeck(cardData, side);});  
   $(".addToDeckButton").off().click(async() => { await addToDeck(cardData, side);});  
-};
 $(".cardEntry").last().click(async () => {
   await populateStage(card, side);
-});
+  }
+);
+};
+
 // populate the options section 
 async function populateControls(side) {
 //empty controls div each time function is called to prevent stacking  
@@ -298,21 +301,22 @@ async function populateControls(side) {
     newRadioButton.id = type.id;
     newRadioButton.value = type.id;
     newRadioButton.name = "cardType"
-    let newLabel = document.createElement('label');1
-    newLabel.htmlFor = type.id
+    let newLabel = document.createElement('label');
+    newLabel.htmlFor = type.id;
     newLabel.textContent = formattedCardType;
     $("#filterCardsControls").append(newRadioButton, newLabel);   
 //give each radio button an event listener that runs the filterCard function based on the label of the radio button and then populates the filtered cards 
 // to the card navigation section
-    newRadioButton.addEventListener('click', function() {
-      (async () => {
+    newRadioButton.addEventListener('click', async() => {
+          if (type.id.includes("identity")){
           // Filter cards based on the selected card type
+            nullDeck();
+          }
           let filteredCards = await filterCards("card_type_id", type.id, side);
           // Populate cards with filtered cards
-          await populateCards(filteredCards, side, allCardsDiv);}
-          )();
+          await populateCards(filteredCards, side, allCardsDiv);
         });
-    }; 
+      }
 updateDeckInfo();
   };
 
@@ -321,7 +325,7 @@ async function addToDeck(card, side) {
   // Matches any card_type_id ending in _identity and starting with any number 
   // of a-z characters and sets appropriate values, passing the ID card object to the deckID key of userDeck 
   if (card.attributes.card_type_id.match(/^[a-z]+_identity$/)) {
-    userDeck = initializeUserDeck();
+    nullDeck();
     userDeck.title = card.attributes.title;
     userDeck.side = side;
     userDeck.faction = card.attributes.faction_id;
@@ -343,7 +347,6 @@ async function addToDeck(card, side) {
     }  }
   updateDeckInfo();
 }
-
 
 function updateDeckInfo() {
 let deckInfoHTML = `
@@ -373,11 +376,11 @@ async function main(side, startingPage) {
   await populateCards(filteredCards, side, allCardsDiv);
   await populateControls(side);
   $("#userControls").hide(); 
-}
+
 $(".cardEntry").last().click(async () => {
   await populateStage(card, side);
-});
-
+  });
+}
 //function runs on page load and initialises the app. Hiding unwanted empty elements, and running main
 $(document).ready(function(){
   $(allCardsDiv).hide();
