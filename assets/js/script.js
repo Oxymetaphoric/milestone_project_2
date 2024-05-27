@@ -4,7 +4,10 @@ const myDeckDiv = "#myDeck";
 //initialise the userDeck object with null values 
 let userSelectedID = false;
 //refactor into function
-let userDeck = {
+let userDeck = {};
+
+function initializeUserDeck(){
+  return {
   title: null,
   side: null,
   faction: null,
@@ -17,24 +20,12 @@ let userDeck = {
   current_influence: null,
   base_link: null,
   cards: [],
+  };
 }
 
 function nullDeck() {
   $(myDeckDiv).empty();
-  userDeck = {
-  title: null,
-  side: null,
-  faction: null,
-  deck_id: {},
-  id_title: "",
-  id_subtype: "",
-  min_deck_size: null,
-  current_deck_size: null,
-  total_influence: null,
-  current_influence: null,
-  base_link: null,
-  cards: [],
-}
+  userDeck = initializeUserDeck();
 }
 nullDeck()
 
