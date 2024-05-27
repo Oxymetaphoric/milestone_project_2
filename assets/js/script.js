@@ -319,7 +319,7 @@ updateDeckInfo();
 // Function called when user wishes to add a card to their deck 
 async function addToDeck(card, side) {
   // Matches any card_type_id ending in _identity and starting with any number 
-  // of a-z characters and sets appropriate values, passing the ID card object to the deckID key of userDeck  
+  // of a-z characters and sets appropriate values, passing the ID card object to the deckID key of userDeck 
   if (card.attributes.card_type_id.match(/^[a-z]+_identity$/)) {
     userDeck = initializeUserDeck();
     userDeck.title = card.attributes.title;
@@ -334,14 +334,16 @@ async function addToDeck(card, side) {
     userSelectedID = true;
     $(myDeckDiv).empty();
   } else { 
-    if (userSelectedID) {
+    
+  if (userSelectedID) {
       userDeck.cards.push(card);
       userDeck.current_deck_size = userDeck.cards.length;
       userDeck.current_influence = card.attributes.influence_limit;
       await populateCards(userDeck.cards, side, myDeckDiv)
-    }  
-  }
+    }  }
+  updateDeckInfo();
 }
+
 
 function updateDeckInfo() {
 let deckInfoHTML = `
