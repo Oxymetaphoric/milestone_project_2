@@ -55,7 +55,7 @@ return data.data;
 
   //fetch the different types of cards filtered by selected side
 async function getCardTypes(side) {
-  let fetchTypes =  await fetch("https://api-preview.netrunnerdb.com//api/v3/public/card_types")
+  let fetchTypes =  await fetch(`${apiLink}card_types`)
   //call fetchTypes and convert to json
   let cardTypesJSON = await fetchTypes.json();
   return cardTypesJSON.data.filter(type => type.attributes.side_id === side)
