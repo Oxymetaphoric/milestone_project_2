@@ -13,11 +13,12 @@
 - ~~build out controls section logic~~
 - ~~build out adding cards to your deck logic~~
   - ~~define card object parameters~~
+  - ~~track and cap out of faction cards in users deck via 'Influence' card property (card.attributes.influence(?))~~
 - build out deckbuilding restriction logic:
   - max 3 copies of any card
   - only 1 copy of unique cards
-  - ~~track and cap out of faction cards in users deck via 'Influence' card property (card.attributes.influence(?))~~
   - modify populateCards function to accept a target parameter to determine which div to populate and with what
+  - only show one copy of each card object in deck (use a set?)
 
 ## HTML
 
@@ -25,6 +26,8 @@
 - ~~sketch out basic areas for js to interact with~~
 - ~~build out controls area~~
 - ~~build out stage area~~
+- faction filter controls
+- 404 page
 
 ## CSS
 
@@ -32,6 +35,12 @@
 - ~~style cardEntry w/ background image etc.~~
 - ~~layout and styling for all elements~~
 - ~~style controls~~
+- UI/UX overhaul:
+  - deck and card list styled better, no horizontal scroll etc.
+  - feedback on buttons (:onHover etc.)
+  - 'loading' text/anims
+  - deck entry UI to include a trash button to remove the card
+  - deck entry UI to include a count of how many copies of a card are in the deck
 - media queries
 
 ## Other
@@ -41,7 +50,11 @@
 - ~~modal instructions on main page~~ //no use intial html on the stage area for intro and instructions
 - ~~background image~~
 - Testing
+- more instruction text throughout app
 
 ## README
 
-- testing
+- Extend project rationale (audiencew needs met etc.)
+- Testing
+- expand UX documentation
+- expand deployment section
