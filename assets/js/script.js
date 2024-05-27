@@ -321,6 +321,7 @@ async function addToDeck(card, side) {
   // Matches any card_type_id ending in _identity and starting with any number 
   // of a-z characters and sets appropriate values, passing the ID card object to the deckID key of userDeck 
   if (card.attributes.card_type_id.match(/^[a-z]+_identity$/)) {
+    userDeck = initializeUserDeck();
     userDeck.title = card.attributes.title;
     userDeck.side = side;
     userDeck.faction = card.attributes.faction_id;
