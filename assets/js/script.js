@@ -333,9 +333,9 @@ let deckInfoHTML = `
         <p class="col deckIDtitle">${userDeck.title ? userDeck.title : " "}</p>
         <div class="col">
           <p class="deckSize"><strong>Deck Size: </strong>
-          ${userDeck.current_deck_size ? userDeck.current_deck_size : " "} / ${userDeck.min_deck_size ? userDeck.min_deck_size : " "}</p>
+          ${userDeck.current_deck_size ? userDeck.current_deck_size : "0"} / ${userDeck.min_deck_size ? userDeck.min_deck_size : " "}</p>
           <p class="deckInfluence"><strong>Influence: </strong>
-          ${userDeck.current_influence} / ${userDeck.total_influence ? userDeck.total_influence : " "}</p>
+          ${userDeck.current_influence ? userDeck.current_influence : "0"} / ${userDeck.total_influence ? userDeck.total_influence : " "}</p>
         </div>
         <p class="deckID"><strong>Deck ID: </strong>${userDeck.id_title}</p>
     </div>
