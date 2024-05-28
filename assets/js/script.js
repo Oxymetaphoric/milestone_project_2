@@ -19,6 +19,7 @@ function initializeUserDeck(){
   total_influence: null,
   current_influence: null,
   base_link: null,
+  description: null,                 
   cards: [],
   userSelectedID: false
   };
@@ -311,6 +312,7 @@ async function addToDeck(card, side) {
     userDeck.min_deck_size = card.attributes.minimum_deck_size;
     userDeck.current_influence = 0;
     userDeck.total_influence = card.attributes.influence_limit;
+    userDeck.description = card.attributes.stripped_text;
     userDeck.base_link = card.attributes.base_link;
     userSelectedID = true;
     $(myDeckDiv).empty();
@@ -328,17 +330,17 @@ async function addToDeck(card, side) {
 function updateDeckInfo() {
 let deckInfoHTML = `
     <div class="row">
+    <p>Place next instruction text block in here, use .hide() to show</p>
       <div class="col">
-        <p class="col side"><strong>${userDeck.side ? userDeck.side : " "}</strong></p> 
-        <p class="col deckIDtitle">${userDeck.title ? userDeck.title : " "}</p>
-        <div class="col">
+      <p class="col deckIDtitle"><strong>${userDeck.title ? userDeck.title : " "}</strong><br/><em>${userDeck.side ? userDeck.side : " "}</em></p>
+      <p>${userDeck.description}</p>  
+      <div class="col">
           <p class="deckSize"><strong>Deck Size: </strong>
           ${userDeck.current_deck_size ? userDeck.current_deck_size : "0"} / ${userDeck.min_deck_size ? userDeck.min_deck_size : " "}</p>
           <p class="deckInfluence"><strong>Influence: </strong>
           ${userDeck.current_influence ? userDeck.current_influence : "0"} / ${userDeck.total_influence ? userDeck.total_influence : " "}</p>
-        </div>
-        <p class="deckID"><strong>Deck ID: </strong>${userDeck.id_title}</p>
-    </div>
+          <p class="deckLink"><strong>Base Link: </strong>${userDeck.base_link ? userDeck.base_link : "0"}</p>
+          </div> </div>
     </div>`
   // Update the deck info section with the new HTML
   $("#deckInfo").html(deckInfoHTML);
