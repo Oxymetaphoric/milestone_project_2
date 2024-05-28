@@ -93,7 +93,7 @@ async function populateCards(cards, side, targetDiv) {
             ${card.attributes.title}
           </h2>
           <p class='cardFaction'>${formattedFaction}</p>
-          <p class='cardFaction'><strong>${formattedCardType}</strong> | ${card.attributes.display_subtypes}</p>
+          <p class='cardFaction'><strong>${formattedCardType}</strong>  ${card.attributes.display_subtypes ? "| "+card.attributes.display_subtypes : ""}</p>
         </div>
       </div>`
 //append each card to the card navigation section
@@ -222,7 +222,7 @@ async function populateStage(cardData, side) {
               <span>
                 <p>
                   <Strong>${formattedCardType}</Strong>
-                  &nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em>
+                  <em>${cardData.attributes.display_subtypes == null ? "" : "&nbsp&nbsp|&nbsp&nbsp"+cardData.attributes.display_subtypes }</em>
                 </p>
               </span>
             <p>${cardData.attributes.stripped_text}</p>
@@ -309,6 +309,7 @@ async function addToDeck(card, side) {
     userDeck.id_title = card.attributes.title;
     userDeck.id_subtype = card.attributes.display_subtypes;
     userDeck.min_deck_size = card.attributes.minimum_deck_size;
+    userDeck.current_influence = 0;
     userDeck.total_influence = card.attributes.influence_limit;
     userDeck.base_link = card.attributes.base_link;
     userSelectedID = true;
@@ -318,7 +319,7 @@ async function addToDeck(card, side) {
   if (userSelectedID) {
       userDeck.cards.push(card);
       userDeck.current_deck_size = userDeck.cards.length;
-      userDeck.current_influence = card.attributes.influence_limit;
+      userDeck.current_influence += card.attributes.influence_cost;
       await populateCards(userDeck.cards, side, myDeckDiv)
     }  }
   updateDeckInfo();
@@ -330,12 +331,11 @@ let deckInfoHTML = `
       <div class="col">
         <p class="col side"><strong>${userDeck.side ? userDeck.side : " "}</strong></p> 
         <p class="col deckIDtitle">${userDeck.title ? userDeck.title : " "}</p>
-        <br><br>
         <div class="col">
           <p class="deckSize"><strong>Deck Size: </strong>
           ${userDeck.current_deck_size ? userDeck.current_deck_size : " "} / ${userDeck.min_deck_size ? userDeck.min_deck_size : " "}</p>
           <p class="deckInfluence"><strong>Influence: </strong>
-          ${userDeck.current_influence ? userDeck.current_influence : " "} / ${userDeck.total_influence ? userDeck.total_influence : " "}</p>
+          ${userDeck.current_influence} / ${userDeck.total_influence ? userDeck.total_influence : " "}</p>
         </div>
         <p class="deckID"><strong>Deck ID: </strong>${userDeck.id_title}</p>
     </div>
