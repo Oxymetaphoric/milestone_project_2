@@ -38,7 +38,7 @@ p {
 /* setting up the page */
 
 #main-stage {
-  height: 70vh;
+  min-height: 70vh;
   margin: 10px;
   padding: 20px;
   background-color:rgba(255, 228, 196, 0.8);
@@ -51,7 +51,6 @@ p {
 
 .cardDisplay {
   min-height: 375px;
-  max-height: 450px;
   padding: 20px;
 
 }

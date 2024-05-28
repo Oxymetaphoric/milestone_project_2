@@ -126,7 +126,7 @@ async function populateStage(cardData, side) {
     switch (cardData.attributes.card_type_id) {
       case 'agenda':
         cardHTML = `
-        <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
+        <div class="row ${cardData.attributes.faction_id} flex container-fluid cardDisplay rounded-3">
           <h1 class="text-center">${cardData.attributes.title}</h1>
           <h2 class="text-center">${formattedFaction}</h2>
           <p class="col align-content-center ">
@@ -137,18 +137,14 @@ async function populateStage(cardData, side) {
           <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em> </p></span>
           <br><br>
           <p>${cardData.attributes.stripped_text}</p>
-          <div class="row ">
-            <div class="center-text">
-              <button class="addToDeckButton col" type="button">Add Card to Deck</button>
-            </div>
-          </div>
+          <button class="addToDeckButton col" type="button">Add Card to Deck</button>
         </div>`     
         break; 
       case "asset":
       case "operation":
       case "upgrade":
           cardHTML = `
-          <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
+          <div class="${cardData.attributes.faction_id} flex container-fluid cardDisplay rounded-3">
             <h1 class="text-center">${cardData.attributes.title}</h1>
             <h2 class="text-center">${formattedFaction}</h2>
             <p class="col align-content-center ">
@@ -181,7 +177,7 @@ async function populateStage(cardData, side) {
            break;
       case "ice":  
         cardHTML = `
-          <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
+          <div class="${cardData.attributes.faction_id} flex container-fluid cardDisplay rounded-3">
             <h1 class="text-center">${cardData.attributes.title}</h1>
             <h2 class="text-center">${formattedFaction}</h2>
             <p class="col align-content-center "><em>Rez Cost: </em><img class="credit" src=
@@ -198,7 +194,7 @@ async function populateStage(cardData, side) {
           break;
       case "corp_identity":
         cardHTML = `
-        <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
+        <div class="${cardData.attributes.faction_id} flex container-fluid cardDisplay rounded-3">
           <h1 class="text-center">${cardData.attributes.title}</h1>
           <h2 class="text-center">${formattedFaction}</h2>
           <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em><br><br>
@@ -222,7 +218,7 @@ async function populateStage(cardData, side) {
       case "program":
       case "event":
           cardHTML = `
-          <div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
+          <div class="${cardData.attributes.faction_id} flex container-fluid cardDisplay rounded-3">
             <h1 class="text-center">${cardData.attributes.title}</h1>
             <h2 class="text-center">${formattedFaction}</h2>
             <p class="col align-content-center ">
@@ -251,7 +247,7 @@ async function populateStage(cardData, side) {
            break;
       case "runner_identity":
         cardHTML = 
-        `<div class="${cardData.attributes.faction_id} cardDisplay rounded-3">
+        `<div class="${cardData.attributes.faction_id} flex container-fluid cardDisplay rounded-3">
           <h1 class="text-center">${cardData.attributes.title}</h1>
           <h2 class="text-center">${formattedFaction}</h2>
           <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em>
@@ -324,7 +320,7 @@ updateDeckInfo();
 async function addToDeck(card, side) {
   // Matches any card_type_id ending in _identity and starting with any number 
   // of a-z characters and sets appropriate values, passing the ID card object to the deckID key of userDeck 
-  if (card.attributes.card_type_id.match(/^[a-z]+_identity$/)) {
+  if (card.attributes.card_type_id.includes("identity")){
     nullDeck();
     userDeck.title = card.attributes.title;
     userDeck.side = side;
