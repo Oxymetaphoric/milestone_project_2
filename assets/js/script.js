@@ -325,11 +325,19 @@ async function addToDeck(card, side) {
   } else { 
     
   if (userSelectedID) {
+    if (userDeck.faction == card.attributes.faction_id){
+      userDeck.cards.push(card);
+      userDeck.current_deck_size = userDeck.cards.length;
+      await populateCards(userDeck.cards, side, myDeckDiv)
+    }
+    else {
       userDeck.cards.push(card);
       userDeck.current_deck_size = userDeck.cards.length;
       userDeck.current_influence += card.attributes.influence_cost;
       await populateCards(userDeck.cards, side, myDeckDiv)
-    }  }
+    }
+  }  
+  }
   updateDeckInfo();
 }
 
