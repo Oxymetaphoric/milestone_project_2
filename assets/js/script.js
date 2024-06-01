@@ -252,7 +252,8 @@ async function populateStage(cardData, side) {
   cardData.attributes.trash_cost == null ?  $("#trashCost").hide() :  $("#trashCost").show();
 //add event listeners to each card entry
   $(".userID").off().click( async () => { 
-    $("#deckInfo").addClass(cardData.attributes.faction_id) // add color code here to change 
+    $('#deckInfo').removeClass()
+    $("#deckInfo").addClass(cardData.attributes.faction_id)
     await addToDeck(cardData, side);
   });  
   $(".addToDeckButton").off().click(async() => { 
