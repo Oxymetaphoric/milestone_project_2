@@ -324,20 +324,25 @@ async function addToDeck(card, side) {
     $(myDeckDiv).empty();
   } else { 
     
-  if (userSelectedID) {
-    if (userDeck.faction == card.attributes.faction_id){
-      userDeck.cards.push(card);
-      userDeck.current_deck_size = userDeck.cards.length;
-      await populateCards(userDeck.cards, side, myDeckDiv)
-    }
-    else {
-      userDeck.cards.push(card);
-      userDeck.current_deck_size = userDeck.cards.length;
-      userDeck.current_influence += card.attributes.influence_cost;
-      await populateCards(userDeck.cards, side, myDeckDiv)
-    }
-  }  
-  }
+    if (userSelectedID) {
+      const count = (deck, attribute, card) => deck.cards.filter(item => item.attributes[attribute] === card.attributes[attribute]).length;
+      console.log(count(userDeck, 'title', card));
+      
+      if (userDeck.faction == card.attributes.faction_id){
+        userDeck.cards.push(card);
+        userDeck.current_deck_size = userDeck.cards.length;
+        await populateCards(userDeck.cards, side, myDeckDiv)
+      }
+
+      if (count(userDeck, 'title', card) < 3){
+        userDeck.cards.push(card);
+        userDeck.current_deck_size = userDeck.cards.length;
+        userDeck.current_influence += card.attributes.influence_cost;
+        await populateCards(userDeck.cards, side, myDeckDiv)
+        }
+          }
+   
+}  
   updateDeckInfo();
 }
 
