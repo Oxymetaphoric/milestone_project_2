@@ -245,14 +245,19 @@ async function populateStage(cardData, side) {
         break;   
     }
   } 
-//populate stage with required html
+//populate stage with required html 
   $("#main-stage-display").html(cardHTML) 
 //conditional formatting for cards 
   cardData.attributes.memory_cost == null ? $("#memoryCost").hide() : $("#memoryCost").show();
   cardData.attributes.trash_cost == null ?  $("#trashCost").hide() :  $("#trashCost").show();
 //add event listeners to each card entry
-  $(".userID").off().click( async () => { await addToDeck(cardData, side);});  
-  $(".addToDeckButton").off().click(async() => { await addToDeck(cardData, side);});  
+  $(".userID").off().click( async () => { 
+    $("#deckInfo").addClass(cardData.attributes.faction_id) // add color code here to change 
+    await addToDeck(cardData, side);
+  });  
+  $(".addToDeckButton").off().click(async() => { 
+    await addToDeck(cardData, side);
+  });  
 $(".cardEntry").last().click(async () => {
   await populateStage(card, side);
   }

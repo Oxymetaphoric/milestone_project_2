@@ -44,6 +44,16 @@ p {
 
 }
 
+#main-stage-display {
+  border: 1px solid black;
+  margin: 5px;
+  margin-bottom: 0px;
+  border-radius: 10px;
+  width: 300px;
+  min-width: 100%;
+  padding: 8px;
+}
+
 .credit {
   max-height: 30px;
 }
@@ -115,6 +125,16 @@ p {
   max-height: 100%;
   height: 100px;
   margin: 5px;
+}
+
+#deckInfo {
+  margin-top: 50px;
+  border: 1px solid black;
+  margin: 5px;
+  margin-bottom: 0px;
+  border-radius: 10px;
+  width: 300px;
+  min-width: 100%;
 }
 
 /* column Title styling for card columns  */
