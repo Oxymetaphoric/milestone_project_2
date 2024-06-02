@@ -17,7 +17,7 @@
 - build out deck-building restriction logic:
   - max 3 copies of any card
   - only 1 copy of unique cards
-  - modify populateCards function to accept a target parameter to determine which div to populate and with what
+  - ~~modify populateCards function to accept a target parameter to determine which div to populate and with what~~
   - only show one copy of each card object in deck (use a set?)
 
 ## HTML
