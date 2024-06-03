@@ -307,6 +307,7 @@ updateDeckInfo();
 async function addToDeck(card, side) {
   // Matches any card_type_id ending in _identity and starting with any number 
   // of a-z characters and sets appropriate values, passing the ID card object to the deckID key of userDeck 
+  const count = (deck, attribute, card) => deck.cards.filter(item => item.attributes[attribute] === card.attributes[attribute]).length;
   if (card.attributes.card_type_id.includes("identity")){
     nullDeck();
     userDeck.title = card.attributes.title;
@@ -325,16 +326,14 @@ async function addToDeck(card, side) {
   } else { 
     
     if (userSelectedID) {
-      const count = (deck, attribute, card) => deck.cards.filter(item => item.attributes[attribute] === card.attributes[attribute]).length;
-      console.log(count(userDeck, 'title', card));
-      
-      if (userDeck.faction == card.attributes.faction_id){
+      currentCardCount = count(userDeck, 'title', card)
+      if (userDeck.faction == card.attributes.faction_id && currentCardCount < 3){
         userDeck.cards.push(card);
         userDeck.current_deck_size = userDeck.cards.length;
         await populateCards(userDeck.cards, side, myDeckDiv)
-      }
+      } 
 
-      if (count(userDeck, 'title', card) < 3){
+      else if (currentCardCount < 3){
         userDeck.cards.push(card);
         userDeck.current_deck_size = userDeck.cards.length;
         userDeck.current_influence += card.attributes.influence_cost;
