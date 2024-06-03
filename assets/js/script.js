@@ -342,7 +342,7 @@ async function addToDeck(card, side) {
           await populateCards(userDeck.cards, side, myDeckDiv);
         } 
 
-        else { if (currentCardCount < card.attributes.deck_limit) {
+        else { if (currentCardCount < card.attributes.deck_limit && userDeck.current_influence + card.attributes.influence_cost < userDeck.total_influence ) {
           userDeck.cards.push(card);
           userDeck.current_deck_size = userDeck.cards.length;
           userDeck.current_influence += card.attributes.influence_cost;
