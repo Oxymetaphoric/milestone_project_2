@@ -16,7 +16,7 @@
   - ~~track and cap out of faction cards in users deck via 'Influence' card property (card.attributes.influence(?))~~
 - build out deck-building restriction logic:
   - ~~max 3 copies of any card~~
-  - only 1 copy of unique cards
+  - ~~only 1 copy of unique cards~~
   - ~~modify populateCards function to accept a target parameter to determine which div to populate and with what~~
   - only show one copy of each card object in deck (use a set? or use filtered array produced when count is run?)
 
@@ -35,7 +35,7 @@
 - ~~style controls~~
 - UI/UX overhaul:
   - deck and card list styled better, no horizontal scroll etc.
-  - feedback on buttons (:onHover etc.)
+  - ~~feedback on buttons (:onHover etc.)~~
   - 'loading' text/anims
   - deck entry UI to include a trash button to remove the card
   - deck entry UI to include a count of how many copies of a card are in the deck
