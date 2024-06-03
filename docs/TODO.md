@@ -29,9 +29,7 @@
 - faction filter controls
 - 404 page
 
-## CSS
-
-- ~~import fonts and set up initial styling~~
+## CSS - ~~import fonts and set up initial styling~~
 - ~~style cardEntry w/ background image etc.~~
 - ~~layout and styling for all elements~~
 - ~~style controls~~
