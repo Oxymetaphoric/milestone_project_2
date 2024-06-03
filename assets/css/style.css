@@ -13,7 +13,9 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   font-family: "Public Sans", Arial, Helvetica, sans-serif;
-  font-size: medium;
+  font-size: large;
+  padding: 5px;
+  margin: 0px;
 }
 
 .button {
@@ -92,12 +94,17 @@ p {
   border-color: aqua;
 }
 
-.sides_icon {
-  height: 100px;
-  width: 100px;
-  opacity: 0.8;
-  display:  inline;
-  margin:10px;
+#sideRunner, #sideCorp{
+  text-align: center;
+  align-items: center;
+  font-family: "Public Sans", Arial, Helvetica, sans-serif;
+  font-size: large;
+  padding: 20px;
+  min-height: 100px;
+  min-width: 100px;
+  max-width: 150px;
+  max-height: 150px;
+  margin-bottom: 20px;
 }
 
 .faction_icon {

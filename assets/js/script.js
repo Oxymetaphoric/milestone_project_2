@@ -357,17 +357,17 @@ async function addToDeck(card, side) {
 function updateDeckInfo() {
 let deckInfoHTML = `
     <div class="row">
-    <p>Place next instruction text block in here, use .hide() to show</p>
+      <p class="instructionText text-center">${userSelectedID ? "" : "Please select an ID from the list on the left"}</p>
       <div class="col">
       <p class="col deckIDtitle"><strong>${userDeck.title ? userDeck.title : " "}</strong><br/><em>${userDeck.side ? userDeck.side : " "}</em></p>
-      <p>${userDeck.description}</p>  
+      <p>${userDeck.description ? userDeck.description : " "}</p>  
       <div class="col">
           <p class="deckSize"><strong>Deck Size: </strong>
           ${userDeck.current_deck_size ? userDeck.current_deck_size : "0"} / ${userDeck.min_deck_size ? userDeck.min_deck_size : " "}</p>
           <p class="deckInfluence"><strong>Influence: </strong>
           ${userDeck.current_influence ? userDeck.current_influence : "0"} / ${userDeck.total_influence ? userDeck.total_influence : " "}</p>
           <p class="deckLink"><strong>Base Link: </strong>${userDeck.base_link ? userDeck.base_link : "0"}</p>
-          </div> </div>
+</div> </div>
     </div>`
   // Update the deck info section with the new HTML
   $("#deckInfo").html(deckInfoHTML);
@@ -381,21 +381,23 @@ async function main(side, startingPage) {
   await populateCards(filteredCards, side, allCardsDiv);
   await populateControls(side);
   $("#userControls").hide(); 
-
 $(".cardEntry").last().click(async () => {
   await populateStage(card, side);
   });
 }
 //function runs on page load and initialises the app. Hiding unwanted empty elements, and running main
 $(document).ready(function(){
+  $(deckInfo).hide();
   $(allCardsDiv).hide();
   $(myDeckDiv).hide();
   $("#sideRunner").click(async() => {
     $("#main-stage-display").empty();
+    $(deckInfo).show();
     await main("runner", 4);
   });
   $("#sideCorp").click(async() => {
     $("#main-stage-display").empty();
+    $(deckInfo).show();
     await main("corp", 2);
   });
   $("#runnerSwitch").click(async() => {
