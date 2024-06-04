@@ -302,69 +302,63 @@ async function populateControls(side) {
 
 // Function called when user wishes to add a card to their deck 
 async function addToDeck(card, side) {
-  // Matches any card_type_id ending in _identity and starting with any number 
-  // of a-z characters and sets appropriate values, passing the ID card object to the deckID key of userDeck 
-  const count = (deck, attribute, card) => deck.cards.filter(item => item.attributes[attribute] === card.attributes[attribute]).length;
-  if (card.attributes.card_type_id.includes("identity")) {
-    nullDeck();
-    userDeck.title = card.attributes.title;
-    userDeck.side = side;
-    userDeck.faction = card.attributes.faction_id;
-    userDeck.deck_id = card;
-    userDeck.id_title = card.attributes.title;
-    userDeck.id_subtype = card.attributes.display_subtypes;
-    userDeck.min_deck_size = card.attributes.minimum_deck_size;
-    userDeck.current_influence = 0;
-    userDeck.total_influence = card.attributes.influence_limit;
-    userDeck.description = card.attributes.stripped_text;
-    userDeck.base_link = card.attributes.base_link;
-    userSelectedID = true;
-    $(myDeckDiv).empty();
-  } else {
-    if (userSelectedID) {
-      const currentCardCount = count(userDeck, 'title', card);        
-      if (card.attributes.card_type_id === 'agenda' &&  card.attributes.faction_id === userDeck.faction && currentCardCount < card.attributes.deck_limit) {
-        userDeck.cards.push(card);
-        userDeck.current_deck_size = userDeck.cards.length;
-        await populateCards(userDeck.cards, side, myDeckDiv);
-        }
-      } else {
-          const currentCardCount = count(userDeck, 'title', card);        
-          if (userDeck.faction === card.attributes.faction_id && currentCardCount < card.attributes.deck_limit) {
+    // Function to count cards in the deck by a specific attribute
+    const count = (deck, attribute, card) => deck.cards.filter(item => item.attributes[attribute] === card.attributes[attribute]).length;
+
+    if (card.attributes.card_type_id.includes("identity")) {
+        nullDeck();
+        Object.assign(userDeck, {
+            title: card.attributes.title,
+            side: side,
+            faction: card.attributes.faction_id,
+            deck_id: card,
+            id_title: card.attributes.title,
+            id_subtype: card.attributes.display_subtypes,
+            min_deck_size: card.attributes.minimum_deck_size,
+            current_influence: 0,
+            total_influence: card.attributes.influence_limit,
+            description: card.attributes.stripped_text,
+            base_link: card.attributes.base_link,
+        });
+        userSelectedID = true;
+        $(myDeckDiv).empty();
+    } else if (userSelectedID) {
+        let currentCardCount = count(userDeck, 'title', card);
+        let canAddCard = (currentCardCount < card.attributes.deck_limit) &&
+            (card.attributes.card_type_id === 'agenda' ?
+                card.attributes.faction_id === userDeck.faction :
+                userDeck.faction === card.attributes.faction_id || 
+                userDeck.current_influence + card.attributes.influence_cost <= userDeck.total_influence);
+        
+        if (canAddCard) {
             userDeck.cards.push(card);
             userDeck.current_deck_size = userDeck.cards.length;
+            if (userDeck.faction !== card.attributes.faction_id) {
+                userDeck.current_influence += card.attributes.influence_cost;
+            }
             await populateCards(userDeck.cards, side, myDeckDiv);
-          } 
-        else { 
-          if (currentCardCount < card.attributes.deck_limit && userDeck.current_influence + card.attributes.influence_cost <= userDeck.total_influence ) {
-            userDeck.cards.push(card);
-            userDeck.current_deck_size = userDeck.cards.length;
-            userDeck.current_influence += card.attributes.influence_cost;
-            await populateCards(userDeck.cards, side, myDeckDiv);
-          }}
         }
-      }
-  updateDeckInfo();
+    }
+    updateDeckInfo();
 }
 
 function updateDeckInfo() {
-let deckInfoHTML = `
+    let deckInfoHTML = `
     <div class="row">
-      <p class="instructionText text-center">${userSelectedID ? "" : "Please select an ID from the list on the left"}</p>
-      <div class="col">
-      <p class="col deckIDtitle"><strong>${userDeck.title ? userDeck.title : " "}</strong><br/><em>${userDeck.side ? userDeck.side : " "}</em></p>
-      <p>${userDeck.description ? userDeck.description : " "}</p>  
-      <div class="col">
-          <p class="deckSize"><strong>Deck Size: </strong>
-          ${userDeck.current_deck_size ? userDeck.current_deck_size : "0"} / ${userDeck.min_deck_size ? userDeck.min_deck_size : " "}</p>
-          <p class="deckInfluence"><strong>Influence: </strong>
-          ${userDeck.current_influence ? userDeck.current_influence : "0"} / ${userDeck.total_influence ? userDeck.total_influence : " "}</p>
-          <p class="deckLink"><strong>Base Link: </strong>${userDeck.base_link ? userDeck.base_link : "0"}</p>
-</div> </div>
-    </div>`
-  // Update the deck info section with the new HTML
-  $("#deckInfo").html(deckInfoHTML);
-};
+        <p class="instructionText text-center">${userSelectedID ? "" : "Please select an ID from the list on the left"}</p>
+        <div class="col">
+            <p class="col deckIDtitle"><strong>${userDeck.title || " "}</strong><br/><em>${userDeck.side || " "}</em></p>
+            <p>${userDeck.description || " "}</p>  
+            <div class="col">
+                <p class="deckSize"><strong>Deck Size: </strong>${userDeck.current_deck_size || "0"} / ${userDeck.min_deck_size || " "}</p>
+                <p class="deckInfluence"><strong>Influence: </strong>${userDeck.current_influence || "0"} / ${userDeck.total_influence || " "}</p>
+                <p class="deckLink"><strong>Base Link: </strong>${userDeck.base_link || "0"}</p>
+            </div>
+        </div>
+    </div>`;
+    // Update the deck info section with the new HTML
+    $("#deckInfo").html(deckInfoHTML);
+}
 
 //Main function, use for calling other functions and hooking into user interface
 async function main(side, startingPage) {
