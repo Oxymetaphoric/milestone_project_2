@@ -324,12 +324,7 @@ async function addToDeck(card, side) {
         $(myDeckDiv).empty();
     } else if (userSelectedID) {
         let currentCardCount = count(userDeck, 'title', card);
-        let canAddCard = (currentCardCount < card.attributes.deck_limit) &&
-            (card.attributes.card_type_id === 'agenda' ?
-                card.attributes.faction_id === userDeck.faction :
-                userDeck.faction === card.attributes.faction_id || 
-                userDeck.current_influence + card.attributes.influence_cost <= userDeck.total_influence);
-        
+        let canAddCard = (currentCardCount < card.attributes.deck_limit) && (card.attributes.card_type_id === 'agenda' ? card.attributes.faction_id === userDeck.faction : userDeck.faction === card.attributes.faction_id || userDeck.current_influence + card.attributes.influence_cost <= userDeck.total_influence);
         if (canAddCard) {
             userDeck.cards.push(card);
             userDeck.current_deck_size = userDeck.cards.length;
@@ -338,7 +333,7 @@ async function addToDeck(card, side) {
             }
             await populateCards(userDeck.cards, side, myDeckDiv);
         }
-    }
+  }   
     updateDeckInfo();
 }
 
