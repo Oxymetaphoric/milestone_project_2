@@ -19,6 +19,7 @@
   - ~~only 1 copy of unique cards~~
   - ~~modify populateCards function to accept a target parameter to determine which div to populate and with what~~
   - only show one copy of each card object in deck (use a set? or use filtered array produced when count is run?)
+  - add loading gif, preload in html
 
 ## HTML
 
