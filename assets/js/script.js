@@ -129,7 +129,7 @@ async function populateStage(cardData, side) {
     switch (cardData.attributes.card_type_id) {
       case 'agenda':
         cardHTML = `
-        <div class="row ${cardData.attributes.faction_id} flex container-fluid cardDisplay rounded-3">
+        <div class="${cardData.attributes.faction_id} flex container-fluid cardDisplay rounded-3">
           <h1 class="text-center">${cardData.attributes.title}</h1>
           <h2 class="text-center">${formattedFaction}</h2>
           <p class="col align-content-center ">
@@ -140,7 +140,7 @@ async function populateStage(cardData, side) {
           <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : " " }</em> </p></span>
           <br><br>
           <p>${cardData.attributes.stripped_text}</p>
-          <button class="addToDeckButton col" type="button">Add Card to Deck</button>
+          ${userSelectedID ? `<button class="addToDeckButton col" type="button">Add Card to Deck</button>` : ""}
         </div>`     
         break; 
       case "asset":
@@ -171,7 +171,7 @@ async function populateStage(cardData, side) {
             </span>
             <br><br>
             <p>${cardData.attributes.stripped_text}</p>
-            <button class="addToDeckButton col" type="button">Add Card to Deck</button>
+            ${userSelectedID ? `<button class="addToDeckButton col" type="button">Add Card to Deck</button>` : ""}
           </div>`
            break;
       case "ice":  
@@ -184,7 +184,7 @@ async function populateStage(cardData, side) {
             <em>Strength: </em>${cardData.attributes.strength}
             <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em></p></span><br>
             <p>${cardData.attributes.stripped_text}"</p>
-            <button class="addToDeckButton col" type="button">Add Card to Deck</button>
+            ${userSelectedID ? `<button class="addToDeckButton col" type="button">Add Card to Deck</button>` : ""}
           </div>`
           break;
       case "corp_identity":
@@ -216,7 +216,6 @@ async function populateStage(cardData, side) {
               <em>Cost: </em>
               <img class="credit" src=
             "assets/images/NSG-Visual-Assets/SVG/GameSymbols/NSG_CREDIT.svg">${cardData.attributes.cost}<span>&nbsp&nbsp|&nbsp&nbsp<em>Influence: </em>${cardData.attributes.influence_cost}
-           
             <span id="memoryCost">&nbsp&nbsp|&nbsp&nbsp
               <em>Memory Cost: </em>
               <img class="credit" src=
@@ -229,7 +228,7 @@ async function populateStage(cardData, side) {
                 </p>
               </span>
             <p>${cardData.attributes.stripped_text}</p>
-            <button class="addToDeckButton col" type="button">Add Card to Deck</button>
+            ${userSelectedID ? `<button class="addToDeckButton col" type="button">Add Card to Deck</button>` : ""}
           </div>`
            break;
       case "runner_identity":
