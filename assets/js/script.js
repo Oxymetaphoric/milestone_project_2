@@ -200,7 +200,8 @@ async function populateStage(cardData, side) {
         </div>`
         break; 
         }
-      }
+    console.log("hello!")    
+  }
 //same code as above but for the runner player
   if (side == "runner"){
     switch (cardData.attributes.card_type_id) {
@@ -302,6 +303,7 @@ async function populateControls(side) {
 
 // Function called when user wishes to add a card to their deck 
 async function addToDeck(card, side) {
+<<<<<<< Updated upstream
     // Function to count cards in the deck by a specific attribute
     const count = (deck, attribute, card) => deck.cards.filter(item => item.attributes[attribute] === card.attributes[attribute]).length;
 
@@ -324,21 +326,55 @@ async function addToDeck(card, side) {
         $(myDeckDiv).empty();
     } else if (userSelectedID) {
         let currentCardCount = count(userDeck, 'title', card);
-        let canAddCard = (currentCardCount < card.attributes.deck_limit) &&
-            (card.attributes.card_type_id === 'agenda' ?
-                card.attributes.faction_id === userDeck.faction :
-                userDeck.faction === card.attributes.faction_id || 
-                userDeck.current_influence + card.attributes.influence_cost <= userDeck.total_influence);
-        
+        let canAddCard = (currentCardCount < card.attributes.deck_limit) && (card.attributes.card_type_id === 'agenda' ? card.attributes.faction_id === userDeck.faction : userDeck.faction === card.attributes.faction_id || userDeck.current_influence + card.attributes.influence_cost <= userDeck.total_influence);
         if (canAddCard) {
+=======
+  // Matches any card_type_id ending in _identity and starting with any number 
+  // of a-z characters and sets appropriate values, passing the ID card object to the deckID key of userDeck 
+  const count = (deck, attribute, card) => deck.cards.filter(item => item.attributes[attribute] === card.attributes[attribute]).length;
+  if (card.attributes.card_type_id.includes("identity")) {
+    nullDeck();
+    userDeck.title = card.attributes.title;
+    userDeck.side = side;
+    userDeck.faction = card.attributes.faction_id;
+    userDeck.deck_id = card;
+    userDeck.id_title = card.attributes.title;
+    userDeck.id_subtype = card.attributes.display_subtypes;
+    userDeck.min_deck_size = card.attributes.minimum_deck_size;
+    userDeck.current_influence = 0;
+    userDeck.total_influence = card.attributes.influence_limit;
+    userDeck.description = card.attributes.stripped_text;
+    userDeck.base_link = card.attributes.base_link;
+    userSelectedID = true;
+    $(myDeckDiv).empty();
+  } else {
+    if (userSelectedID) {
+      let currentCardCount = count(userDeck, 'title', card);        
+      if (card.attributes.card_type_id === 'agenda' &&  card.attributes.faction_id === userDeck.faction && currentCardCount < card.attributes.deck_limit) {
+        userDeck.cards.push(card);
+        userDeck.current_deck_size = userDeck.cards.length;
+        await populateCards(userDeck.cards, side, myDeckDiv);
+        }
+       else if (userDeck.faction === card.attributes.faction_id && currentCardCount < card.attributes.deck_limit) {
+>>>>>>> Stashed changes
             userDeck.cards.push(card);
             userDeck.current_deck_size = userDeck.cards.length;
             if (userDeck.faction !== card.attributes.faction_id) {
                 userDeck.current_influence += card.attributes.influence_cost;
             }
             await populateCards(userDeck.cards, side, myDeckDiv);
+<<<<<<< Updated upstream
+=======
+          } 
+        else if (currentCardCount < card.attributes.deck_limit && userDeck.current_influence + card.attributes.influence_cost <= userDeck.total_influence ) {
+            userDeck.cards.push(card);
+            userDeck.current_deck_size = userDeck.cards.length;
+            userDeck.current_influence += card.attributes.influence_cost;
+            await populateCards(userDeck.cards, side, myDeckDiv);
+          }
+>>>>>>> Stashed changes
         }
-    }
+  }   
     updateDeckInfo();
 }
 
