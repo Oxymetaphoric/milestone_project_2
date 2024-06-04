@@ -140,7 +140,7 @@ async function populateStage(cardData, side) {
           <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : " " }</em> </p></span>
           <br><br>
           <p>${cardData.attributes.stripped_text}</p>
-          ${userSelectedID ? `<button class="addToDeckButton col" type="button">Add Card to Deck</button>` : ""}
+          ${userSelectedID && userDeck.faction === cardData.attributes.faction_id ? `<button class="addToDeckButton col" type="button">Add Card to Deck</button>` : ""}
         </div>`     
         break; 
       case "asset":
@@ -196,7 +196,7 @@ async function populateStage(cardData, side) {
           <strong>Minimum Deck Size: </strong>${cardData.attributes.minimum_deck_size}<br>
           <strong>Influence: </strong>${cardData.attributes.influence_limit}</p></span> </p></span>
           <p>${cardData.attributes.stripped_text}</p>
-          <button class="userID col" type="button">Build deck with this ID</button>
+          <button class="userID col" type="button">Build a deck with this ID?</button>
         </div>`
         break; 
         }
@@ -291,18 +291,14 @@ async function populateControls(side) {
     $("#filterCardsControls").append(newRadioButton, newLabel);   
 //give each radio button an event listener that runs the filterCard function based on the label of the radio button and then populates the filtered cards 
 // to the card navigation section
-    newRadioButton.addEventListener('click', async() => {
-          if (type.id.includes("identity")){
-          // Filter cards based on the selected card type
-            nullDeck();
-          }
-          let filteredCards = await filterCards("card_type_id", type.id, side);
-          // Populate cards with filtered cards
-          await populateCards(filteredCards, side, allCardsDiv);
-        });
-  updateDeckInfo();
-  };
+ newRadioButton.addEventListener('click', async () => {
+    // Filter the cards based on the card type ID, type ID, and side
+    let filteredCards = await filterCards("card_type_id", type.id, side);
+    await populateCards(filteredCards, side, allCardsDiv);
+    updateDeckInfo();
+});
 }  
+}
 
 // Function called when user wishes to add a card to their deck 
 async function addToDeck(card, side) {
@@ -326,30 +322,28 @@ async function addToDeck(card, side) {
     $(myDeckDiv).empty();
   } else {
     if (userSelectedID) {
-      const currentCardCount = count(userDeck, 'title', card);
-
-      if (card.attributes.card_type_id === 'agenda') {
-        if (card.attributes.faction_id === userDeck.faction) {
-          userDeck.cards.push(card);
-          userDeck.current_deck_size = userDeck.cards.length;
-          await populateCards(userDeck.cards, side, myDeckDiv);
+      const currentCardCount = count(userDeck, 'title', card);        
+      if (card.attributes.card_type_id === 'agenda' &&  card.attributes.faction_id === userDeck.faction && currentCardCount < card.attributes.deck_limit) {
+        userDeck.cards.push(card);
+        userDeck.current_deck_size = userDeck.cards.length;
+        await populateCards(userDeck.cards, side, myDeckDiv);
         }
       } else {
-        if (userDeck.faction === card.attributes.faction_id && currentCardCount < card.attributes.deck_limit) {
-          userDeck.cards.push(card);
-          userDeck.current_deck_size = userDeck.cards.length;
-          await populateCards(userDeck.cards, side, myDeckDiv);
-        } 
-
-        else { if (currentCardCount < card.attributes.deck_limit && userDeck.current_influence + card.attributes.influence_cost <= userDeck.total_influence ) {
-          userDeck.cards.push(card);
-          userDeck.current_deck_size = userDeck.cards.length;
-          userDeck.current_influence += card.attributes.influence_cost;
-          await populateCards(userDeck.cards, side, myDeckDiv);
-        }}
+          const currentCardCount = count(userDeck, 'title', card);        
+          if (userDeck.faction === card.attributes.faction_id && currentCardCount < card.attributes.deck_limit) {
+            userDeck.cards.push(card);
+            userDeck.current_deck_size = userDeck.cards.length;
+            await populateCards(userDeck.cards, side, myDeckDiv);
+          } 
+        else { 
+          if (currentCardCount < card.attributes.deck_limit && userDeck.current_influence + card.attributes.influence_cost <= userDeck.total_influence ) {
+            userDeck.cards.push(card);
+            userDeck.current_deck_size = userDeck.cards.length;
+            userDeck.current_influence += card.attributes.influence_cost;
+            await populateCards(userDeck.cards, side, myDeckDiv);
+          }}
+        }
       }
-    }
-  }
   updateDeckInfo();
 }
 
