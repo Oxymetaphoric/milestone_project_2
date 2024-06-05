@@ -308,6 +308,7 @@ async function populateControls(side) {
 async function addToDeck(card, side) {
     // Function to count cards in the deck by a specific attribute
     const count = (deck, attribute, card) => deck.cards.filter(item => item.attributes[attribute] === card.attributes[attribute]).length;
+
     if (card.attributes.card_type_id.includes("identity")) {
         nullDeck();
         Object.assign(userDeck, {
@@ -344,14 +345,16 @@ async function addToDeck(card, side) {
 }
 
 function removeCard(card) {
+    userDeck.cards = userDeck.cards.filter(item => item !== card);
     userDeck.current_deck_size = userDeck.cards.length;
     userDeck.current_influence -= card.attributes.influence_cost;
     $(`#${card.id}`).remove();
+
     if (card.attributes.card_type_id.includes("identity")) {
         nullDeck();
         $('#deckInfo').removeClass();
     }
-    $(`#${card.id}`).remove();
+
     updateDeckInfo();
     populateCards(userDeck.cards, userDeck.side, myDeckDiv);
 }
