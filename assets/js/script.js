@@ -2,7 +2,6 @@ const apiLink = "https://api-preview.netrunnerdb.com/api/v3/public/"
 const allCardsDiv = "#allCards";
 const myDeckDiv = "#myDeck";
 const count = (deck, attribute, card) => deck.cards.filter(item => item.attributes[attribute] === card.attributes[attribute]).length;
-console.log(count)
 //initialise the userDeck object with null values 
 let userSelectedID = false;
 //refactor into function
@@ -89,7 +88,7 @@ async function populateCards(cards, side, targetDiv) {
       //html for allCards entries
       //define HTML for cards in the card navigation section
       let cardHTML = `
-      <div class="row cardEntry ${factionID}">  
+      <div class="col row cardEntry ${factionID}">  
         <img class="row faction_icon" src = ${factionIcon}>
         <div class="col">
           <h2 class='card-title'>
@@ -141,6 +140,7 @@ async function populateStage(cardData, side) {
           <br><br>
           <p>${cardData.attributes.stripped_text}</p>
           ${userSelectedID && userDeck.faction === cardData.attributes.faction_id ? `<button class="addToDeckButton col" type="button">Add Card to Deck</button>` : ""}
+            ${userSelectedID ? `<button class="removeFromDeckButton col" type="button">Remove Card from Deck</button>` : ""}
         </div>`     
         break; 
       case "asset":
@@ -172,6 +172,7 @@ async function populateStage(cardData, side) {
             <br><br>
             <p>${cardData.attributes.stripped_text}</p>
             ${userSelectedID ? `<button class="addToDeckButton col" type="button">Add Card to Deck</button>` : ""}
+            ${userSelectedID ? `<button class="removeFromDeckButton col" type="button">Remove Card from Deck</button>` : ""}
           </div>`
            break;
       case "ice":  
@@ -185,6 +186,7 @@ async function populateStage(cardData, side) {
             <span><p><Strong>${formattedCardType}</Strong>&nbsp&nbsp|&nbsp&nbsp<em>${cardData.attributes.display_subtypes ? cardData.attributes.display_subtypes : ""}</em></p></span><br>
             <p>${cardData.attributes.stripped_text}"</p>
             ${userSelectedID ? `<button class="addToDeckButton col" type="button">Add Card to Deck</button>` : ""}
+            ${userSelectedID ? `<button class="removeFromDeckButton col" type="button">Remove Card from Deck</button>` : ""}
           </div>`
           break;
       case "corp_identity":
@@ -196,7 +198,7 @@ async function populateStage(cardData, side) {
           <strong>Minimum Deck Size: </strong>${cardData.attributes.minimum_deck_size}<br>
           <strong>Influence: </strong>${cardData.attributes.influence_limit}</p></span> </p></span>
           <p>${cardData.attributes.stripped_text}</p>
-          <button class="userID col" type="button">Build a deck with this ID?</button>
+          ${!userSelectedID ? '<button class="userID col" type="button">Build deck with this ID</button>' : '<button class="userID col" type="button">Change IDs?</button>' } 
         </div>`
         break; 
         }
@@ -229,6 +231,7 @@ async function populateStage(cardData, side) {
               </span>
             <p>${cardData.attributes.stripped_text}</p>
             ${userSelectedID ? `<button class="addToDeckButton col" type="button">Add Card to Deck</button>` : ""}
+            ${userSelectedID ? `<button class="removeFromDeckButton col" type="button">Remove Card from Deck</button>` : ""}
           </div>`
            break;
       case "runner_identity":
@@ -241,7 +244,7 @@ async function populateStage(cardData, side) {
           <strong>Minimum Deck Size: </strong>${cardData.attributes.minimum_deck_size}<br>
           <strong>Influence: </strong>${cardData.attributes.influence_limit}</p></span>
           <p>${cardData.attributes.stripped_text}</p>
-          <button class="userID col" type="button">Build deck with this ID</button>
+          ${!userSelectedID ? '<button class="userID col" type="button">Build deck with this ID</button>' : '<button class="userID col" type="button">Change IDs?</button>' } 
         </div>`
         break;   
     }
@@ -259,7 +262,8 @@ async function populateStage(cardData, side) {
   });  
   $(".addToDeckButton").off().click(async() => { 
     await addToDeck(cardData, side);
-  });  
+  });
+  $(".removeFromDeckButton").off().click(() => removeCard(cardData));
 $(".cardEntry").last().click(async () => {
   await populateStage(cardData, side);
   }
@@ -339,6 +343,25 @@ async function addToDeck(card, side) {
     }
     updateDeckInfo();
 }
+
+function removeCard(card) {
+    userDeck.cards = userDeck.cards.filter(item => item !== card);
+    userDeck.current_deck_size = userDeck.cards.length;
+    userDeck.current_influence -= card.attributes.influence_cost;
+    $(`#${card.id}`).remove();
+
+    if (card.attributes.card_type_id.includes("identity")) {
+        nullDeck();
+        userSelectedID = false;
+  $(".removeFromDeckButton").off().click(() => removeCard(card));
+        userDeck.userSelectedID = userSelectedID;
+        $('#deckInfo').removeClass();
+    }
+
+    updateDeckInfo();
+    populateCards(userDeck.cards, userDeck.side, myDeckDiv);
+}
+
 function updateDeckInfo() {
     let deckInfoHTML = `
     <div class="row">
