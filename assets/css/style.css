@@ -19,6 +19,7 @@ p {
 }
 
 .button {
+  background-color: rgb(156, 124, 156);
   font-family: "Play", Arial, Helvetica, sans-serif;
   border: none;
   padding: 32px;
@@ -27,6 +28,7 @@ p {
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
+  border-radius:10px;
 }
 
 .full-height {
@@ -73,7 +75,8 @@ p {
 
 .cardDisplayAreas {
   max-height: 100vh;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
   font-size: 14pt;
   border: 2px solid black;
   background-color:rgba(255, 228, 196, 0.8);
@@ -86,8 +89,9 @@ p {
   margin: 5px;
   margin-bottom: 0px;
   border-radius: 10px;
-  width: 300px;
-  min-width: 100%;
+  min-width:100%;
+  padding: 5px;
+  padding-right: 10px;
 }
 
 .cardEntry:hover {
@@ -129,9 +133,19 @@ p {
 }
 
 #filterCardsControls {
-  max-height: 100%;
-  height: 100px;
+  font-family: "Public Sans", Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  height: 100%;
   margin: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.radio-button {
+  display: inline-block;
+  padding: 10px;
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
 #deckInfo {

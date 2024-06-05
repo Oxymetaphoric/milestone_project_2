@@ -395,7 +395,7 @@ $(".cardEntry").last().click(async () => {
   });
 }
 //function runs on page load and initialises the app. Hiding unwanted empty elements, and running main
-$(document).ready(function(){
+$(document).ready(async function(){
   $(deckInfo).hide();
   $(allCardsDiv).hide();
   $(myDeckDiv).hide();
@@ -409,12 +409,12 @@ $(document).ready(function(){
     $(deckInfo).show();
     await main("corp", 2);
   });
-  $("#runnerSwitch").click(async() => {
+  $("#switchRunner").click(async() => {
     $("#main-stage-display").empty();
     nullDeck();
     await main("runner", 4);
   });
-  $("#corpSwitch").click(async() => {
+  $("#switchCorp").click(async() => {
     $("#main-stage-display").empty(); 
     nullDeck();
     await main("corp", 2);
