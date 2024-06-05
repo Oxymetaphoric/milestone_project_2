@@ -261,7 +261,7 @@ async function populateStage(cardData, side) {
     await addToDeck(cardData, side);
   });  
 $(".cardEntry").last().click(async () => {
-  await populateStage(card, side);
+  await populateStage(cardData, side);
   }
 );
 };
