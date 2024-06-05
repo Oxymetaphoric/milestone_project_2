@@ -200,7 +200,6 @@ async function populateStage(cardData, side) {
         </div>`
         break; 
         }
-    console.log("hello!")    
   }
 //same code as above but for the runner player
   if (side == "runner"){
@@ -322,16 +321,24 @@ async function addToDeck(card, side) {
             base_link: card.attributes.base_link,
         });
         userSelectedID = true;
-        $(myDeckDiv).empty();
+         $(myDeckDiv).empty();
     } else if (userSelectedID) {
+        // Count the current number of this card in the deck
         let currentCardCount = count(userDeck, 'title', card);
-        let canAddCard = (currentCardCount < card.attributes.deck_limit) && (card.attributes.card_type_id === 'agenda' ? card.attributes.faction_id === userDeck.faction : userDeck.faction === card.attributes.faction_id || userDeck.current_influence + card.attributes.influence_cost <= userDeck.total_influence);
+        // Check if the card can be added to the deck
+        let canAddCard = (currentCardCount < card.attributes.deck_limit) && 
+                         (userDeck.current_influence + card.attributes.influence_cost <= userDeck.total_influence);
         if (canAddCard) {
+            userDeck.cards.push(card);
+            userDeck.current_deck_size = userDeck.cards.length;
+            if (userDeck.faction != card.attributes.faction_id){
+              userDeck.current_influence += card.attributes.influence_cost;
+            }
+            await populateCards(userDeck.cards, side, myDeckDiv);
         }
-  }   
+    }
     updateDeckInfo();
 }
-
 function updateDeckInfo() {
     let deckInfoHTML = `
     <div class="row">
