@@ -38,7 +38,7 @@
   - deck and card list styled better, no horizontal scroll etc.
   - ~~feedback on buttons (:onHover etc.)~~
   - 'loading' text/anims
-  - deck entry UI to include a trash button to remove the card
+  - ~~deck entry UI to include a trash button to remove the card~~
   - deck entry UI to include a count of how many copies of a card are in the deck
 - media queries
 
