@@ -26,7 +26,6 @@ p {
   text-align: center;
   text-decoration: none;
   font-size: 16px;
-  margin: 4px 2px;
   cursor: pointer;
   border-radius:10px;
 }
@@ -44,7 +43,6 @@ p {
   margin: 10px;
   padding: 20px;
   background-color:rgba(255, 228, 196, 0.8);
-
 }
 
 #main-stage-display {
@@ -63,7 +61,6 @@ p {
 .cardDisplay {
   min-height: 375px;
   padding: 20px;
-
 }
 
 #controls {
@@ -118,7 +115,6 @@ p {
   opacity: 0.8;
   display:  inline;
 }
-
 
 .card-title {
   line-height: 1.5rem;

@@ -301,6 +301,7 @@ async function populateControls(side) {
     let filteredCards = await filterCards("card_type_id", type.id, side);
     await populateCards(filteredCards, side, allCardsDiv);
     updateDeckInfo();
+    
     });
   }  
 }
@@ -332,7 +333,7 @@ async function addToDeck(card, side) {
         let currentCardCount = count(userDeck, 'title', card);
         // Check if the card can be added to the deck
         let canAddCard = (currentCardCount < card.attributes.deck_limit) && 
-                         (userDeck.current_influence + card.attributes.influence_cost <= userDeck.total_influence);
+                         (userDeck.current_influence + card.attributes.influence_cost <= userDeck.total_influence || card.attributes.faction === userDeck.faction);
         if (canAddCard) {
             userDeck.cards.push(card);
             userDeck.current_deck_size = userDeck.cards.length;
@@ -401,22 +402,28 @@ $(document).ready(async function(){
   $(myDeckDiv).hide();
   $("#sideRunner").click(async() => {
     $("#main-stage-display").empty();
-    $(deckInfo).show();
+    $("#deckInfo").show();
+    updateDeckInfo();
     await main("runner", 4);
   });
   $("#sideCorp").click(async() => {
     $("#main-stage-display").empty();
-    $(deckInfo).show();
+    $("deckInfo").show();
+    updateDeckInfo();
     await main("corp", 2);
   });
   $("#switchRunner").click(async() => {
     $("#main-stage-display").empty();
     nullDeck();
+    $("#deckInfo").removeClass();
+    updateDeckInfo();
     await main("runner", 4);
   });
   $("#switchCorp").click(async() => {
     $("#main-stage-display").empty(); 
     nullDeck();
+    $("#deckInfo").removeClass();
+    updateDeckInfo();
     await main("corp", 2);
   });
   }
