@@ -103,7 +103,7 @@ async function populateCards(cards, side, targetDiv) {
     $(targetDiv).append(cardHTML);
   //attach eventListeners to cardEntries to send clicked card information and user side to main Stage
   $(".cardEntry").last().click(async () => {
-    await populateStage(card, side);
+      await populateStage(card, side);
   }); 
 })};
 
@@ -265,10 +265,6 @@ async function populateStage(cardData, side) {
     await addToDeck(cardData, side);
   });
 $(".removeFromDeckButton").off().click(() => removeCard(cardData));
-$(".cardEntry").last().click(async () => {
-  await populateStage(cardData, side);
-  }
-);
 };
 
 // populate the options section 
@@ -333,7 +329,7 @@ async function addToDeck(card, side) {
         let currentCardCount = count(userDeck, 'title', card);
         // Check if the card can be added to the deck
         let canAddCard = (currentCardCount < card.attributes.deck_limit) && 
-                         (userDeck.current_influence + card.attributes.influence_cost <= userDeck.total_influence || card.attributes.faction === userDeck.faction);
+                         (userDeck.current_influence + card.attributes.influence_cost <= userDeck.total_influence || card.attributes.faction_id === userDeck.faction);
         if (canAddCard) {
             userDeck.cards.push(card);
             userDeck.current_deck_size = userDeck.cards.length;
@@ -341,8 +337,15 @@ async function addToDeck(card, side) {
               userDeck.current_influence += card.attributes.influence_cost;
             }
             await populateCards(userDeck.cards, side, myDeckDiv);
-        }
-    }
+        } else { 
+            if (currentCardCount >= card.attributes.deck_limit) {
+              alert("Unable to add to deck. Too many copies")
+              } 
+            if (userDeck.current_influence === userDeck.total_influence){
+                alert("influence limit reached")
+      }
+          }
+      }
     updateDeckInfo();
 }
 
@@ -390,7 +393,6 @@ async function main(side, startingPage) {
   let filteredCards = await filterCards("card_type_id", cardType, side);
   await populateCards(filteredCards, side, allCardsDiv);
   await populateControls(side);
-  $("#userControls").hide(); 
 $(".cardEntry").last().click(async () => {
   await populateStage(card, side);
   });
