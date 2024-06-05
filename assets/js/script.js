@@ -28,6 +28,7 @@ function initializeUserDeck(){
 
 function nullDeck() {
   $(myDeckDiv).empty();
+  $(myDeckDiv).hide();
   userDeck = initializeUserDeck();
 
 }
@@ -345,9 +346,13 @@ async function addToDeck(card, side) {
 }
 
 function removeCard(card) {
+    const count = (deck, attribute, card) => deck.cards.filter(item => item.attributes[attribute] === card.attributes[attribute]).length;
+    cardCount = count(userDeck, 'title', card);
     userDeck.cards = userDeck.cards.filter(item => item !== card);
     userDeck.current_deck_size = userDeck.cards.length;
-    userDeck.current_influence -= card.attributes.influence_cost;
+    if (card.attributes.faction_id != userDeck.faction){
+    userDeck.current_influence > 0 ? userDeck.current_influence -= card.attributes.influence_cost * cardCount : userDeck.current_influence = userDeck.current_influence;
+    }
     $(`#${card.id}`).remove();
 
     if (card.attributes.card_type_id.includes("identity")) {
