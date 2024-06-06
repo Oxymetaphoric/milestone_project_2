@@ -38,7 +38,7 @@ a {
     background-size: 80px;
 }
 
-.addToDeckButton, .removeFromDeckButton, .userID {
+.addToDeckButton, .removeFromDeckButton, .userID, .cardEntry {
   background-color: #e3e3e3;
   font-family: "Play", Arial, Helvetica, sans-serif;
   border: none;
