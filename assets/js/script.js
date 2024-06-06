@@ -145,7 +145,7 @@ async function populateStage(cardData, side) {
           <br><br>
           <p>${cardData.attributes.stripped_text}</p>
           ${userSelectedID && userDeck.faction === cardData.attributes.faction_id ? `<button class="addToDeckButton col" type="button">Add Card to Deck</button>` : ""}
-            ${userSelectedID ? `<button class="removeFromDeckButton col" type="button">Remove Card from Deck</button>` : ""}
+            ${userSelectedID && userDeck.faction === cardData.attributes.faction_id ? `<button class="removeFromDeckButton col" type="button">Remove Card from Deck</button>` : ""}
         </div>`     
         break; 
       case "asset":
