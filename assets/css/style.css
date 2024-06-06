@@ -38,17 +38,24 @@ a {
     background-size: 80px;
 }
 
-.button {
-  background-color: rgb(156, 124, 156);
+.addToDeckButton, .removeFromDeckButton, .userID {
+  background-color: #e3e3e3;
   font-family: "Play", Arial, Helvetica, sans-serif;
   border: none;
-  padding: 32px;
+  padding: 15px;
   text-align: center;
   text-decoration: none;
   font-size: 16px;
   cursor: pointer;
   border-radius:10px;
+  margin:20px;
 }
+.addToDeckButton:hover, .removeFromDeckButton:hover, .userID:hover {
+  background-color:#d3d3d3;
+  border: 1px solid inset aqua;
+} 
+
+
 
 .full-height {
   max-height: 100;
@@ -160,8 +167,9 @@ a {
   max-height: 80px;
   height: 80px;
   width: 80px;
-  opacity: 0.8;
+  opacity: 1;
   display:  inline;
+  
 }
 
 .card-title {
@@ -220,26 +228,26 @@ a {
 /* Faction Colours */
 
 .weyland_consortium {
-  background-color: rgba(51, 68, 51, 0.5);}
+  background-color: rgba(51, 68, 51, 0.8);}
 .haas_bioroid {
-  background-color: rgba(105, 20, 105, 0.5)}
+  background-color: rgba(105, 20, 105, 0.8)}
 .jinteki {
   background-color: rgba(141, 34, 34, 0.8)}
 .nbn {
-  background-color: rgba(255, 208, 0, 0.5)}
+  background-color: rgba(255, 208, 0, 0.8)}
 .anarch {
-  background-color: rgba(255, 30, 0, 0.5)}
+  background-color: rgba(255, 30, 0, 0.6)}
 .shaper {
-  background-color: rgba(0, 197, 0, 0.5)}
+  background-color: rgba(0, 197, 0, 0.8)}
 .criminal {
-  background-color: rgba(84, 128, 209, 0.5)}
+  background-color: rgba(84, 128, 209, 0.8)}
 .neutral_runner {
-  background-color: rgba(128, 128, 128, 0.5);}
+  background-color: rgba(128, 128, 128, 0.8);}
 .neutral_corp {
-  background-color: rgba(128, 128, 128, 0.5);}
+  background-color: rgba(128, 128, 128, 0.8);}
 .adam {
-  background-color: rgba(156, 124, 156, 0.5);}
+  background-color: rgba(156, 124, 156, 0.8);}
 .sunny_lebeau {
-  background-color: rgba(156, 124, 156, 0.5);}
+  background-color: rgba(156, 124, 156, 0.8);}
 .apex {
-  background-color: rgba(156, 124, 156, 0.5);}
+  background-color: rgba(156, 124, 156, 0.8);}
