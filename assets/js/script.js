@@ -344,9 +344,9 @@ async function addToDeck(card, side) {
             if (currentCardCount >= card.attributes.deck_limit) {
               alert("Unable to add to deck. Too many copies")
               } 
-            if (userDeck.current_influence === userDeck.total_influence){
-                alert("influence limit reached")
-      }
+            else if (userDeck.current_influence += card.attributes.influence_cost > userDeck.total_influence){
+              alert("not enough influence")
+            }
           }
       }
     updateDeckInfo();
