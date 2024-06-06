@@ -411,6 +411,7 @@ $(document).ready(async function(){
     $(".overlay").show();
     $("#main-stage-display").empty();
     $("#deckInfo").show();
+    userSelectedID=false; 
     updateDeckInfo();
     await main("runner", 4);
   });
@@ -418,6 +419,7 @@ $(document).ready(async function(){
     $(".overlay").show();
     $("#main-stage-display").empty();
     $("deckInfo").show();
+    userSelectedID=false;
     updateDeckInfo();
     await main("corp", 2);
   });
@@ -426,6 +428,7 @@ $(document).ready(async function(){
     $("#main-stage-display").empty();
     nullDeck();
     $("#deckInfo").removeClass();
+    userSelectedID=false;
     updateDeckInfo();
     await main("runner", 4);
   });
@@ -434,6 +437,7 @@ $(document).ready(async function(){
     $("#main-stage-display").empty(); 
     nullDeck();
     $("#deckInfo").removeClass();
+    userSelectedID=false;
     updateDeckInfo();
     await main("corp", 2);
   });

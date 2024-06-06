@@ -39,16 +39,16 @@
   - ~~feedback on buttons (:onHover etc.)~~
   - ~~'loading' text/anims~~
   - ~~deck entry UI to include a trash button to remove the card~~
-  - deck entry UI to include a count of how many copies of a card are in the deck X
+  - deck entry UI to include a count of how many copies of a card are in the deck
 - media queries
 
 ## Other
 
 - ~~Do I need an API key to access the images on netrunner db?~~
-  - yes. Devs contacted, yet to hear back
+  - ~~yes. Devs contacted, yet to hear back~~
 - ~~modal instructions on main page~~ //no use initial html on the stage area for intro and instructions
 - ~~background image~~
-- Testing
+- ~~Testing~~
 - ~~More instruction text throughout app~~
 
 ## README

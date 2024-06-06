@@ -55,8 +55,6 @@ a {
   border: 1px solid inset aqua;
 } 
 
-
-
 .full-height {
   max-height: 100;
   height: 100vh;
@@ -159,8 +157,8 @@ a {
   margin-bottom: 20px;
 }
 #switchRunner, #switchCorp{
-  min-height:80px;
-  min-height:80px;
+  max-height:80px;
+  max-height:80px;
 }
 
 .faction_icon {
@@ -209,6 +207,11 @@ a {
   width: 300px;
   min-width: 100%;
   padding: 5px;
+}
+
+#changeSide {
+  align-content: center;
+  display: inline-flex;
 }
 
 /* column Title styling for card columns  */
