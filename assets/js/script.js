@@ -1,4 +1,4 @@
-const apiLink = "https://api-preview.netrunnerdb.com/api/v3/public/"
+const apiLink = "https://api-preview.netrunnerdb.com/api/v3/public/";
 const allCardsDiv = "#allCards";
 const myDeckDiv = "#myDeck";
 const count = (deck, attribute, card) => deck.cards.filter(item => item.attributes[attribute] === card.attributes[attribute]).length;
@@ -101,11 +101,15 @@ async function populateCards(cards, side, targetDiv) {
       </div>`
 //append each card to the card navigation section
     $(targetDiv).append(cardHTML);
-  //attach eventListeners to cardEntries to send clicked card information and user side to main Stage
-  $(".cardEntry").last().click(async () => {
-      await populateStage(card, side);
-  }); 
-})};
+    });
+
+    // Attach event listener to the parent container using event delegation
+    $(targetDiv).off('click', '.cardEntry').on('click', '.cardEntry', async function() {
+        let cardIndex = $(this).index();
+        let card = cards[cardIndex];
+        await populateStage(card, side);
+    });
+}
 
 //code for fetching images if a dev API key is obtained: 
 //
@@ -297,7 +301,6 @@ async function populateControls(side) {
     let filteredCards = await filterCards("card_type_id", type.id, side);
     await populateCards(filteredCards, side, allCardsDiv);
     updateDeckInfo();
-    
     });
   }  
 }
@@ -355,13 +358,13 @@ function removeCard(card) {
     userDeck.cards = userDeck.cards.filter(item => item !== card);
     userDeck.current_deck_size = userDeck.cards.length;
     if (card.attributes.faction_id != userDeck.faction){
-    userDeck.current_influence > 0 ? userDeck.current_influence -= card.attributes.influence_cost * cardCount : userDeck.current_influence = userDeck.current_influence;
+      userDeck.current_influence > 0 ? userDeck.current_influence -= card.attributes.influence_cost * cardCount : userDeck.current_influence = userDeck.current_influence;
     }
     $(`#${card.id}`).remove();
 
     if (card.attributes.card_type_id.includes("identity")) {
-        nullDeck();
-        $('#deckInfo').removeClass();
+      nullDeck();
+      $('#deckInfo').removeClass();
     }
 
     updateDeckInfo();
@@ -393,28 +396,33 @@ async function main(side, startingPage) {
   let filteredCards = await filterCards("card_type_id", cardType, side);
   await populateCards(filteredCards, side, allCardsDiv);
   await populateControls(side);
-$(".cardEntry").last().click(async () => {
-  await populateStage(card, side);
+  $(".overlay").hide();
+  $(".cardEntry").last().click(async () => {
+    await populateStage(card, side);
   });
 }
 //function runs on page load and initialises the app. Hiding unwanted empty elements, and running main
-$(document).ready(async function(){
+$(document).ready(async function(){  
   $(deckInfo).hide();
   $(allCardsDiv).hide();
   $(myDeckDiv).hide();
+  $(".overlay").hide();
   $("#sideRunner").click(async() => {
+    $(".overlay").show();
     $("#main-stage-display").empty();
     $("#deckInfo").show();
     updateDeckInfo();
     await main("runner", 4);
   });
   $("#sideCorp").click(async() => {
+    $(".overlay").show();
     $("#main-stage-display").empty();
     $("deckInfo").show();
     updateDeckInfo();
     await main("corp", 2);
   });
   $("#switchRunner").click(async() => {
+    $(".overlay").show();
     $("#main-stage-display").empty();
     nullDeck();
     $("#deckInfo").removeClass();
@@ -422,6 +430,7 @@ $(document).ready(async function(){
     await main("runner", 4);
   });
   $("#switchCorp").click(async() => {
+    $(".overlay").show();
     $("#main-stage-display").empty(); 
     nullDeck();
     $("#deckInfo").removeClass();
