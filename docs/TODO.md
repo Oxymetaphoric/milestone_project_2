@@ -19,7 +19,7 @@
   - ~~only 1 copy of unique cards~~
   - ~~modify populateCards function to accept a target parameter to determine which div to populate and with what~~
   - only show one copy of each card object in deck (use a set? or use filtered array produced when count is run?)
-  - add loading gif, preload in html
+  - ~~add loading gif, preload in html~~
 
 ## HTML
 
@@ -28,18 +28,18 @@
 - ~~build out controls area~~
 - ~~build out stage area~~
 - faction filter controls
-- 404 page
+- ~~404 page~~
 
 ## CSS - ~~import fonts and set up initial styling~~
 - ~~style cardEntry w/ background image etc.~~
 - ~~layout and styling for all elements~~
 - ~~style controls~~
-- UI/UX overhaul:
-  - deck and card list styled better, no horizontal scroll etc.
+- ~~UI/UX overhaul:~~
+  - ~~deck and card list styled better, no horizontal scroll etc.~~
   - ~~feedback on buttons (:onHover etc.)~~
-  - 'loading' text/anims
+  - ~~'loading' text/anims~~
   - ~~deck entry UI to include a trash button to remove the card~~
-  - deck entry UI to include a count of how many copies of a card are in the deck
+  - deck entry UI to include a count of how many copies of a card are in the deck X
 - media queries
 
 ## Other
@@ -49,7 +49,7 @@
 - ~~modal instructions on main page~~ //no use initial html on the stage area for intro and instructions
 - ~~background image~~
 - Testing
-- more instruction text throughout app
+- ~~More instruction text throughout app~~
 
 ## README
 

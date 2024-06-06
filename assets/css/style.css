@@ -19,6 +19,13 @@ p {
   padding: 5px;
   margin: 0px;
 }
+
+a {
+  color: magenta;
+  text-decoration: underline;
+
+}
+
 .overlay {
     position: absolute;
     top: 0;
@@ -65,6 +72,30 @@ p {
   border-radius: 10px;
   width: 300px;
   min-width: 100%;
+}
+
+#errorStage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#error-display {
+    margin: 50px;
+    z-index: 100000;
+    opacity: 0.8;
+    background: white;
+    border-radius: 10px;
+    height: 500px;
+    width: 500px;
+    text-align: center;
+}
+
+#error-display p {
+  font-family: "Public Sans", Arial, Helvetica, sans-serif;
+  font-size: 20pt;
+  padding: 5px;
 }
 
 .credit {
