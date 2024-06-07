@@ -185,17 +185,8 @@ a {
 #filterCardsControls {
   font-family: "Public Sans", Arial, Helvetica, sans-serif;
   font-size: 20px;
-  height: 100%;
-  margin: 5px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
-
-.radio-button {
-  display: inline-block;
-  padding: 10px;
-  transition: background-color 0.3s, border-color 0.3s;
+  display: flexbox;
+  flex-direction: column;
 }
 
 #deckInfo {
