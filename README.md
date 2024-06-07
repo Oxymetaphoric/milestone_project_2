@@ -10,14 +10,14 @@
 
 ### Project Goals
 
-This is my milestone two project for the [Code Institute's](http://www.codeinstitute.net/) *'Level 5 Diploma in Web Application Development'*. The goal of this project is to *Design, develop and implement a dynamic Front end web application using HTML, CSS and JavaScript*. To this end I am building a website that will connect to the [Netrunner Database](http://www.netrunnerdb.com) API, download, manipulate, and display card data in the JSON format, and allow users to build a deck of cards for the card game [Netrunner](http://www.nullsignalgames.com/about/netrunner/), exporting completed decks as a printable pdf or uploading to netrunnerdb. The app  will be aimed at people already familiar with the game and ruleset.
+This is my milestone two project for the [Code Institute's](http://www.codeinstitute.net/) *'Level 5 Diploma in Web Application Development'*. The goal of this project is to *Design, develop and implement a dynamic Front end web application using HTML, CSS and JavaScript*. To this end I am building a website that will connect to the [Netrunner Database](http://www.netrunnerdb.com) API, and download, manipulate, and display card data in the JSON format, and allow users to build a deck of cards for the card game [Netrunner](http://www.nullsignalgames.com/about/netrunner/), exporting completed decks as a printable pdf or uploading to netrunnerdb. The app  will be aimed at people already familiar with the game and ruleset.Players are required to build decks from a vast selection of cards, and this app aims to make it easier to browse the selection of cards and streamline the process of building a deck for the user. I decided to take this project on as I am familiar with the game and ruleset, and identified a need for a webapp that allowed users to browse through the currently legal selection of cards and to build decks, without the overhead of having to browse and organise a collection of physical cards.   
 
 #### User Goals
 
 - browse the database of Netrunner cards
 - filter the cards displayed by various properties
 - add and remove cards from their current deck
-- upload completed decks to netrunnerdb to share them with other players
+- upload completed decks to netrunnerdb to share them with other players - this proved untenable as I was unable to obtain a developer api key which would be required to implement this feature. 
 - remove all cards and start again
 
 #### Site Operator Goals
@@ -162,6 +162,8 @@ for body text:
 
 #### Colour Palettes
 
+I elected to use a cyberpunk/vaporwave image as the background for this app, which is suitable thematically. I elected to use the in-game faction colours to denote the faction of the various cards, these colours were pulled from the cards. 
+
 ### Technologies and Tools used
 
 #### Languages
@@ -195,6 +197,16 @@ for body text:
 
 ---
 
+In the course of developing this project, I elected to use manual testing exclusively. Despite the reasonably large codebase, the logic is still straightforward enough that I believe it was on the bound of needing to use automated testing. While automated testing has many advantages, such as consistency and comprehensive coverage, the initial time investment and setup would have expanded the project, which was already overscoped, even further. 
+
+While manual testing, making use of console.log() and alert(), is slower and less efficient compared ot automated testing, it provides significant flexiblity and allowed me to follow the thread of logic as the program ran, providing immediate and comprehensible feedback. 
+
+### Testing Procedure
+
+Du
+
+
+
 ### Functional testing
 
 | test                                           | verified |
@@ -207,6 +219,8 @@ for body text:
 | adding card to deck should update deckInfo section appropriately      | yes      |
 | radio Buttons should clear cards display and load appropriate cards in   | yes      |
 | small 'side' icons in controls should change side, clear the stage and update radio buttons appropriately                   | yes      |
+| 
+
 
 ### User Stories Testing
 
@@ -296,6 +310,7 @@ placing the cloned files in the root of your web server, should be sufficient fo
 ---
 
 My wonderful family!
-Background image by [Jr Korpa](https://unsplash.com/@jrkorpa?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash) on [Unsplash](https://unsplash.com/photos/pink-and-black-wallpaper-9XngoIpxcEo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash)
+
+background image: <a href="https://www.vecteezy.com/free-vector/blue">Blue Vectors by Vecteezy</a>
 
 card data and all game related information and imagery - [null signal games](https://nullsignal.games/)
