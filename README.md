@@ -2,6 +2,8 @@
 
 [LIVE SITE](https://Oxymetaphoric.github.io/milestone_project_2/index.html)
 
+![amiresponsive screenshot](docs/images/Screenshot%20from%202024-06-07%2013-42-46.png)
+
 ---
 
 ## :world_map: Strategy
@@ -171,6 +173,7 @@ I elected to use a cyberpunk/vaporwave image as the background for this app, whi
 - **CSS3**
 - **HTML5**
 - **javaScript**
+- **jQuery**
 - **Markdown**
 - **Regex**
 
@@ -203,9 +206,29 @@ While manual testing, making use of console.log() and alert(), is slower and les
 
 ### Testing Procedure
 
-Du
+Rough out the function: 
 
 
+Initially I outlineed the required function(), using a descriptive name and passing it any arguments I thought it might need to function, typically a card object or set of card objects and the side the players was playing as.   
+
+function foo(bar){
+    pass;
+}
+
+Testing: 
+
+To ensure the function processed the input as I expected I placed console.logs to print the functions output and track the state during processing. 
+
+function foo(bar){
+    console.log(bar)
+    
+    //function logic
+    
+    console.log(output)
+    return output
+}
+
+During this iterative process of testing I could directly observe how the data was being manipulated and which objects or data were being passed (or not!). 
 
 ### Functional testing
 
@@ -287,19 +310,88 @@ Achieved
 
 ### Mobile Testing
 
-Unfortunately this site has not been developed for mobile. The javascript required to complete the project was so complex that I found I had run out of time before I could address implementing media queries.
-
-### Devices
+the webapp would require significant redesign and extension to function suitably as a mobile app as well as the desktop based app it was intially envisoned as. 
 
 ### Bug fixes
 
+The first and most common bug that I encountered when writing this webapp was an issue with my code not correctly utilising promises. Which meant that functions could be triggered and would resolve multiple times. This resulted in unexpected behaviour, such as the radio-button html being appended multiple times to the page. 
+
+------------
+Eventually my code became so tightly coupled (that is, self-referential) that it became expedient to solve the issues that handling promises was causing by simply designating all functions as asynychronous (unless I was certain this was not needed) and use await on all calls. 
+
+---------------
+While not a bug, as such, it took a long time to figure out how to use recursion correctly in order to fetch multiple pages of cards from the API. Eventually I realised that functions are able to call themselves and that the fetch function, internally, contained all the information it needed to call itself and fetch the next page in the series. 
+
+-------------
+One major bug that I encountered when using recursion was that the code I initially wrote was fetching page 1, then page 1 and 2, then page 1, 2, and 3 etc. This ended up wit ha very large json object with a huge number of redundant cards. 
+
+I solved this by realising thrat I need to concatenate the final object outside of the recursive call to the api which is what I was doing. 
+
+--------------
+The next section that I had trouble with was parsing the text from the card objects. I started by using regex, which I am somewhat familiar with through using bash+linux, to search for specific strings and change them, however I switched to the far friendlier and more maintainable .includes() built-in shortly after discovering it, although there are still sections of the code that utilise the regex. 
+
+---------------------
+Later on in development I came across another problem in which I fetched some information from the API and it was returned however, it transpired, the data was not returned as JSON and needed to be converted using foo.json(), which caused further problems as .json() is a async process, which I did not realise intially. Using 'await' apprropriately solved this. 
+
+-----------------------------
+misidentifying the scope of 'this' led to a function returning the entire window object at one point in development
+
+--------------------------------
+using stringify to convert a json object resulted in much confusion as the resultant entire object was rendered in the browser window. This was solved by realising that I could simply place the results of the stringification into a variable, and if stored as a template literal could be dropped into the active page with actions like append() and html().
+
+-----------------------------
+
+
 ## :loudspeaker: Deployment
 
-Deployment will be using gitHub pages and similarly to my previous project can be simply deployed yourself by first cloning the repository:
+Deployment will be using GitHub Pages, which allows you to host your static websites directly from your GitHub repository. Similar to my previous project, you can deploy this project yourself by following these steps:
 
-> git clone <http://www.github.com/Oxymetaphoric/milestone_project_2>
+### Clone the Repository:
 
-placing the cloned files in the root of your web server, should be sufficient for deployment.
+Begin by cloning the repository to your local machine. Open your terminal or command prompt and run the following command:
+
+    > git clone http://www.github.com/Oxymetaphoric/milestone_project_2
+
+This command will create a local copy of the repository on your machine.
+
+Change your directory to the cloned repository folder:
+
+    > cd milestone_project_2
+
+Ensure your project is configured to be served by GitHub Pages. Typically, this involves placing your HTML, CSS, and JavaScript files in the root directory or a specific folder like docs or gh-pages branch.
+
+If using the root directory, make sure your index.html file is in the root of the repository.
+
+If you prefer using a docs folder or a specific branch for GitHub Pages, move your files accordingly and update your repository settings on GitHub.
+
+If you made any changes to the project structure or added new files, commit and push those changes to your GitHub repository:
+
+    > git add .
+    > git commit -m "Prepare project for GitHub Pages deployment"
+    > git push origin main
+
+Replace `main` with the appropriate branch name if your default branch is named differently.
+
+### Enable GitHub Pages:
+
+Go to your GitHub repository on the web:
+
+Navigate to the repository settings by clicking on the "Settings" tab.
+Scroll down to the "GitHub Pages" section.
+Under "Source," select the branch you want to deploy from (e.g., main or gh-pages) and the folder (e.g., /root or /docs).
+Click "Save" to enable GitHub Pages.
+
+### Access Your Deployed Project:
+
+Once GitHub Pages is enabled, your project will be deployed, and you can access it via the URL provided in the GitHub Pages settings. It will typically be in the format https://<username>.github.io/<repository-name>.
+
+### Direct Deployment to Web Server (Optional):
+
+If you prefer deploying to your own web server, after cloning the repository, simply copy the cloned files to the root directory of your web server. For example, using an FTP client or SSH, transfer all files from the cloned repository to your web server's root directory.
+
+Ensure your web server is configured correctly to serve HTML files from the root directory, and you should be able to access your project through your domain.
+
+By following these steps, you should be able to easily deploy and access your project either through GitHub Pages or your own web server.
 
 ---
 
